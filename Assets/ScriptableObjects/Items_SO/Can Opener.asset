@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f7d81d2d543d8488ff6f0156791563, type: 3}
+  m_Name: Can Opener
+  m_EditorClassIdentifier: Assembly-CSharp::Item_SO
+  itemName: Can Opener
+  cost: 20
+  sellValue: 15
+  hint: Looks like I can use this to cut some wires!
+  compatiblePartTypes:
+  - Wires
+  - Broken Wire
