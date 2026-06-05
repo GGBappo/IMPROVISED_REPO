@@ -18,12 +18,16 @@ public class InventoryBar : MonoBehaviour
 
     private List<InventorySlot> slots = new List<InventorySlot>();
 
+    public GameObject[] itemPositions;
+    private GameObject itemPrefab;
+
     private void Start()
     {
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
         RefreshBar();
     }
+
 
     private void RefreshBar()
     {
@@ -79,5 +83,36 @@ public class InventoryBar : MonoBehaviour
         InventorySlot slot = slots.Find(s => s.item == item);
         if (slot != null)
             slot.ResetPosition();
+    }
+
+    private GameObject FindOpenSlot()
+    {
+        for (int i = 0; i< itemPositions.Length; i++)
+        {
+            if (itemPositions[i].transform.childCount == 0)
+            {
+                // Found an open slot
+                return itemPositions[i]; // give back the empty slot
+            }
+        }
+        return null; // no open slots
+    }
+
+    private void OnItemBought(Item_SO item)
+    {
+        GameObject openSlot = FindOpenSlot();
+
+        if (openSlot != null)
+        {
+            // Instantiate the item prefab in the open slot
+            GameObject itemObj = Instantiate(itemPrefab, openSlot.transform);
+            // Optionally, set the item data on the instantiated object here
+
+            itemObj.GetComponent<InventorySlot>().Initialize(item, this);
+        }
+        else
+        {
+            Debug.Log("No open slots available to place the bought item.");
+        }
     }
 }
