@@ -10,13 +10,10 @@ public abstract class BombPart : MonoBehaviour
     public ItemType[] compatibileItems;
     public bool isHighlighted;
     [SerializeField] protected BombManager bomb;
-    [SerializeField] protected highlightable;
+    [SerializeField] protected Highlightable highlightable;
 
 
-    public abstract void /*bool*/ OnItemUsed(UsableItem item)
-    {
-
-    }
+    public abstract void /*bool*/ OnItemUsed(UsableItem item);
 
     //I dont think we need them to be Overriden, but it could depend on the part, so i change them to virtual
     public virtual void Highlight()
@@ -29,13 +26,7 @@ public abstract class BombPart : MonoBehaviour
         //If Highlightable - Remove Highlight (who could have guessed?)
     }
 
-    protected abstract void Solve()
-    {
+    protected abstract void Solve();
 
-    }
-
-    protected abstract void OnWrongItem()
-    {
-
-    }
+    protected abstract void OnWrongItem();
 }

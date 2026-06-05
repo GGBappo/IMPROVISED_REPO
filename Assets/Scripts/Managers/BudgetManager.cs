@@ -9,10 +9,10 @@ public class BudgetManager : MonoBehaviour
 
     public bool TryBuy(Item_SO item)
     {
-        if (CanAfford(item.cost) && !IsInventoryFull())
+        if (CanAfford(item.cost) && !Inventory.Instance.IsFull())
         {
             currentMoney -= item.cost;   // reads cost directly from SO
-            inventory.Add(item);
+            inventory.AddItem(item);
             return true;
         }
         return false;
@@ -21,10 +21,10 @@ public class BudgetManager : MonoBehaviour
     public void SellItem(Item_SO item)
     {
         currentMoney += item.sellValue;  // reads sellValue directly from SO
-        inventory.Remove(item);
+        inventory.RemoveItem(item);
     }
 
-    public bool CanAfford(int cost)
+    public bool CanAfford(float cost)
     {
         return currentMoney >= cost;
     }
