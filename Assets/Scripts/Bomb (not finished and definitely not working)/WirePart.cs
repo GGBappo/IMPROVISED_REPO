@@ -31,7 +31,7 @@ public class WirePart : BombPart
             return /*false*/;
         }
 
-        wires[currentInOrder].isCut = true;
+        wires[current].isCut = true;
         current++;
 
         if (current >= wires.Length)

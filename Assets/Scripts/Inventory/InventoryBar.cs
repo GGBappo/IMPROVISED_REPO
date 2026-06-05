@@ -1,5 +1,5 @@
 // InventoryBar.cs
-// Controls the bottom bar UI — hover rise, click to hold, right click to cancel
+// Controls the bottom bar UI ï¿½ hover rise, click to hold, right click to cancel
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +38,7 @@ public class InventoryBar : MonoBehaviour
         slots.Clear();
 
         // rebuild from inventory
-        foreach (UsableItem item in inventory.items)
+        foreach (Item_SO item in inventory.items)
         {
             SpawnSlot(item);
         }
@@ -66,7 +66,7 @@ public class InventoryBar : MonoBehaviour
         {
             slots.Remove(slot);
             Destroy(slot.gameObject);
-            // no shifting — empty space stays until filled
+            // no shifting ï¿½ empty space stays until filled
         }
     }
 

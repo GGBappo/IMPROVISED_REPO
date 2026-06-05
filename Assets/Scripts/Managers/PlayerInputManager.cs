@@ -24,13 +24,13 @@ public class PlayerInputManager : MonoBehaviour
             MoveItemWithCursor();
             CheckHoverHighlight();
 
-            // right click — cancel, return to bar
+            // right click ï¿½ cancel, return to bar
             if (Input.GetMouseButtonDown(1))
             {
                 CancelHeldItem();
             }
 
-            // left click — try to use on a bomb part
+            // left click ï¿½ try to use on a bomb part
             if (Input.GetMouseButtonDown(0))
             {
                 TryUseOnPart();
@@ -79,7 +79,7 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
 
-        // not hovering any part — clear highlight
+        // not hovering any part ï¿½ clear highlight
         if (hoveredPart != null)
         {
             hoveredPart.RemoveHighlight();
@@ -105,8 +105,8 @@ public class PlayerInputManager : MonoBehaviour
         }
         else
         {
-            // wrong item on this part — strike penalty
-            StrikeSystem.Instance.AddStrike();
+            // wrong item on this part ï¿½ strike penalty
+            StrikeSystem.AddStrike();
             CancelHeldItem();
         }
     }
@@ -119,7 +119,7 @@ public class PlayerInputManager : MonoBehaviour
         isHoldingItem = true;
     }
 
-    // Right click — go back to bar
+    // Right click ï¿½ go back to bar
     private void CancelHeldItem()
     {
         ReturnToBar();
