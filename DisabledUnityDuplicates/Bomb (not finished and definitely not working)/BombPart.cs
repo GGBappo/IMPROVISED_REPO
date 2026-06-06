@@ -13,7 +13,7 @@ public abstract class BombPart : MonoBehaviour
     [SerializeField] protected string highlightable;
 
 
-    public abstract void /*bool*/ OnItemUsed(Item_SO item)
+    public void OnItemUsed(Item_SO item)
     {
 
     }
