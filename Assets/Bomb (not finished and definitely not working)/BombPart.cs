@@ -10,10 +10,10 @@ public abstract class BombPart : MonoBehaviour
     public ItemType[] compatibileItems;
     public bool isHighlighted;
     [SerializeField] protected BombManager bomb;
-    [SerializeField] protected highlightable;
+    [SerializeField] protected string highlightable;
 
 
-    public abstract void /*bool*/ OnItemUsed(UsableItem item)
+    public abstract void /*bool*/ OnItemUsed(Item_SO item)
     {
 
     }

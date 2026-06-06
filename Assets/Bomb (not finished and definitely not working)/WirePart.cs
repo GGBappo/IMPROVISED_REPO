@@ -8,7 +8,7 @@ public class WirePart : BombPart
     private int current = 0;
 
     //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
-    public override void /*bool*/ OnItemUsed(UsableItem item)
+    public override void /*bool*/ OnItemUsed(Item_SO item)
     {
         if (isLocked) { return /*false*/; }
 

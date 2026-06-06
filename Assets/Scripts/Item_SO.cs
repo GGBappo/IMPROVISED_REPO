@@ -13,3 +13,8 @@ public class Item_SO : ScriptableObject
     public bool isSingleUse;
 }
 
+public void Item_SO()
+{
+
+}
+
