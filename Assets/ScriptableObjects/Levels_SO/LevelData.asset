@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44a64aa95095054fbb67db7968c8654, type: 3}
+  m_Name: LevelData
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelIndex: 0
+  levelName: 
+  levelLocation: 
+  startingBudget: 0
+  bombPrefab: {fileID: 9197622134547142398, guid: da9db4cf6e445a0419e7d5f572ce5112, type: 3}
+  timerSeconds: 0
+  isDud: 0
+  difficulty: 0
+  storyEvents: []
+  isUnlocked: 0
