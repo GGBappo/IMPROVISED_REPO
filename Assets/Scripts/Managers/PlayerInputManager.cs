@@ -72,7 +72,7 @@ public class PlayerInputManager : MonoBehaviour
 
                     hoveredPart = part;
 
-                    if (heldItem.IsCompatibleWith(part))
+                    //if (heldItem.IsCompatibleWith(part))
                         part.Highlight();
                 }
                 return;

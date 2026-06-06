@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "Item/Item Data")]
 public class Item_SO : ScriptableObject
@@ -14,12 +15,11 @@ public class Item_SO : ScriptableObject
 
     public bool IsCompatibleWith(BombPart part)
     {
-        return true; 
+        return true;
     }
 
-    public bool Use(BombPart part)  
+    public bool Use(BombPart part)
     {
         return true;
     }
 }
-
