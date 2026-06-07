@@ -15,10 +15,10 @@ public class Item_SO : ScriptableObject
     public bool isSingleUse;
 
     public float hoverHeight = 1.432f;
-    public Quaternion hoverRot = 1.757f;
+    public float hoverRot = 1.757f;
 
     public float dragHeight;
-    public Quaternion dragRot;
+    public float dragRot;
 
     public bool IsCompatibleWith(BombPart part)
     {
