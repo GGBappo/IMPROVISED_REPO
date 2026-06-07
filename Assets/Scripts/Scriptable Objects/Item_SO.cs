@@ -6,6 +6,7 @@ public class Item_SO : ScriptableObject
 {
     [TextArea(3, 10)]
     public Sprite itemSprite; // Sprite representing the item
+    public InteractableItem prefab; // GameObject representing the item in the world
     public string itemName; // Name of the item
     public float cost; // Cost of the item
     public float sellValue; // Sell value of the item

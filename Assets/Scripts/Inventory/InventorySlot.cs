@@ -13,10 +13,6 @@ public class InventorySlot : MonoBehaviour,
     IPointerExitHandler,
     IPointerClickHandler
 {
-    [Header("References")]
-    public Image itemIcon;
-    public Image slotBackground;
-    public TextMeshProUGUI itemNameText;
 
     [Header("State")]
     public Item_SO item;
@@ -35,14 +31,11 @@ public class InventorySlot : MonoBehaviour,
         inventoryBar = bar;
         inputManager = FindObjectOfType<PlayerInputManager>();
 
-        itemIcon.sprite = item.itemSprite;
-        itemNameText.text = item.itemName;
-
         defaultPosition = transform.localPosition;
         raisedPosition = defaultPosition + new Vector3(0, bar.riseAmount, 0);
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (isHeld) return;  // don't animate if item is following cursor
 
@@ -53,7 +46,7 @@ public class InventorySlot : MonoBehaviour,
             target,
             Time.deltaTime * inventoryBar.riseSpeed
         );
-    }
+    }*/
 
     // Hover 
     public void OnPointerEnter(PointerEventData eventData)
