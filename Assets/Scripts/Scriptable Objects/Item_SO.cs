@@ -14,6 +14,12 @@ public class Item_SO : ScriptableObject
     public string[] compatiblePartTypes; // Array of compatible part types for the item
     public bool isSingleUse;
 
+    public float hoverHeight = 1.432f;
+    public float hoverRot = 1.757f;
+
+    public float dragHeight;
+    public float dragRot;
+
     public bool IsCompatibleWith(BombPart part)
     {
         return true;

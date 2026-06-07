@@ -3,5 +3,8 @@ using UnityEngine;
 
 public class RubberDuck : InteractableItem
 {
+    public override void OnUse()
+    {
 
+    }
 }
