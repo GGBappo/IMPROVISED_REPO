@@ -22,3 +22,7 @@ MonoBehaviour:
   - Broken wire
   - Energy supply
   isSingleUse: 0
+  hoverHeight: 1.432
+  hoverRot: {x: 0, y: 0, z: 0, w: 0}
+  dragHeight: 1.757
+  dragRot: {x: 0, y: 0, z: 0, w: 0}

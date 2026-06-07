@@ -36,8 +36,8 @@ public class ItemShopPanel : MonoBehaviour
         }
         //Create an instance of the bought item at the current spawn point
         InteractableItem instItem = Instantiate(item.prefab);
-        instItem.transform.parent = spawnPoints[currentSpawnPointIndex];
-        instItem.transform.localPosition = Vector3.zero; // Position the item at the spawn point
+        //instItem.transform.parent = spawnPoints[currentSpawnPointIndex];
+        instItem.transform.localPosition = spawnPoints[currentSpawnPointIndex].position;
 
         currentSpawnPointIndex++;
 
