@@ -13,9 +13,16 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Collider itemCollider;
     private Rigidbody rb;
     private bool wasGravityEnabled;
+    private BudgetManager budgetManager;
 
     private bool isHovered = false;
     private bool isDragging = false;
+
+
+    private void Awake()
+    {
+        budgetManager = FindObjectOfType<BudgetManager>();
+    }   
 
     private void Start()
     {
@@ -48,9 +55,13 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
             targetY = itemData.hoverHeight;
             targetRotY = itemData.hoverRot;
         }
+        else if (isHovered && !isDragging && Input.GetMouseButtonDown(1))
+        {
+            OnRightClick();
+        }
 
-        // Smoothly transition Y position
-        Vector3 pos = transform.position;
+            // Smoothly transition Y position
+            Vector3 pos = transform.position;
         pos.y = Mathf.Lerp(pos.y, targetY, Time.deltaTime * 10f);
 
         if (isDragging)
@@ -196,5 +207,14 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         OnEndDrag(eventData);
+    }
+
+    //While Item is not being dragged or used and the mouse is on it and then
+    //the player right clicks, the item will be sold. 
+    private void OnRightClick()
+    {
+            budgetManager.SellItem(itemData);
+            Destroy(itemData);
+            Debug.Log("Sold: " + gameObject.name);
     }
 }
