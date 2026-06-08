@@ -4,7 +4,7 @@ public class BudgetManager : MonoBehaviour
 {
     [SerializeField] private float startingBudget = 45f;
 
-    private float currentMoney;
+    [SerializeField] private float currentMoney;
     private Inventory inventory;
 
     public void Awake()
@@ -30,5 +30,10 @@ public class BudgetManager : MonoBehaviour
     public bool CanAfford(float cost)
     {
         return currentMoney >= cost;
+    }
+
+    public void CurrentMoney()
+    {
+        Debug.Log("Current money: " + currentMoney);
     }
 }

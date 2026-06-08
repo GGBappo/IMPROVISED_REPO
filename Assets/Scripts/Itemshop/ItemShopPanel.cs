@@ -66,4 +66,9 @@ public class ItemShopPanel : MonoBehaviour
             Debug.Log($"Item bought: {item.itemName}");
         }
     }
+
+    public void FreeSpawnPoint()
+    {
+        currentSpawnPointIndex--;
+    }
 }
