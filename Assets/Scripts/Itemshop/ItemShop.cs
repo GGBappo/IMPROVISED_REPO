@@ -3,7 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System;
-
+//This class controls the item shop callingthe ItemShopPanel and using its
+//functions to add the item to the Slots. We also call the Item_SO
+//To set the values of the item in the shop and to add it to the inventory when bought.
 public class ItemShop : MonoBehaviour
 {
     [SerializeField] private Image itemImage;
@@ -32,8 +34,5 @@ public class ItemShop : MonoBehaviour
     public void OnButtonClick()
     {
         shopPanel.OnItemBought(currentItem);
-
-        Debug.Log($"Added {currentItem.itemName} to inventory.");
-
     }
 }

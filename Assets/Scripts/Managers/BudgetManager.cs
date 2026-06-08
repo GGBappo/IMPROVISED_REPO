@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class BudgetManager : MonoBehaviour
 {
-    private float startingBudget = 1000f;
+    [SerializeField] private float startingBudget = 45f;
 
     private float currentMoney;
     private Inventory inventory;
 
+    public void Awake()
+    {
+        currentMoney = startingBudget;
+        Debug.Log("You have " + currentMoney + " money to start with.");
+    }
     public bool TryBuy(Item_SO item)
     {
-        if (CanAfford(item.cost) && !Inventory.Instance.IsFull())
+        if (CanAfford(item.cost))
         {
             currentMoney -= item.cost;   // reads cost directly from SO
-            inventory.AddItem(item);
             return true;
         }
         return false;
@@ -21,7 +25,6 @@ public class BudgetManager : MonoBehaviour
     public void SellItem(Item_SO item)
     {
         currentMoney += item.sellValue;  // reads sellValue directly from SO
-        inventory.RemoveItem(item);
     }
 
     public bool CanAfford(float cost)

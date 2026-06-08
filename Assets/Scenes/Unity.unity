@@ -952,6 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678a5665afe2ecc4b9d5692c01cdc478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BudgetManager
+  startingBudget: 45
 --- !u!1 &960639178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1326,7 @@ MonoBehaviour:
   - {fileID: 1332518445}
   - {fileID: 1776540958}
   - {fileID: 2079747556}
+  budgetManager: {fileID: 0}
 --- !u!114 &1299171474
 MonoBehaviour:
   m_ObjectHideFlags: 0
