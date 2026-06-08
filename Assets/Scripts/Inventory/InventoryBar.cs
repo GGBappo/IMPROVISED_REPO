@@ -2,6 +2,7 @@
 // Controls the bottom bar UI � hover rise, click to hold, right click to cancel
 
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class InventoryBar : MonoBehaviour
@@ -25,11 +26,10 @@ public class InventoryBar : MonoBehaviour
     {
         inventory.OnItemAdded += OnItemAdded;
         inventory.OnItemRemoved += OnItemRemoved;
-        RefreshBar();
     }
 
 
-    private void RefreshBar()
+   /* private void RefreshBar()
     {
         // clear existing slots
         foreach (Transform child in slotContainer)
@@ -42,19 +42,11 @@ public class InventoryBar : MonoBehaviour
         {
             SpawnSlot(item);
         }
-    }
-
-    private void SpawnSlot(Item_SO item)
-    {
-        GameObject obj = Instantiate(slotPrefab, slotContainer);
-        InventorySlot slot = obj.GetComponent<InventorySlot>();
-        slot.Initialize(item, this);
-        slots.Add(slot);
-    }
+    }*/
 
     private void OnItemAdded(Item_SO item)
     {
-        SpawnSlot(item);
+        OnItemBought(item);
     }
 
     private void OnItemRemoved(Item_SO item)
@@ -104,11 +96,11 @@ public class InventoryBar : MonoBehaviour
 
         if (openSlot != null)
         {
+            Debug.Log("Placing bought item in open slot: " + openSlot.name);
             // Instantiate the item prefab in the open slot
-            GameObject itemObj = Instantiate(itemPrefab, openSlot.transform);
+            //GameObject itemObj = Instantiate(itemPrefab, openSlot.transform);
             // Optionally, set the item data on the instantiated object here
-
-            itemObj.GetComponent<InventorySlot>().Initialize(item, this);
+            //itemObj.GetComponent<InventorySlot>().Initialize(item, this);
         }
         else
         {

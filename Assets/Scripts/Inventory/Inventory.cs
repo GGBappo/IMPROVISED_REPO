@@ -34,6 +34,7 @@ public class Inventory : MonoBehaviour
 
         items.Add(item);
         OnItemAdded?.Invoke(item);
+        Debug.Log($"Added {item.name} to inventory");
         return true;
     }
 

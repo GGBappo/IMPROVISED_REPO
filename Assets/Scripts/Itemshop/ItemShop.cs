@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
+using System;
 
 public class ItemShop : MonoBehaviour
 {
@@ -9,17 +11,29 @@ public class ItemShop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemPrice;
     [SerializeField] private TextMeshProUGUI itemDescription;
 
+    // Store the currently displayed item so the button can add it without needing a parameter.
+    public Item_SO currentItem;
+
+    private int currentSpawnIndex = 0;
+    private ItemShopPanel shopPanel;
+
     //gets the Item_SO scriptable object and sets the values of the item in the shop
-    public void SetValues(Item_SO item)
+    public void SetValues(Item_SO item, ItemShopPanel shop)
     {
+        currentItem = item;
         itemImage.sprite = item.itemSprite;
         itemName.text = item.itemName;
         itemPrice.text = item.cost.ToString();
         itemDescription.text = item.hint;
+
+        shopPanel = shop;
     }
 
     public void OnButtonClick()
     {
+        shopPanel.OnItemBought(currentItem);
+
+        Debug.Log($"Added {currentItem.itemName} to inventory.");
 
     }
 }

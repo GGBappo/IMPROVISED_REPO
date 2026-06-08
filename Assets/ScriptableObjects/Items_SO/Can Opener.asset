@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06f7d81d2d543d8488ff6f0156791563, type: 3}
+  m_Script: {fileID: 11500000, guid: 0797c409cd8c3f34fab78edf126c344b, type: 3}
   m_Name: Can Opener
   m_EditorClassIdentifier: Assembly-CSharp::Item_SO
+  itemSprite: {fileID: 0}
+  prefab: {fileID: 5391650230976927253, guid: e23fc47cadf31ca4db44c35c38399b91, type: 3}
   itemName: Can Opener
   cost: 20
   sellValue: 15
@@ -19,3 +21,8 @@ MonoBehaviour:
   compatiblePartTypes:
   - Wires
   - Broken Wire
+  isSingleUse: 0
+  hoverHeight: 1.432
+  hoverRot: {x: 0, y: 0, z: 0, w: 0}
+  dragHeight: 1.757
+  dragRot: {x: 0, y: 0, z: 0, w: 0}
