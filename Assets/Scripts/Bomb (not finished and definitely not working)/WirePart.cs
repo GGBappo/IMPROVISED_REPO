@@ -8,11 +8,11 @@ public class WirePart : BombPart
     private int current = 0;
 
     //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
-    public override void /*bool*/ OnItemUsed(UsableItem item)
+    public override bool OnItemUsed(string item)
     {
-        if (isLocked) { return /*false*/; }
+        if (isLocked) { return false; }
 
-        if (isSolved) { return /*false*/; }
+        if (isSolved) { return false; }
 
         var hoverOverAnything = false;
         for (int i = 0; i < wires.Length; i++)
@@ -22,15 +22,16 @@ public class WirePart : BombPart
                 hoverOverAnything = true;
             }
         }
-        if (!hoverOverAnything) { return /*false*/; }
+        if (!hoverOverAnything) { return false; }
         
         if (!wires[current].mouseHover && inOrder)
         {
             //Also shouldnt consume Item
             StrikeSystem.AddStrike();
-            return /*false*/;
+            return false;
         }
 
+        wires[current].RemoveHighlight();
         wires[current].isCut = true;
         current++;
 
@@ -38,7 +39,7 @@ public class WirePart : BombPart
         {
             Solve();
         }
-        return /*true*/;
+        return true;
     }
 
     protected override void Solve()
