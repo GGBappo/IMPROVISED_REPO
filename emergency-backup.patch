@@ -1,0 +1,101 @@
+diff --cc Bomb (not finished and definitely not working)/BombPart.cs
+index ef3b1e7,ce77d41..0000000
+--- a/Bomb (not finished and definitely not working)/BombPart.cs
++++ b/Bomb (not finished and definitely not working)/BombPart.cs
+@@@ -7,16 -8,14 +8,24 @@@ public abstract class BombPart : MonoBe
+      public bool isSolved;
+      public bool isLocked;
+      public string hint;
+-     public ItemType[] compatibileItems;
++     //public ItemType[] compatibileItems;
+      public bool isHighlighted;
+      [SerializeField] protected BombManager bomb;
+++<<<<<<< Updated upstream:Bomb (not finished and definitely not working)/BombPart.cs
+ +    [SerializeField] protected highlightable;
+ +
+ +
+ +    public abstract void /*bool*/ OnItemUsed(UsableItem item)
+ +    {
+ +
+ +    }
+++=======
++     [SerializeField] protected bool highlightable;
++     //Tmp
++     public GameObject highlight;
++ 
++     public abstract bool OnItemUsed(string item);
+++>>>>>>> Stashed changes:Assets/Scripts/Bomb (not finished and definitely not working)/BombPart.cs
+  
+      //I dont think we need them to be Overriden, but it could depend on the part, so i change them to virtual
+      public virtual void Highlight()
+@@@ -26,16 -26,24 +36,34 @@@
+  
+      public virtual void RemoveHighlight()
+      {
+-         //If Highlightable - Remove Highlight (who could have guessed?)
++         if (!highlightable) return;
++         highlight.SetActive(false);
+      }
+  
+ -    protected abstract void Solve();
+ +    protected abstract void Solve()
+ +    {
+  
+++<<<<<<< Updated upstream:Bomb (not finished and definitely not working)/BombPart.cs
+ +    }
+ +
+ +    protected abstract void OnWrongItem()
+ +    {
+ +
+ +    }
+++=======
++     protected abstract void OnWrongItem();
++ 
++     protected virtual bool IsCompatibile(string item)
++     {
++         for (int i = 0; i < compatibileItems.Length; i++)
++         {
++             if (compatibileItems[i] == item)
++             {
++                 return true;
++             }
++         }
++         return false;
++     }
++ 
+++>>>>>>> Stashed changes:Assets/Scripts/Bomb (not finished and definitely not working)/BombPart.cs
+  }
+diff --cc Bomb (not finished and definitely not working)/WirePart.cs
+index 8a543dd,565ad9b..0000000
+--- a/Bomb (not finished and definitely not working)/WirePart.cs
++++ b/Bomb (not finished and definitely not working)/WirePart.cs
+@@@ -28,13 -31,14 +31,18 @@@ public class WirePart : BombPar
+          {
+              //Also shouldnt consume Item
+              StrikeSystem.AddStrike();
+-             return /*false*/;
++             return false;
+          }
+  
+++<<<<<<< Updated upstream:Bomb (not finished and definitely not working)/WirePart.cs
+ +        wires[currentInOrder].isCut = true;
+++=======
++         wires[cw].RemoveHighlight();
++         wires[cw].isCut = true;
+++>>>>>>> Stashed changes:Assets/Scripts/Bomb (not finished and definitely not working)/WirePart.cs
+          current++;
+  
+-         if (current >= wires.Length)
++         if (current >= wiresToCut)
+          {
+              Solve();
+          }
+* Unmerged path Assets/Scenes/Unity.unity
+* Unmerged path Assets/Scripts/Bomb (not finished and definitely not working)/Wire.cs
+* Unmerged path Assets/Scripts/ItemScripts/CanOpener.cs
+* Unmerged path Assets/Scripts/ItemScripts/NailClipper.cs
+* Unmerged path Assets/Scripts/ItemScripts/Potato.cs
+* Unmerged path Assets/Scripts/ItemScripts/RubberDuck.cs
+* Unmerged path Assets/Scripts/Managers/InteractableItem.cs
+* Unmerged path Bomb (not finished and definitely not working)/BombHoveringManager.cs
+* Unmerged path Bomb (not finished and definitely not working)/BombHoveringManager.cs.meta
