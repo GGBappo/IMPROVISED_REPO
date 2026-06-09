@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Transition : MonoBehaviour
 {
@@ -8,6 +9,6 @@ public class Transition : MonoBehaviour
     public enum TransitionState { transitioning, transitioned }
 
     public bool isComplete { get; protected set; }
-    public virtual void TransitionIN() {}
-    public virtual void TransitionOUT() {}
+    public virtual void TransitionIN(Action onComplete = null) {}
+    public virtual void TransitionOUT(Action onComplete = null) {}
 }

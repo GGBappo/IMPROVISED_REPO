@@ -4,61 +4,58 @@ using UnityEngine.SceneManagement;
 
 public class SceneOperator : MonoBehaviour
 {
-    private Scene ActiveScene;
-    private Scene CurrentScene; // different from actiive scene, as this is the scene we want to load, but it may not be active yet
+    // i still need to use these pls dont abuse me for this :(
+    private Scene _activeScene;
+    private Scene _currentScene; // different from actiive scene, as this is the scene we want to load, but it may not be active yet
+    
     public void Setup()
     {
-        Load("SESSION");
+        // unsure what to put here yet as initializing
     }
-
-    ///// load functions /////
-    public void Load(string sceneName)
-    {
-        StartCoroutine(LoadWithTransition(sceneName));
-    }
-    public void Load(string sceneName, bool loadWithTransition)
-    {
-        if (loadWithTransition)
-        {
-            StartCoroutine(LoadWithTransition(sceneName));
-        }
-        else
-        {
-            StartCoroutine(TransitionlessLoad(sceneName));
-        }
-    }
-    /////////////////////////
     
-    ////// unload functions ////// 
+    public void Load(string sceneName, TransitionType transition = TransitionType.None, bool setActive = true)
+    {
+        StartCoroutine(LoadCoroutine(sceneName, transition, setActive));
+    }
+  
+    
     public void Unload(string sceneName)
     {
         SceneManager.UnloadSceneAsync(sceneName);
     }
-    //////////////////////////////
     
-    
-    private IEnumerator TransitionlessLoad(string sceneName)
+    private IEnumerator LoadCoroutine(string sceneName, TransitionType transition, bool setActive)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        while(!operation.isDone)
+        if (transition == TransitionType.None)
         {
-            Debug.Log("Loading progress: " + operation.progress);
-            yield return null;
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while(!operation.isDone)
+            {
+                Debug.Log("Loading progress: " + operation.progress);
+                yield return null;
+            }
+            Debug.Log("Scene loaded: " + sceneName);
+            if (setActive)
+            {
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+                Debug.Log("Current Active Scene: " + SceneManager.GetActiveScene().name);
+            }
         }
-        Debug.Log("Scene loaded: " + sceneName);
-        Debug.Log("Current Active Scene: " + SceneManager.GetActiveScene().name);
-    }
-    private IEnumerator LoadWithTransition(string sceneName)
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        while(!operation.isDone)
+        else
         {
-            Debug.Log("Loading progress: " + operation.progress);
-            yield return null;
+            bool transitionComplete = false;
+            GameManager.Instance.PlayTransitionIN(transition, () => { transitionComplete = true; });
+
+            yield return new WaitUntil(() => transitionComplete);
+
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while (!operation.isDone)
+            {
+                Debug.Log("Loading progress: " + operation.progress + " for scene: " + sceneName);
+                yield return null;
+            }
         }
-        Debug.Log("Scene loaded: " + sceneName);
-        Debug.Log("Current Active Scene: " + SceneManager.GetActiveScene().name);
-        yield return null;
         
     }
+    
 }

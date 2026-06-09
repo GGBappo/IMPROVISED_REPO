@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
     [Header("Managers")]
     [Header("Gameplay Related")]
     [SerializeField]private BombManager bombManager;
@@ -45,9 +47,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private bool runWithDebug;
     [Tooltip("Run the game starting off this scene. This should be used for when you'd like to skip the main menu or a specifiic scene.")]
     [SerializeField]private string runStartingScene;
-    // once i get to work on the LevelManager
-    // and the architecture begins to become clearer
-    // i think these functions will get removed
+    
     void Start()
     {
         sceneManager.Setup();            
@@ -58,8 +58,21 @@ public class GameManager : MonoBehaviour
         //progressionSystem.Setup();
         //taskSystem.Setup();
         //timerManager.Setup();
-        //uiManager.Setup();
+        uiManager.Setup();
         //storyManager.Setup();
         //playerInputManager.Setup();
+
+        sceneManager.Load(runStartingScene);
     }
+
+    public void PlayTransitionIN(TransitionType transition, Action onComplete = null)
+    {
+        uiManager.PlayTransitionIN(transition, onComplete);
+    }
+
+    public void PlayTransitionOUT(TransitionType transition, Action onComplete = null)
+    {
+        uiManager.PlayTransitionOUT(transition, onComplete);
+    }
+
 }
