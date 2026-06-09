@@ -5,6 +5,6 @@ public class NailClipper : InteractableItem
 {
     public override void OnUse()
     {
-
+        base.OnUse();
     }
 }

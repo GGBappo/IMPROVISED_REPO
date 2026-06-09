@@ -6,39 +6,45 @@ public class WirePart : BombPart
     [SerializeField] Wire[] wires;
     [SerializeField] bool inOrder = false;
     private int current = 0;
+    public int wiresToCut;
 
     //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
-    public override void /*bool*/ OnItemUsed(UsableItem item)
+    public override bool OnItemUsed(string item)
     {
-        if (isLocked) { return /*false*/; }
+        int cw = 0;
 
-        if (isSolved) { return /*false*/; }
+        if (isLocked) { return false; }
+
+        if (isSolved) { return false; }
 
         var hoverOverAnything = false;
         for (int i = 0; i < wires.Length; i++)
         {
-            if (wires[i].mouseHover && !wires[i].isCut)
+            if (wires[i] == BombHoveringManager.hoveredPartOfPart && !wires[i].isCut)
             {
                 hoverOverAnything = true;
+                cw = i; break;
             }
         }
-        if (!hoverOverAnything) { return /*false*/; }
+        if (!hoverOverAnything) { return false; }
         
-        if (!wires[current].mouseHover && inOrder)
+        if ((cw != current && inOrder) || (wires[cw].dontCut) || (!IsCompatibile(item)))
         {
             //Also shouldnt consume Item
+            Debug.Log("Strike");
             StrikeSystem.AddStrike();
-            return /*false*/;
+            return false;
         }
 
-        wires[current].isCut = true;
+        wires[cw].RemoveHighlight();
+        wires[cw].isCut = true;
         current++;
 
-        if (current >= wires.Length)
+        if (current >= wiresToCut)
         {
             Solve();
         }
-        return /*true*/;
+        return true;
     }
 
     protected override void Solve()
