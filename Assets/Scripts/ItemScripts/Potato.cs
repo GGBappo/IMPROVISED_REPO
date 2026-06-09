@@ -5,6 +5,6 @@ public class Potato : InteractableItem
 {
     public override void OnUse()
     {
-
+        base.OnUse();
     }
 }

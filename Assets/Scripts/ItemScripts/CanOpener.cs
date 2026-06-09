@@ -5,6 +5,6 @@ public class CanOpener : InteractableItem
 {
     public override void OnUse()
     {
-
+        base.OnUse();
     }
 }
