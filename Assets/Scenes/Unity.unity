@@ -953,6 +953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BudgetManager
   startingBudget: 45
+  currentMoney: 0
 --- !u!1 &960639178
 GameObject:
   m_ObjectHideFlags: 0
