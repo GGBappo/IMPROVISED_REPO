@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Potato
   m_EditorClassIdentifier: Assembly-CSharp::Item_SO
   itemSprite: {fileID: 0}
-  prefab: {fileID: 5391650230976927253, guid: 2032dd8c1096be64894657fc1689b816, type: 3}
+  prefab: {fileID: -2952815541480023075, guid: 2032dd8c1096be64894657fc1689b816, type: 3}
   itemName: Potato
   cost: 20
   sellValue: 15
@@ -23,6 +23,6 @@ MonoBehaviour:
   - Energy supply
   isSingleUse: 0
   hoverHeight: 1.432
-  hoverRot: {x: 0, y: 0, z: 0, w: 0}
+  hoverRot: 1.757
   dragHeight: 1.757
-  dragRot: {x: 0, y: 0, z: 0, w: 0}
+  dragRot: 0

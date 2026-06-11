@@ -44,7 +44,7 @@ public class ItemShopPanel : MonoBehaviour
 
     public void OnItemBought(Item_SO item)
     {        
-        if(purchasedItems.Count >= 5 || boughtItems[item.itemName].Value)
+        if(purchasedItems.Count >= 5 || boughtItems[item.itemName])
         {
             Debug.LogWarning("Cant buy this item");
             return;
@@ -77,7 +77,7 @@ public class ItemShopPanel : MonoBehaviour
                         //if it is, it updates the item in the table
                         purchasedItems[spawnPoints[i]] = instItem;
 
-                        boughtItems[item.itemName].Value = true;
+                        boughtItems[item.itemName] = true;
                         break;
                     }
                     else
@@ -100,7 +100,7 @@ public class ItemShopPanel : MonoBehaviour
 
                     Debug.Log($"Item bought: {item.itemName}");
 
-                    boughtItems[item.itemName].Value = true;
+                    boughtItems[item.itemName] = true;
 
                     break;
                 }
@@ -118,7 +118,7 @@ public class ItemShopPanel : MonoBehaviour
             {
                 if (kvp.Value.itemData.itemName == item.itemData.itemName)
                 {
-                    boughtItems[item.itemData.itemName].Value = false;
+                    boughtItems[item.itemData.itemName] = false;
                     purchasedItems[kvp.Key] = null;
                     break;
                 }
