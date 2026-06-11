@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Can Opener
   m_EditorClassIdentifier: Assembly-CSharp::Item_SO
   itemSprite: {fileID: 0}
-  prefab: {fileID: 5391650230976927253, guid: e23fc47cadf31ca4db44c35c38399b91, type: 3}
+  prefab: {fileID: 5391650230976927253, guid: f8399cdd2e4012747a9d90dad8e63e55, type: 3}
   itemName: Can Opener
   cost: 20
   sellValue: 15
@@ -23,6 +23,6 @@ MonoBehaviour:
   - Broken Wire
   isSingleUse: 0
   hoverHeight: 1.432
-  hoverRot: {x: 0, y: 0, z: 0, w: 0}
+  hoverRot: 1.757
   dragHeight: 1.757
-  dragRot: {x: 0, y: 0, z: 0, w: 0}
+  dragRot: 0

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3347701471640808863}
   - component: {fileID: 1430302724363864975}
-  - component: {fileID: 4696715959545304574}
   - component: {fileID: 4531354038653369035}
+  - component: {fileID: 7584784631197688047}
   m_Layer: 0
   m_Name: NailClipper
   m_TagString: Untagged
@@ -62,7 +62,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &4696715959545304574
+--- !u!114 &4531354038653369035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100021005429750579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29aa03c9f328f14fa46ac7f5a4777a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NailClipper
+  itemData: {fileID: 0}
+  spawnPos: {x: 0, y: 0, z: 0}
+--- !u!65 &7584784631197688047
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,22 +95,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.18, y: 0.05, z: 0.15}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4531354038653369035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7100021005429750579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29aa03c9f328f14fa46ac7f5a4777a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NailClipper
-  itemData: {fileID: 0}
-  spawnPos: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.2, y: 0.05, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0.04}
 --- !u!1001 &182008708601310894
 PrefabInstance:
   m_ObjectHideFlags: 0
