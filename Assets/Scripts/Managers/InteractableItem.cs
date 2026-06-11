@@ -103,6 +103,17 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public virtual void OnUse()
     {
+        if (BombHoveringManager.hoveredBombPart != null)
+        {
+            if (BombHoveringManager.hoveredBombPart.OnItemUsed(itemData.itemName))
+            {
+                //Item Used Succesfully
+            }
+            else
+            {
+                //Item Used Unsuccesfully (strike was already added)
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -17,11 +17,14 @@ public class BombManager : MonoBehaviour
 
     public void OnPartSolved(BombPart part)
     {
+        part.isSolved = true;
         solvedParts++;
         if (CheckAllSolved())
         {
             TriggerDefused();
         }
+        else
+            parts[solvedParts].isLocked = false;
     }
 
     public void TriggerExplosion()
@@ -31,6 +34,7 @@ public class BombManager : MonoBehaviour
 
     public void TriggerDefused()
     {
+        Debug.Log("BOMB DEFUSED!");
         //You win!
     }
 
