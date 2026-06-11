@@ -16,6 +16,7 @@ public class ItemShopPanel : MonoBehaviour
     [SerializeField] private BudgetManager budgetManager;
 
     private int currentSpawnPointIndex = 0;
+    private Vector3 deleteedItemPosition;
 
 
     private void Awake()
@@ -55,13 +56,18 @@ public class ItemShopPanel : MonoBehaviour
         }
         else
         {
+            GameObject emptyObject = new GameObject("PlaceHolder");
+
             //Create an instance of the bought item at the current spawn point
             InteractableItem instItem = Instantiate(item.prefab);
             instItem.itemData = item;
-            //instItem.transform.parent = spawnPoints[currentSpawnPointIndex];
+
+            FindOpenSlots();
             instItem.transform.localPosition = spawnPoints[currentSpawnPointIndex].position;
 
-            currentSpawnPointIndex++;
+            emptyObject.transform.SetParent(spawnPoints[currentSpawnPointIndex].transform);
+
+            //currentSpawnPointIndex++;
 
             Debug.Log($"Item bought: {item.itemName}");
         }
@@ -70,5 +76,17 @@ public class ItemShopPanel : MonoBehaviour
     public void FreeSpawnPoint()
     {
         currentSpawnPointIndex--;
+    }
+
+    public void FindOpenSlots()
+    {
+        for(int i = 0; i < spawnPoints.Count; i++)
+        {
+            if(spawnPoints[i].childCount == 0)
+            {
+                currentSpawnPointIndex = i;
+                return;
+            }
+        }
     }
 }

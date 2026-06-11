@@ -20,7 +20,6 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private bool isHovered = false;
     private bool isDragging = false;
 
-
     private void Awake()
     {
         budgetManager = FindObjectOfType<BudgetManager>();
@@ -229,6 +228,7 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void OnRightClick()
     {
         budgetManager.SellItem(itemData);
+
         Destroy(gameObject);
 
         itemShopPanel.FreeSpawnPoint();

@@ -1689,7 +1689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &756015615
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2492,7 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678a5665afe2ecc4b9d5692c01cdc478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BudgetManager
-  startingBudget: 45
+  startingBudget: 100
   currentMoney: 0
 --- !u!1 &931395728
 GameObject:
