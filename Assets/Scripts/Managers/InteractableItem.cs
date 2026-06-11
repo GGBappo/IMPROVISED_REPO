@@ -228,10 +228,9 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void OnRightClick()
     {
         budgetManager.SellItem(itemData);
+        itemShopPanel.FreeSpawnPoint(this);
 
         Destroy(gameObject);
-
-        itemShopPanel.FreeSpawnPoint();
 
         Debug.Log("Sold: " + gameObject.name);
         budgetManager.CurrentMoney();

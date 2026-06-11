@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices.ComTypes;
@@ -13,11 +14,11 @@ public class ItemShopPanel : MonoBehaviour
     public Transform itemsParent; // Parent transform for instantiated item prefabs
 
     [SerializeField] private List<Transform> spawnPoints;
+    //creates a table to keep track of the items that have been bought and their corresponding spawn points
+    //Transform is the key, Item is the Value
+    [SerializeField] private Dictionary<Transform, InteractableItem> purchasedItems = new Dictionary<Transform, InteractableItem>();
+    [SerializeField] private Dictionary<string, bool> boughtItems = new Dictionary<string, bool>();
     [SerializeField] private BudgetManager budgetManager;
-
-    private int currentSpawnPointIndex = 0;
-    private Vector3 deleteedItemPosition;
-
 
     private void Awake()
     {
@@ -35,15 +36,17 @@ public class ItemShopPanel : MonoBehaviour
             {
                 //sends values of the items and it self to the itemGO script to be used for displaying and buying items
                 itemGO.SetValues(item, this);
+
+                boughtItems.Add(item.itemName, false);
             }
         }
     }
 
     public void OnItemBought(Item_SO item)
     {        
-        if(currentSpawnPointIndex >= spawnPoints.Count)
+        if(purchasedItems.Count >= 5 || boughtItems[item.itemName].Value)
         {
-            Debug.LogWarning("No more spawn points available for bought items.");
+            Debug.LogWarning("Cant buy this item");
             return;
         }
 
@@ -56,37 +59,69 @@ public class ItemShopPanel : MonoBehaviour
         }
         else
         {
-            GameObject emptyObject = new GameObject("PlaceHolder");
-
-            //Create an instance of the bought item at the current spawn point
-            InteractableItem instItem = Instantiate(item.prefab);
-            instItem.itemData = item;
-
-            FindOpenSlots();
-            instItem.transform.localPosition = spawnPoints[currentSpawnPointIndex].position;
-
-            emptyObject.transform.SetParent(spawnPoints[currentSpawnPointIndex].transform);
-
-            //currentSpawnPointIndex++;
-
-            Debug.Log($"Item bought: {item.itemName}");
-        }
-    }
-
-    public void FreeSpawnPoint()
-    {
-        currentSpawnPointIndex--;
-    }
-
-    public void FindOpenSlots()
-    {
-        for(int i = 0; i < spawnPoints.Count; i++)
-        {
-            if(spawnPoints[i].childCount == 0)
+            //This does this for each spawn point,
+            //but it only updates the table for the current spawn point index, so it is not really a problem
+            for (int i = 0; i < spawnPoints.Count; i++)
             {
-                currentSpawnPointIndex = i;
-                return;
+                //Checks if its occupied
+                if (purchasedItems.ContainsKey(spawnPoints[i]))
+                {
+                    //checks if there is a item in the spawn point
+                    if (purchasedItems[spawnPoints[i]] == null)
+                    {
+                        //Create an instance of the bought item at the current spawn point
+                        InteractableItem instItem = Instantiate(item.prefab, spawnPoints[i].position, Quaternion.identity, spawnPoints[i].transform);
+                        //sets the data of the item
+                        instItem.itemData = item;
+
+                        //if it is, it updates the item in the table
+                        purchasedItems[spawnPoints[i]] = instItem;
+
+                        boughtItems[item.itemName].Value = true;
+                        break;
+                    }
+                    else
+                    {
+                        //makes the for loop continue to the next check
+                        continue;
+                    }
+                }
+                //not occupied add item
+                else
+                {
+                    //Create an instance of the bought item at the current spawn point
+                    InteractableItem instItem = Instantiate(item.prefab, spawnPoints[i].position, Quaternion.identity, spawnPoints[i].transform);
+
+                    //sets the data of the item
+                    instItem.itemData = item;
+
+                    //if it is not, it adds the item to the table with its corresponding spawn point
+                    purchasedItems.Add(spawnPoints[i], instItem);
+
+                    Debug.Log($"Item bought: {item.itemName}");
+
+                    boughtItems[item.itemName].Value = true;
+
+                    break;
+                }
             }
         }
+    }
+
+    public void FreeSpawnPoint(InteractableItem item)
+    {
+        //ContainsValue is used to check if the item is in the table,
+        //if it is, it finds the corresponding spawn point and sets it to null
+
+            //find the spawn point that corresponds to the item and set it to null
+            foreach (var kvp in purchasedItems)
+            {
+                if (kvp.Value.itemData.itemName == item.itemData.itemName)
+                {
+                    boughtItems[item.itemData.itemName].Value = false;
+                    purchasedItems[kvp.Key] = null;
+                    break;
+                }
+            }
     }
 }
