@@ -1,80 +1,106 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Simple bomb countdown timer.
-/// - Displays remaining time in mm:ss on a TextMeshProUGUI.
-/// - Can be started, stopped, reset and seeded with a time value.
-/// - Updates UI every frame while running.
+/// Simple bomb countdown timer with an exponential strike penalty system.
+/// - Call <see cref="RegisterStrike"/> when a wrong mistake occurs; each strike removes time.
+/// - Penalty increases per strike (exponential growth by default).
+/// - Raises optional events when a strike occurs or when the timer expires.
 /// </summary>
 public class BombTimer : MonoBehaviour
 {
-    // Reference to the TextMeshPro UI element where the timer is shown.
-    // Assign this in the Inspector by dragging your TMP text object.
-    [SerializeField] private TextMeshProUGUI bombTimer;
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI bombTimer; // TMP field to show mm:ss
 
-    // Initial time (serialized for easy tuning in Inspector) in seconds.
-    [SerializeField] private int timeSeconds;
-
-    // If true the timer will start automatically during Awake.
+    [Header("Timer")]
+    [SerializeField] private int timeSeconds = 60; // initial time (seconds)
     [SerializeField] private bool startOnAwake;
 
-    // Internal remaining time in seconds (float so we can decrement by Time.deltaTime).
-    private float remaining;
+    [Header("Strike / Penalty")]
+    [SerializeField] private float baseStrikePenaltySeconds = 5f; // penalty for first strike (seconds)
+    [SerializeField] private float strikePenaltyMultiplier = 1.5f; // multiplier per subsequent strike (exponential)
 
-    // Whether the timer is currently counting down.
+    // Current runtime state
+    private float remaining; // remaining time in seconds (float for smooth decrement)
     private bool running;
+    private int strikeCount;
+
+    // Events: subscribe to react to strikes or timer expiry
+    public event Action<int, float> OnStrikeOccurred; // (strikeCount, penaltyApplied)
+    public event Action OnTimerExpired;
 
     private void Awake()
     {
-        // Ensure remaining is non-negative and initialized to the serialized value.
+        // initialize remaining time and optionally start
         remaining = Mathf.Max(0, timeSeconds);
-
-        // Optionally start the timer immediately on Awake.
+        strikeCount = 0;
         if (startOnAwake) StartTimer();
-
-        // Make sure the UI shows the current value even if not running.
         UpdateTimerText();
     }
 
     private void Update()
     {
-        // Only decrement time if the timer is running.
         if (!running) return;
 
+        // decrement timer while running
         if (remaining > 0f)
         {
-            // Subtract elapsed frame time.
             remaining -= Time.deltaTime;
 
-            // When we hit zero stop and clamp.
             if (remaining <= 0f)
             {
+                // clamp, stop, and notify
                 remaining = 0f;
                 running = false;
-
-                // TODO: add hook/event here to notify other systems the bomb exploded or timer expired.
+                OnTimerExpired?.Invoke();
             }
 
-            // Update the displayed text each frame while counting down.
             UpdateTimerText();
         }
     }
 
     /// <summary>
-    /// Set the timer value (in seconds) and immediately update the display.
-    /// This does not start the countdown unless you call StartTimer().
+    /// Registers a strike (wrong mistake). This removes time from the remaining timer.
+    /// Penalty applied = baseStrikePenaltySeconds * (strikePenaltyMultiplier ^ (strikeCount-1)).
+    /// </summary>
+    public void RegisterStrike()
+    {
+        if (remaining <= 0f) return; // nothing to do if timer already finished
+
+        // increment strike count and compute exponential penalty
+        strikeCount = Mathf.Max(0, strikeCount) + 1;
+        float penalty = baseStrikePenaltySeconds * Mathf.Pow(strikePenaltyMultiplier, strikeCount - 1);
+
+        // subtract penalty from remaining time
+        remaining = Mathf.Max(0f, remaining - penalty);
+
+        // notify listeners about the strike and update UI
+        OnStrikeOccurred?.Invoke(strikeCount, penalty);
+        UpdateTimerText();
+
+        // if time is up after penalty, trigger expiry
+        if (remaining <= 0f)
+        {
+            remaining = 0f;
+            running = false;
+            OnTimerExpired?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Set the timer value in seconds (does not start by itself).
     /// </summary>
     public void SetTime(int seconds)
     {
         timeSeconds = Mathf.Max(0, seconds);
         remaining = timeSeconds;
+        strikeCount = 0;
         UpdateTimerText();
     }
 
     /// <summary>
-    /// Start counting down from the current remaining time.
-    /// If remaining is zero, it will be reinitialized from the serialized timeSeconds.
+    /// Start or resume the timer.
     /// </summary>
     public void StartTimer()
     {
@@ -84,7 +110,7 @@ public class BombTimer : MonoBehaviour
     }
 
     /// <summary>
-    /// Stop/pause the countdown. Current remaining time is preserved.
+    /// Stop/pause the timer.
     /// </summary>
     public void StopTimer()
     {
@@ -93,18 +119,18 @@ public class BombTimer : MonoBehaviour
     }
 
     /// <summary>
-    /// Reset the remaining time to the serialized initial value and stop the timer.
+    /// Reset the timer to the serialized initial value and clear strikes.
     /// </summary>
     public void ResetTimer()
     {
         running = false;
+        strikeCount = 0;
         remaining = Mathf.Max(0, timeSeconds);
         UpdateTimerText();
     }
 
     /// <summary>
-    /// Formats remaining time as mm:ss and writes it to the assigned TMP text.
-    /// Uses Ceil so UI shows '00:01' until the last frame transitions to zero.
+    /// Formats remaining time as mm:ss and writes to the assigned TMP text.
     /// </summary>
     private void UpdateTimerText()
     {
@@ -114,21 +140,21 @@ public class BombTimer : MonoBehaviour
             return;
         }
 
-        // Convert remaining float to whole seconds (ceiling so UI doesn't drop prematurely).
-        int secs = Mathf.CeilToInt(remaining);
+        int secs = Mathf.CeilToInt(remaining); // ceil so 1.9s still shows as 02 until the last frame
         int minutes = secs / 60;
         int seconds = secs % 60;
-
-        // Format with leading zeros: "MM:SS"
         bombTimer.text = $"{minutes:00}:{seconds:00}";
     }
 
 #if UNITY_EDITOR
-    // Called in the Editor when a serialized field changes in the Inspector.
-    // Keeps the displayed text in sync with edited values while not playing.
     private void OnValidate()
     {
+        // Keep sane serialized values and keep UI updated in editor
+        baseStrikePenaltySeconds = Mathf.Max(0f, baseStrikePenaltySeconds);
+        strikePenaltyMultiplier = Mathf.Max(1f, strikePenaltyMultiplier);
+        timeSeconds = Mathf.Max(0, timeSeconds);
         remaining = Mathf.Max(0, timeSeconds);
+
         if (!Application.isPlaying) UpdateTimerText();
     }
 #endif
