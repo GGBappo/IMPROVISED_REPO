@@ -23,8 +23,6 @@ public class BombManager : MonoBehaviour
         {
             TriggerDefused();
         }
-        else
-            parts[solvedParts].isLocked = false;
     }
 
     public void TriggerExplosion()
