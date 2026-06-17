@@ -1,16 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public abstract class BombPart : MonoBehaviour
 {
+    [Space(10)]
+    [Header("Base")]
+    [SerializeField] protected BombManager bomb;
     public string[] compatibileItems;
     public string partName;
-    public bool isSolved;
-    public bool isLocked;
     public string hint;
+    public bool isSolved;
+    [Space(10)]
+    [Header("Locks")]
+    public BombPart[] toUnlockParts;
+    public bool isLocked;
+    [SerializeField] private Animator lockAnim;
     //public ItemType[] compatibileItems;
+    [Space(10)]
+    [Header("Highlights")]
     public bool isHighlighted;
-    [SerializeField] protected BombManager bomb;
     [SerializeField] protected bool highlightable;
     //Tmp
     public GameObject highlight;
@@ -47,5 +56,32 @@ public abstract class BombPart : MonoBehaviour
             }
         }
         return false;
+    }
+
+    //Most parts need to call base.Update() when is overriden
+    protected virtual void Update()
+    {
+        int x = 0;
+        for (int i = 0; i < toUnlockParts.Length; i++)
+        {
+            if (toUnlockParts[i].isSolved)
+            {
+                x++;
+            }
+        }
+        if (x >= toUnlockParts.Length)
+        {
+            isLocked = false;
+        }
+        else
+        {
+            isLocked = true;
+        }
+
+        if (lockAnim != null)
+        {
+            lockAnim.SetBool("IsLocked", !isLocked);
+        }
+
     }
 }
