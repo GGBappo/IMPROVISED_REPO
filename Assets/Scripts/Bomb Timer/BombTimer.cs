@@ -26,10 +26,6 @@ public class BombTimer : MonoBehaviour
     private bool running;
     private int strikeCount;
 
-    // Events: subscribe to react to strikes or timer expiry
-    public event Action<int, float> OnStrikeOccurred; // (strikeCount, penaltyApplied)
-    public event Action OnTimerExpired;
-
     private void Awake()
     {
         // initialize remaining time and optionally start
@@ -53,7 +49,7 @@ public class BombTimer : MonoBehaviour
                 // clamp, stop, and notify
                 remaining = 0f;
                 running = false;
-                OnTimerExpired?.Invoke();
+                GameEvents.TimerExpired();
             }
 
             UpdateTimerText();
@@ -76,7 +72,7 @@ public class BombTimer : MonoBehaviour
         remaining = Mathf.Max(0f, remaining - penalty);
 
         // notify listeners about the strike and update UI
-        OnStrikeOccurred?.Invoke(strikeCount, penalty);
+        GameEvents.StrikeOccurred(strikeCount, penalty);
         UpdateTimerText();
 
         // if time is up after penalty, trigger expiry
@@ -84,7 +80,7 @@ public class BombTimer : MonoBehaviour
         {
             remaining = 0f;
             running = false;
-            OnTimerExpired?.Invoke();
+            GameEvents.TimerExpired();
         }
     }
 

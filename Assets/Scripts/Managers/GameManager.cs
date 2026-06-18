@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,35 +19,12 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    private GameStateManager gameStateManager;
-    private BombManager bombManager;
-    private BudgetManager budgetManager;
-    private LevelManager levelManager;
-    private ProgressionSystem progressionSystem;
-    private TaskSystem taskSystem;
-    private TimerManager timerManager;
-    private UIManager uiManager;
-    private StoryManager storyManager;
 
-    // once i get to work on the LevelManager
-    // and the architecture begins to become clearer
-    // i think these functions will get removed
-    void StartNextLevel()
+    private void OnEnable() => GameEvents.OnTimerExpired += HandleGameOver;
+    private void OnDisable() => GameEvents.OnTimerExpired -= HandleGameOver;
+    
+    private void HandleGameOver()
     {
-    }
-
-    void OnLevelComplete()
-    {
-        
-    }
-
-    void OnLevelFinished()
-    {
-        
-    }
-
-    private void Initalize()
-    {
-        
+        Debug.Log("timer expired, game over");
     }
 }
