@@ -7,16 +7,20 @@ public class SceneOperator : MonoBehaviour
     // i still need to use these pls dont abuse me for this :(
     private Scene _activeScene;
     private Scene _currentScene; // different from actiive scene, as this is the scene we want to load, but it may not be active yet
-    
+
+    private void OnEnable() {GameEvents.OnRequestSceneLoad += Load; GameEvents.OnRequestSceneUnLoad += Unload;}
+    private void OnDisable() {GameEvents.OnRequestSceneLoad -= Load; GameEvents.OnRequestSceneUnLoad -= Unload;}
+
+
     /// <summary>
     /// Loads a scene additively with an optional transition and sets it as the active scene if specified.
     /// </summary>
     /// <param name="sceneName"></param>
     /// <param name="transition"></param>
     /// <param name="setActive"></param>
-    public void Load(string sceneName, TransitionType transition = TransitionType.None, bool setActive = true)
+    private void Load(string sceneName, TransitionType transition = TransitionType.None)
     {
-        StartCoroutine(LoadCoroutine(sceneName, transition, setActive));
+        StartCoroutine(LoadCoroutine(sceneName, transition));
     }
     
     /// <summary>
@@ -28,7 +32,7 @@ public class SceneOperator : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
     
-    private IEnumerator LoadCoroutine(string sceneName, TransitionType transition, bool setActive)
+    private IEnumerator LoadCoroutine(string sceneName, TransitionType transition)
     {
         if (transition == TransitionType.None)
         {
@@ -39,18 +43,11 @@ public class SceneOperator : MonoBehaviour
                 yield return null;
             }
             Debug.Log("Scene loaded: " + sceneName);
-            if (setActive)
-            {
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-                Debug.Log("Current Active Scene: " + SceneManager.GetActiveScene().name);
-            }
         }
         else
         {
-            bool transitionComplete = false;
-            GameEvents.RequestTransition(transition, () => { transitionComplete = true; });
+            GameEvents.RequestTransitionIN(transition);
 
-            yield return new WaitUntil(() => transitionComplete);
 
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             while (!operation.isDone)
@@ -58,6 +55,8 @@ public class SceneOperator : MonoBehaviour
                 Debug.Log("Loading progress: " + operation.progress + " for scene: " + sceneName);
                 yield return null;
             }
+            Debug.Log("Scene loaded: " + sceneName);
+            GameEvents.RequestTransitionOUT(transition);
         }
         
     }
