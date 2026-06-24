@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     private BudgetManager budgetManager;
     private LevelManager levelManager;
     private ProgressionSystem progressionSystem;
-    private TaskSystem taskSystem;
     private TimerManager timerManager;
     private UIManager uiManager;
     private StoryManager storyManager;

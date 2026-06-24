@@ -5,9 +5,16 @@ public class WirePart : BombPart
 {
     [SerializeField] Wire[] wires;
     [SerializeField] bool inOrder = false;
+    [SerializeField] private BombTimer timer;
+    [SerializeField] private Tasks taskSystem;
+
     private int current = 0;
     public int wiresToCut;
 
+    private void Awake()
+    {
+   
+    }
     //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
     public override bool OnItemUsed(string item)
     {
@@ -31,8 +38,7 @@ public class WirePart : BombPart
         if ((cw != current && inOrder) || (wires[cw].dontCut) || (!IsCompatibile(item)))
         {
             //Also shouldnt consume Item
-            Debug.Log("Strike");
-            StrikeSystem.AddStrike();
+            OnWrongItem();
             return false;
         }
 
@@ -69,6 +75,6 @@ public class WirePart : BombPart
 
     protected override void OnWrongItem()
     {
-        StrikeSystem.AddStrike();
+        timer.RegisterStrike();
     }
 }
