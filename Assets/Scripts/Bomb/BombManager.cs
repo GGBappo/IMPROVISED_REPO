@@ -9,6 +9,7 @@ public class BombManager : MonoBehaviour
     public BombPart[] parts;
     public int totalParts;
     public int solvedParts;
+    public BombPart core;
 
     public void InitializeBomb(GameObject prefab)
     {
@@ -21,7 +22,8 @@ public class BombManager : MonoBehaviour
         solvedParts++;
         if (CheckAllSolved())
         {
-            TriggerDefused();
+            core.Open();
+            //TriggerDefused();
         }
     }
 

@@ -21,9 +21,25 @@ public class PanelPart : BombPart
 
     protected override void Solve()
     {
-        bomb.OnPartSolved(this);
-        //some animation of destroying before deleting
-        Destroy(gameObject);
+        if (isSolved)
+        {
+            return;
+        }
+
+        if (sSolver != null)
+        {
+            sSolver.Solve();
+        }
+        if (countsToBomb)
+        {
+            bomb.OnPartSolved(this);
+        }
+        else
+        {
+            isSolved = true;
+        }
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     protected override void OnWrongItem()
