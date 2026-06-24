@@ -49,7 +49,22 @@ public class WirePart : BombPart
 
     protected override void Solve()
     {
-        bomb.OnPartSolved(this);
+        if (isSolved)
+        {
+            return;
+        }
+
+        if (sSolver != null)
+        {
+            sSolver.Solve();
+        }
+        if (countsToBomb)
+        {
+            bomb.OnPartSolved(this);
+        }else
+        {
+            isSolved = true;
+        }
     }
 
     protected override void OnWrongItem()
