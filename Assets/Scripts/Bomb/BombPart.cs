@@ -11,11 +11,14 @@ public abstract class BombPart : MonoBehaviour
     public string partName;
     public string hint;
     public bool isSolved;
+    public bool dontNeedTool;
+    public bool countsToBomb;
+    public SpecialSolve sSolver;
     [Space(10)]
     [Header("Locks")]
     public BombPart[] toUnlockParts;
     public bool isLocked;
-    [SerializeField] private Animator lockAnim;
+    [SerializeField] protected Animator lockAnim;
     //public ItemType[] compatibileItems;
     [Space(10)]
     [Header("Highlights")]
@@ -80,8 +83,16 @@ public abstract class BombPart : MonoBehaviour
 
         if (lockAnim != null)
         {
-            lockAnim.SetBool("IsLocked", !isLocked);
+            lockAnim.SetBool("IsLocked", isLocked);
         }
+    }
+    public virtual void SpecialSolve(int id)
+    {
 
+    }
+
+    public virtual void Open()
+    {
+        //Special Unlock
     }
 }
