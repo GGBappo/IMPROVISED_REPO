@@ -116,6 +116,8 @@ public class ItemShopPanel : MonoBehaviour
             //find the spawn point that corresponds to the item and set it to null
             foreach (var kvp in purchasedItems)
             {
+                if (kvp.Value == null) continue;
+
                 if (kvp.Value.itemData.itemName == item.itemData.itemName)
                 {
                     boughtItems[item.itemData.itemName] = false;
