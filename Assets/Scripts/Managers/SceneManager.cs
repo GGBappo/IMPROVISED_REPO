@@ -18,7 +18,7 @@ public class SceneOperator : MonoBehaviour
     /// <param name="sceneName"></param>
     /// <param name="transition"></param>
     /// <param name="setActive"></param>
-    private void Load(string sceneName, TransitionType transition = TransitionType.None)
+    private void Load(string sceneName, TransitionType transition = TransitionType.None, bool setActive = true)
     {
         StartCoroutine(LoadCoroutine(sceneName, transition));
     }

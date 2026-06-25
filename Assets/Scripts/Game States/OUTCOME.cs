@@ -4,7 +4,7 @@ public class OUTCOME : IGameState
 {
     public void EnterState()
     {
-        Debug.Log("[GAME STATE] entered OUTCOME state.");
+        
     }
 
     public void UpdateState()

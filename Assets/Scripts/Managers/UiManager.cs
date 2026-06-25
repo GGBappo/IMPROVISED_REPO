@@ -19,8 +19,19 @@ public class UIManager : MonoBehaviour
         _transitions.Add(TransitionType.Fade, new Fade());
     }
 
-    private void OnEnable() {GameEvents.OnTransitionINRequested += HandleTransitionIn; GameEvents.OnTransitionOUTRequested += HandleTransitionOut;}
-    private void OnDisable() {GameEvents.OnTransitionINRequested -= HandleTransitionIn; GameEvents.OnTransitionOUTRequested -= HandleTransitionOut;}
+    private void OnEnable() {
+        GameEvents.OnTransitionINRequested += HandleTransitionIn; 
+        GameEvents.OnTransitionOUTRequested += HandleTransitionOut;
+        GameEvents.OnShowGameOverRequested += ShowGameOverScreen;
+        GameEvents.OnHideGameOverRequested += HideGameOverScreen;
+    }
+
+    private void OnDisable() {
+        GameEvents.OnTransitionINRequested -= HandleTransitionIn; 
+        GameEvents.OnTransitionOUTRequested -= HandleTransitionOut;
+        GameEvents.OnShowGameOverRequested -= ShowGameOverScreen;
+        GameEvents.OnHideGameOverRequested -= HideGameOverScreen;
+    }
 
     private void HandleTransitionIn(TransitionType type, Action onComplete)
     {
@@ -32,5 +43,21 @@ public class UIManager : MonoBehaviour
     {
         if (_transitions.TryGetValue(type, out ITransition activeTransition))
             activeTransition.TransitionOUT(_loadingScreen, _globalTransitionSpeed, onComplete);
+    }
+
+    private void ShowGameOverScreen()
+    {
+        _gameOverScreen.alpha = 1f;
+        _gameOverScreen.interactable = true;
+        _gameOverScreen.blocksRaycasts = true;
+        Debug.Log("[UIManager] Showing Game Over Screen");
+    }
+
+    private void HideGameOverScreen()
+    {
+        _gameOverScreen.alpha = 0f;
+        _gameOverScreen.interactable = false;
+        _gameOverScreen.blocksRaycasts = false;
+        Debug.Log("[UIManager] Hiding Game Over Screen");
     }
 }

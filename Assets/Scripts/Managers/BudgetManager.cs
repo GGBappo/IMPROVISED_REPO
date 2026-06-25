@@ -4,9 +4,8 @@ public class BudgetManager : MonoBehaviour
 {
     [SerializeField] private float startingBudget = 45f;
 
-    [SerializeField] private float currentMoney;
+    [SerializeField] private float currentMoney; // unlike starting budget, this money fluctuates within the level as the player buys and sells items
     private Inventory inventory;
-
     public void Awake()
     {
         currentMoney = startingBudget;

@@ -4,14 +4,14 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     [Header("Level Info")]
-    [Tooltip("The index of the level. This is used not only to determine the level's position in the level select menu, but also to determine which level is unlocked when the player completes a level.")]
+    [Tooltip("The index of the level. This is used not only to determine the level's position in the level select menu and story events, but also to determine which level is unlocked when the player completes a level.")]
     public int levelIndex;
 
-    [Tooltip("The name of the level.")]
+    [Tooltip("The screen name of the level. This is what will be displayed on the level select menu.")]
     public string levelName;
 
-    [Tooltip("The location/PATH of the level.")]
-    public string levelLocation;
+    [Tooltip("Drag the physical scene file here in order for the scene manager to load the level. This pulls the level's name in order to load. See the SceneOperator for more information.")]
+    public SceneReference sceneToLoad;
 
     [Tooltip("The starting budget for the level.")]
     public int startingBudget;
@@ -24,12 +24,7 @@ public class LevelData : ScriptableObject
     public float timerSeconds;
 
     [Tooltip("Whether the bomb is a dud or not. If checked, the level will NOT have a bomb defusal, and will instead be a narrative cutscene.")]
-    public bool isDud;
-
-    public enum Difficulty{Easy, Medium, Hard}
-    [Header("Difficulty")]
-    [Tooltip("The difficulty of the level. This will be used to determine a few other factors, most notably time and budget.")]
-    public Difficulty difficulty;
+    public bool isDud;    
 
     [Header("Story Events")]
     [Tooltip("The story events for the level.")]
