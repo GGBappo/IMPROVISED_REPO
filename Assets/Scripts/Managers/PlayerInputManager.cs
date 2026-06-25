@@ -17,6 +17,11 @@ public class PlayerInputManager : MonoBehaviour
     private InventorySlot heldSlot;
     private BombPart hoveredPart;
 
+    private GlobalStateType _currentGameState;
+
+    private void OnEnable() => GameEvents.OnGlobalStateChanged += UpdateLocalState;
+    private void OnDisable() => GameEvents.OnGlobalStateChanged -= UpdateLocalState;
+
     private void Update()
     {
         if (isHoldingItem)
@@ -36,8 +41,23 @@ public class PlayerInputManager : MonoBehaviour
                 TryUseOnPart();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_currentGameState == GlobalStateType.Menu)
+            {
+                GameEvents.StateChanged(GlobalStateType.Active);
+            }
+            else
+            {
+                GameEvents.StateChanged(GlobalStateType.Menu);
+            }
+        }
     }
 
+    private void UpdateLocalState(GlobalStateType newState)
+    {
+        _currentGameState = newState;
+    }
     // Item icon follows mouse cursor
     private void MoveItemWithCursor()
     {

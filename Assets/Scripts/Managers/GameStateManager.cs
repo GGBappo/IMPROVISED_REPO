@@ -2,30 +2,50 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
-    public MENU menuState = new MENU();
-    public ACTIVE activeState = new ACTIVE();
-    public HUB hubState = new HUB();
-    public OUTCOME outcomeState = new OUTCOME();
+    // these are the four main global states of the game
+    // these classes should only be accessed by the GameStateManager
+    // changing states is done through changing the enum GlobalStateType
+    private readonly MENU menuState = new MENU();
+    private readonly ACTIVE activeState = new ACTIVE();
+    private readonly HUB hubState = new HUB();
+    private readonly OUTCOME outcomeState = new OUTCOME();
 
     private IGameState currentState;
-    private bool isReady = false;
-    
-    void Setup()
+
+    // subscribe to events
+    private void OnEnable() => GameEvents.OnGlobalStateChanged += SwitchState;
+    private void OnDisable() => GameEvents.OnGlobalStateChanged -= SwitchState;
+
+    void Start()
     {
-        ChangeState(menuState);
-        isReady = true;
+        // start the game in the menu state
+        // this is assuming we're saying the title screen
+        // also counts as a global state.
+        SwitchState(GlobalStateType.Menu);
     }
 
     void Update()
     {
-        if (!isReady) return;
-        currentState?.UpdateState(this); 
+        // update the current state every frame
+        currentState?.UpdateState();
     }
 
-    public void ChangeState(IGameState newState)
+    /// <summary>
+    /// Switches the current game state to the specified target state.
+    /// </summary>
+    /// <param name="targetState"></param>
+    private void SwitchState(GlobalStateType targetState)
     {
-        currentState?.ExitState(this); 
-        currentState = newState;
-        currentState?.EnterState(this); 
+        currentState?.ExitState(); 
+
+        switch (targetState)
+        {
+            case GlobalStateType.Menu: currentState = menuState; break;
+            case GlobalStateType.Active: currentState = activeState; break;
+            case GlobalStateType.Hub: currentState = hubState; break;
+            case GlobalStateType.Outcome: currentState = outcomeState; break;
+        }
+
+        currentState?.EnterState(); 
     }
 }

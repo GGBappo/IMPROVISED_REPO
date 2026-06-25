@@ -7,7 +7,6 @@ public class BudgetManager : MonoBehaviour
     [SerializeField] private float currentMoney;
     [SerializeField] private TextMeshProUGUI budgetText;
     private Inventory inventory;
-
     public void Awake()
     {
         currentMoney = startingBudget;

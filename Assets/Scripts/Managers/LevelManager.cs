@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
@@ -6,35 +7,15 @@ public class LevelManager : MonoBehaviour
     public LevelData currentLevel;
     public int currentLevelIndex = 0;
     private bool isReady = false; // for wakeup when getting called by game manager
-    public void Setup()
-    {
-        isReady = true;
-    }
     
-    public void LoadLevel(int index)
-    {
-        if (index < 0 || index >= allLevels.Length)
-        {
-            Debug.LogError("Invalid level index: " + index);
-            return;
-        }
-        currentLevelIndex = index;
-        currentLevel = allLevels[currentLevelIndex];
-    }
-    public void UnlockNextLevel()
-    {
-        
-    }
+    private void OnEnable() {GameEvents.OnRequestLevelReset += LevelReset;}
+    private void OnDisable() {GameEvents.OnRequestLevelReset -= LevelReset;}
 
-    public bool isLevelUnlocked(int index)
+    // okay some of my thought process is cooking something up by splitting strings
+    private void LevelReset(TransitionType transition)
     {
-        return true;
-    }
-
-    /*
-    public LevelData GetLevelData(int index)
-    {
-        
-    }
-    */
+        Debug.Log($"[LevelManager] Resetting level: {currentLevel.levelName} with transition: {transition}");
+        GameEvents.RequestSceneUnLoad(currentLevel.levelLocation);
+        GameEvents.RequestSceneLoad(currentLevel.levelLocation, transition, true);
+    } 
 }
