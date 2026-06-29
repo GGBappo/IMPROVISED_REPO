@@ -23,8 +23,10 @@ public static class GameEvents
     public static event Action<TransitionType, Action> OnTransitionINRequested; 
     public static event Action<TransitionType, Action> OnTransitionOUTRequested; 
 
-    
-    
+    // camera events
+    public static event Action<Vector3, Quaternion, float> OnCameraMoveRequest; // (position, rotation, duration)
+    public static event Action<Vector3, float> OnCameraLookAtRequest; // (targetPosition, duration)
+    public static event Action<GameObject, float> OnCameraLookAtGameObjectRequest; // (targetGameObject, duration)
 
     #region Timer/Strike Calls
     /// <summary>
@@ -149,6 +151,27 @@ public static class GameEvents
     {
         Debug.Log($"[GameEvents] Requesting transition OUT of type: {transition}");
         OnTransitionOUTRequested?.Invoke(transition, onComplete);
+    }
+    #endregion
+
+    #region Camera Calls
+
+    public static void RequestCameraMove(Vector3 position, Quaternion rotation, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera move to position: {position}, rotation: {rotation}, duration: {duration}");
+        OnCameraMoveRequest?.Invoke(position, rotation, duration);
+    }
+
+    public static void RequestCameraLookAt(Vector3 targetPosition, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera to look at position: {targetPosition}, duration: {duration}");
+        OnCameraLookAtRequest?.Invoke(targetPosition, duration);
+    }
+
+    public static void RequestCameraLookAt(GameObject target, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera to look at GameObject: {target.name}, duration: {duration}");
+        OnCameraLookAtGameObjectRequest?.Invoke(target, duration);
     }
     #endregion
 }

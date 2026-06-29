@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class StartScreenManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] 
+    private GameObject _cameraStartPosition;
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameEvents.RequestCameraMove(_cameraStartPosition.transform.position, _cameraStartPosition.transform.rotation, 0f);
     }
 }
