@@ -33,4 +33,7 @@ public class LevelData : ScriptableObject
     [Header("Unlocking")]
     [Tooltip("Whether the level is unlocked. If checked, this means the player is able to access the level at any time.")]
     public bool isUnlocked;
+
+    //Temporary, to fix one error
+    public string levelLocation;
 }

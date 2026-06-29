@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 //such as dragging and dropping, using, and hovering over them.
 public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
+
     public Item_SO itemData;
     public Vector3 spawnPos;
     private Vector3 spawnRot;
@@ -19,6 +20,15 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private bool isHovered = false;
     private bool isDragging = false;
+
+    public virtual ItemActionType ActionType
+    {
+        get
+        {
+            Debug.LogWarning(gameObject.name + " does not override ActionType!");
+            return ItemActionType.Cut;
+        }
+    }
 
     private void Awake()
     {
@@ -104,7 +114,7 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (BombHoveringManager.hoveredBombPart != null)
         {
-            if (BombHoveringManager.hoveredBombPart.OnItemUsed(itemData.itemName))
+            if (BombHoveringManager.hoveredBombPart.OnItemUsed(ActionType))
             {
                 //Item Used Succesfully
             }

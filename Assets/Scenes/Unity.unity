@@ -710,14 +710,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombManager
   currentState: 0
-  isFake: 0
-  parts:
-  - {fileID: 186710252}
-  - {fileID: 1414933569}
-  - {fileID: 347513842}
-  totalParts: 3
-  solvedParts: 0
-  core: {fileID: 1605027381}
+  fragments:
+  - {fileID: 186710257}
+  - {fileID: 1414933573}
+  - {fileID: 1129222143}
+  baseUnlock:
+  - {fileID: 186710257}
+  totalFragments: 3
+  solvedFragments: 0
+  core: {fileID: 1605027386}
 --- !u!1 &186338618
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +764,7 @@ GameObject:
   - component: {fileID: 186710255}
   - component: {fileID: 186710254}
   - component: {fileID: 186710253}
+  - component: {fileID: 186710257}
   - component: {fileID: 186710252}
   m_Layer: 6
   m_Name: PanelPart(CanOpener)
@@ -783,21 +785,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4731b660529fae74796cda6436fdc905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
-  bomb: {fileID: 164691441}
-  compatibileItems:
-  - Can Opener
-  partName: 
-  hint: 
+  fragment: {fileID: 186710257}
+  compatibileItems: 02000000
   isSolved: 0
   dontNeedTool: 0
-  countsToBomb: 1
-  sSolver: {fileID: 0}
-  toUnlockParts: []
-  isLocked: 0
-  lockAnim: {fileID: 5339724242204134455}
+  selfLocked: 0
+  lockAnim: {fileID: 0}
   isHighlighted: 0
   highlightable: 1
   highlight: {fileID: 756015614}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 186710257}
+        m_TargetAssemblyTypeName: BombFragmentManager, Assembly-CSharp
+        m_MethodName: OnPartSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 1
 --- !u!65 &186710253
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -893,6 +911,53 @@ Transform:
   - {fileID: 971176962330766213}
   m_Father: {fileID: 164691436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &186710257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186710251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3013ff5babce64aa575900b10468d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BombFragmentManager
+  bomb: {fileID: 164691441}
+  parts:
+  - {fileID: 186710252}
+  toSolveParts: 1
+  onFragmentSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 164691441}
+        m_TargetAssemblyTypeName: BombManager, Assembly-CSharp
+        m_MethodName: OnFragmentSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1414933573}
+        m_TargetAssemblyTypeName: BombFragmentManager, Assembly-CSharp
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFragmentUlnocked:
+    m_PersistentCalls:
+      m_Calls: []
+  lockAnim: {fileID: 5339724242204134455}
 --- !u!1 &218302104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,22 +1754,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e437a53e7f82fc141a6762b51d609e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonCode
-  bomb: {fileID: 164691441}
-  compatibileItems: []
-  partName: 
-  hint: 
+  fragment: {fileID: 1129222143}
+  compatibileItems: 04000000
   isSolved: 0
   dontNeedTool: 1
-  countsToBomb: 1
-  sSolver: {fileID: 0}
-  toUnlockParts:
-  - {fileID: 186710252}
-  - {fileID: 1414933569}
-  isLocked: 0
-  lockAnim: {fileID: 331571179}
+  selfLocked: 0
+  lockAnim: {fileID: 0}
   isHighlighted: 0
   highlightable: 0
   highlight: {fileID: 0}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1129222143}
+        m_TargetAssemblyTypeName: BombFragmentManager, Assembly-CSharp
+        m_MethodName: OnPartSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 0
   buttons:
   - {fileID: 1507108729}
   - {fileID: 47678434}
@@ -1836,7 +1916,7 @@ MonoBehaviour:
   bombPartMask:
     serializedVersion: 2
     m_Bits: 64
-  partOfPartMask:
+  partElementMask:
     serializedVersion: 2
     m_Bits: 128
 --- !u!1 &359855666
@@ -3356,7 +3436,6 @@ GameObject:
   - component: {fileID: 756366592}
   - component: {fileID: 756366591}
   - component: {fileID: 756366590}
-  - component: {fileID: 756366594}
   m_Layer: 6
   m_Name: WirePart(NailClipper)(Dont Cut Yellow)
   m_TagString: Untagged
@@ -3395,29 +3474,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc619847f9bd5024195d1d08fd5eddbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
-  bomb: {fileID: 164691441}
-  compatibileItems:
-  - Nail Clipper
-  partName: 
-  hint: 
+  fragment: {fileID: 1129222143}
+  compatibileItems: 00000000
   isSolved: 0
   dontNeedTool: 0
-  countsToBomb: 0
-  sSolver: {fileID: 756366594}
-  toUnlockParts:
-  - {fileID: 1920397832}
-  isLocked: 0
+  selfLocked: 1
   lockAnim: {fileID: 532053776}
   isHighlighted: 0
   highlightable: 0
   highlight: {fileID: 0}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 347513842}
+        m_TargetAssemblyTypeName: ButtonCode, Assembly-CSharp
+        m_MethodName: DisableElectricity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 0
   wires:
   - {fileID: 1498325167}
   - {fileID: 581086557}
   - {fileID: 1933720415}
   inOrder: 0
-  timer: {fileID: 0}
-  taskSystem: {fileID: 0}
   wiresToCut: 1
 --- !u!65 &756366591
 BoxCollider:
@@ -3497,21 +3589,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756366588}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &756366594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756366588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2739770e83233e64f803da643d2a71b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpecialSolve
-  thisPart: {fileID: 756366590}
-  toSolvePart: {fileID: 347513842}
-  ssID: 0
 --- !u!1 &757840373
 GameObject:
   m_ObjectHideFlags: 0
@@ -5195,6 +5272,7 @@ GameObject:
   - component: {fileID: 1129222142}
   - component: {fileID: 1129222141}
   - component: {fileID: 1129222140}
+  - component: {fileID: 1129222143}
   m_Layer: 6
   m_Name: MoreComplcatedPartTest
   m_TagString: Untagged
@@ -5300,6 +5378,43 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129222137}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1129222143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129222137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3013ff5babce64aa575900b10468d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BombFragmentManager
+  bomb: {fileID: 164691441}
+  parts:
+  - {fileID: 347513842}
+  - {fileID: 1920397832}
+  - {fileID: 756366590}
+  toSolveParts: 1
+  onFragmentSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 164691441}
+        m_TargetAssemblyTypeName: BombManager, Assembly-CSharp
+        m_MethodName: OnFragmentSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFragmentUlnocked:
+    m_PersistentCalls:
+      m_Calls: []
+  lockAnim: {fileID: 331571179}
 --- !u!1 &1142779893
 GameObject:
   m_ObjectHideFlags: 0
@@ -6903,6 +7018,7 @@ GameObject:
   - component: {fileID: 1414933572}
   - component: {fileID: 1414933571}
   - component: {fileID: 1414933570}
+  - component: {fileID: 1414933573}
   - component: {fileID: 1414933569}
   m_Layer: 6
   m_Name: WirePart(NailClipper)(Dont Cut Yellow)
@@ -6942,29 +7058,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc619847f9bd5024195d1d08fd5eddbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
-  bomb: {fileID: 164691441}
-  compatibileItems:
-  - Nail Clipper
-  partName: 
-  hint: 
+  fragment: {fileID: 1414933573}
+  compatibileItems: 00000000
   isSolved: 0
   dontNeedTool: 0
-  countsToBomb: 1
-  sSolver: {fileID: 0}
-  toUnlockParts:
-  - {fileID: 186710252}
-  isLocked: 1
-  lockAnim: {fileID: 1194821910}
+  selfLocked: 0
+  lockAnim: {fileID: 0}
   isHighlighted: 0
   highlightable: 0
   highlight: {fileID: 0}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1414933573}
+        m_TargetAssemblyTypeName: BombFragmentManager, Assembly-CSharp
+        m_MethodName: OnPartSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 1
   wires:
   - {fileID: 1013325919}
   - {fileID: 359855668}
   - {fileID: 571328815}
   inOrder: 0
-  timer: {fileID: 0}
-  taskSystem: {fileID: 0}
   wiresToCut: 2
 --- !u!65 &1414933570
 BoxCollider:
@@ -7044,6 +7173,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414933567}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1414933573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414933567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3013ff5babce64aa575900b10468d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BombFragmentManager
+  bomb: {fileID: 164691441}
+  parts:
+  - {fileID: 1414933569}
+  toSolveParts: 1
+  onFragmentSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 164691441}
+        m_TargetAssemblyTypeName: BombManager, Assembly-CSharp
+        m_MethodName: OnFragmentSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1129222143}
+        m_TargetAssemblyTypeName: BombFragmentManager, Assembly-CSharp
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFragmentUlnocked:
+    m_PersistentCalls:
+      m_Calls: []
+  lockAnim: {fileID: 1194821910}
 --- !u!1 &1415727060
 GameObject:
   m_ObjectHideFlags: 0
@@ -8123,9 +8299,10 @@ GameObject:
   - component: {fileID: 1605027379}
   - component: {fileID: 1605027384}
   - component: {fileID: 1605027383}
-  - component: {fileID: 1605027381}
   - component: {fileID: 1605027380}
   - component: {fileID: 1605027385}
+  - component: {fileID: 1605027386}
+  - component: {fileID: 1605027381}
   m_Layer: 6
   m_Name: SUPER-CORE-01
   m_TagString: Untagged
@@ -8185,21 +8362,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b0e4f5e7608c04db478a848de88f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestCore01
-  bomb: {fileID: 164691441}
-  compatibileItems:
-  - Rubber Duckie!
-  partName: 
-  hint: 
+  fragment: {fileID: 1605027386}
+  compatibileItems: 01000000
   isSolved: 0
   dontNeedTool: 0
-  countsToBomb: 0
-  sSolver: {fileID: 0}
-  toUnlockParts: []
-  isLocked: 1
-  lockAnim: {fileID: 1106461456}
+  selfLocked: 0
+  lockAnim: {fileID: 0}
   isHighlighted: 0
   highlightable: 1
   highlight: {fileID: 684457981}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1605027386}
+        m_TargetAssemblyTypeName: CoreManager, Assembly-CSharp
+        m_MethodName: OnPartSolved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 0
   anim: {fileID: 1605027380}
   disabledMaterial: {fileID: 2100000, guid: 942bf432f858b0848938fa5a6792e269, type: 2}
   render: {fileID: 150742443}
@@ -8281,6 +8474,42 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.28281692
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1605027386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605027378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 120d183e779ab124bb559478ce0506dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreManager
+  bomb: {fileID: 164691441}
+  parts:
+  - {fileID: 1605027381}
+  toSolveParts: 1
+  onFragmentSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 164691441}
+        m_TargetAssemblyTypeName: BombManager, Assembly-CSharp
+        m_MethodName: TriggerDefused
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFragmentUlnocked:
+    m_PersistentCalls:
+      m_Calls: []
+  lockAnim: {fileID: 1106461456}
+  anim: {fileID: 1605027380}
 --- !u!1 &1613594714
 GameObject:
   m_ObjectHideFlags: 0
@@ -10111,23 +10340,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4731b660529fae74796cda6436fdc905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
-  bomb: {fileID: 164691441}
-  compatibileItems:
-  - Can Opener
-  partName: 
-  hint: 
+  fragment: {fileID: 1129222143}
+  compatibileItems: 02000000
   isSolved: 0
   dontNeedTool: 0
-  countsToBomb: 0
-  sSolver: {fileID: 0}
-  toUnlockParts:
-  - {fileID: 186710252}
-  - {fileID: 1414933569}
-  isLocked: 1
-  lockAnim: {fileID: 715164588}
+  selfLocked: 0
+  lockAnim: {fileID: 0}
   isHighlighted: 0
   highlightable: 1
   highlight: {fileID: 628753276}
+  onPartSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 756366590}
+        m_TargetAssemblyTypeName: WirePart, Assembly-CSharp
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPartUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartWrongItem:
+    m_PersistentCalls:
+      m_Calls: []
+  sendStrikeOnWrongItem: 0
 --- !u!65 &1920397833
 BoxCollider:
   m_ObjectHideFlags: 0
