@@ -14,6 +14,8 @@ public static class GameEvents
     public static event Action<string, TransitionType, bool> OnRequestSceneLoad;
     public static event Action<string> OnRequestSceneUnLoad;
     public static event Action<TransitionType> OnRequestLevelReset;
+    public static event Action OnRequestLevelEnd;
+    public static event Action OnRequestLevelStart;
 
     /// UI events
     public static event Action OnShowGameOverRequested;
@@ -79,6 +81,15 @@ public static class GameEvents
     }
 
     /// <summary>
+    /// Requests the start of the current level. This should be used to notify subscribers that the current level has started and any necessary setup should be performed.
+    /// </summary>
+    public static void RequestLevelStart()
+    {
+        Debug.Log($"[GameEvents] Requesting start of current level");
+        OnRequestLevelStart?.Invoke();
+    }
+
+    /// <summary>
     /// Requests a level reset. This should be used to reset the current level.
     /// </summary>
     /// <param name="transition"></param>
@@ -86,6 +97,16 @@ public static class GameEvents
     {
         Debug.Log($"[GameEvents] Requesting reset of current level with transition: {transition}");
         OnRequestLevelReset?.Invoke(transition);
+    }
+
+    /// <summary>
+    /// Requests the end of the current level. This should be used to notify subscribers that the current level has ended and any necessary cleanup should be performed.
+    /// <br>Note:</br> "End" here means after the level has been completed no matter the outcome. It is to quite literally END the level, meaning unload.
+    /// </summary>
+    public static void RequestEndLevel()
+    {
+        Debug.Log($"[GameEvents] Requesting end of current level");
+        OnRequestLevelEnd?.Invoke();
     }
 
     #endregion

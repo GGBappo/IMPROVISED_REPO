@@ -2253,7 +2253,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:05
+  m_text: 00:03
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4728,7 +4728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombTimer
   bombTimer: {fileID: 493476976}
-  timeSeconds: 5
+  timeSeconds: 3
   startOnAwake: 1
   baseStrikePenaltySeconds: 5
   strikePenaltyMultiplier: 1.5

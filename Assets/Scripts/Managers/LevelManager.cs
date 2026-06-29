@@ -6,16 +6,29 @@ public class LevelManager : MonoBehaviour
     public LevelData[] allLevels;
     public LevelData currentLevel;
     public int currentLevelIndex = 0;
-    private bool isReady = false; // for wakeup when getting called by game manager
     
-    private void OnEnable() {GameEvents.OnRequestLevelReset += LevelReset;}
-    private void OnDisable() {GameEvents.OnRequestLevelReset -= LevelReset;}
+    private void OnEnable() {GameEvents.OnRequestLevelStart += StartLevel; GameEvents.OnRequestLevelReset += LevelReset; GameEvents.OnRequestLevelEnd += EndLevel;}
+    private void OnDisable() {GameEvents.OnRequestLevelStart -= StartLevel; GameEvents.OnRequestLevelReset -= LevelReset; GameEvents.OnRequestLevelEnd -= EndLevel;}
 
-    // okay some of my thought process is cooking something up by splitting strings
+    private void StartLevel()
+    {
+        currentLevel = allLevels[currentLevelIndex];
+    }
+
     private void LevelReset(TransitionType transition)
     {
-        Debug.Log($"[LevelManager] Resetting level: {currentLevel.levelName} with transition: {transition}");
-        GameEvents.RequestSceneUnLoad(currentLevel.levelLocation);
-        GameEvents.RequestSceneLoad(currentLevel.levelLocation, transition, true);
+        string sceneName = currentLevel.sceneToLoad.SceneName;
+        GameEvents.RequestSceneUnLoad(sceneName);
+        GameEvents.RequestSceneLoad(sceneName, TransitionType.Fade);
+        GameEvents.StateChanged(GlobalStateType.Active);
     } 
+
+    private void EndLevel()
+    {
+        currentLevelIndex = 0;
+        GameEvents.RequestSceneUnLoad(currentLevel.sceneToLoad.SceneName);
+        currentLevel = null;
+        GameEvents.RequestSceneLoad("StartMenu", TransitionType.Fade);
+        GameEvents.StateChanged(GlobalStateType.Active);
+    }
 }
