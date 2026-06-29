@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3347701471640808863}
-  - component: {fileID: 5391650230976927253}
   - component: {fileID: 1430302724363864975}
   - component: {fileID: 2747311472365010721}
   - component: {fileID: 503771416222135430}
@@ -37,20 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5391650230976927253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7100021005429750579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab44e1a4a0b69146bd3607a46669b54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RubberDuck
-  itemData: {fileID: 0}
-  spawnPos: {x: 0, y: 0, z: 0}
 --- !u!54 &1430302724363864975
 Rigidbody:
   m_ObjectHideFlags: 0
