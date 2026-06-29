@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class PanelPart : BombPart
 {
-    public override bool OnItemUsed(string item)
+    public override bool OnItemUsed(ItemActionType type)
     {
         if (isLocked) return false;
 
         if (isSolved) return false;
 
-        if (!IsCompatibile(item))
+        if (!IsCompatibile(type))
         {
-            //Also shouldnt consume Item
-            Debug.Log("Strike");
-            StrikeSystem.AddStrike();
+            onPartWrongItem?.Invoke();
             return false;
         }
         Solve();
@@ -21,29 +19,7 @@ public class PanelPart : BombPart
 
     protected override void Solve()
     {
-        if (isSolved)
-        {
-            return;
-        }
-
-        if (sSolver != null)
-        {
-            sSolver.Solve();
-        }
-        if (countsToBomb)
-        {
-            bomb.OnPartSolved(this);
-        }
-        else
-        {
-            isSolved = true;
-        }
+        base.Solve();
         gameObject.SetActive(false);
-        //Destroy(gameObject);
-    }
-
-    protected override void OnWrongItem()
-    {
-        StrikeSystem.AddStrike();
     }
 }

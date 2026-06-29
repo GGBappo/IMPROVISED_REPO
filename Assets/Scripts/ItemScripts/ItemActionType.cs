@@ -6,4 +6,5 @@ public enum ItemActionType
     Squeak,   // RubberDuck
     Open,     // CanOpener
     Place,    // Potato
+    Empty,  //NoItem
 }

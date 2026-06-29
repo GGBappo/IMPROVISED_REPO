@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class TestCore01 : BombPart
 {
+    [Space(10)]
+    [Header("Test Core 01")]
+    [Space(5)]
     [SerializeField] Animator anim;
     public Material disabledMaterial;
     public MeshRenderer render;
 
-    //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
-    public override bool OnItemUsed(string item)
+    public override bool OnItemUsed(ItemActionType type)
     {
         if (isLocked) return false;
 
         if (isSolved) return false;
 
-        if (!IsCompatibile(item))
+        if (!IsCompatibile(type))
         {
-            //Also shouldnt consume Item
-            Debug.Log("Strike");
-            StrikeSystem.AddStrike();
+            onPartWrongItem?.Invoke();
             return false;
         }
         RemoveHighlight();
@@ -27,30 +27,8 @@ public class TestCore01 : BombPart
 
     protected override void Solve()
     {
-        if (isSolved)
-        {
-            return;
-        }
-        isSolved = true;
+        base.Solve();
         render.material = disabledMaterial;
         anim.SetTrigger("Defused");
-        bomb.TriggerDefused();
-    }
-
-    protected override void OnWrongItem()
-    {
-        StrikeSystem.AddStrike();
-    }
-
-    public override void Open()
-    {
-        isLocked = false;
-        anim.SetTrigger("Open");
-        lockAnim.SetBool("IsLocked", false);
-    }
-
-    protected override void Update()
-    {
-
     }
 }

@@ -6,20 +6,19 @@ public class BombHoveringManager : MonoBehaviour
 {
     public Camera mainCamera;
     public LayerMask bombPartMask;
-    public LayerMask partOfPartMask;
+    public LayerMask partElementMask;
 
     static public BombPart hoveredBombPart;
-    static public PartOfPart hoveredPartOfPart;
+    static public PartElement hoveredPartElement;
 
     void Update()
     {
         CheckBombPart();
-        CheckPartOfPart();
+        CheckPartElement();
         if (Input.GetMouseButtonDown(0) && hoveredBombPart != null && hoveredBombPart.dontNeedTool)
         {
-            hoveredBombPart.OnItemUsed("Nothing");
+            hoveredBombPart.OnItemUsed(ItemActionType.Empty);
         }
-
     }
 
     private void CheckBombPart()
@@ -51,32 +50,37 @@ public class BombHoveringManager : MonoBehaviour
         }
     }
 
-    private void CheckPartOfPart()
+    private void CheckPartElement()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, partOfPartMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, partElementMask))
         {
-            PartOfPart partOP = hit.collider.GetComponent<PartOfPart>();
+            PartElement partElement = hit.collider.GetComponent<PartElement>();
 
-            if (partOP != null)
+            if (partElement != null)
             {
-                if (hoveredPartOfPart != partOP)
+                if (hoveredPartElement != partElement)
                 {
-                    if (hoveredPartOfPart != null)
-                        hoveredPartOfPart.RemoveHighlight();
+                    if (hoveredPartElement != null)
+                    {
+                        hoveredPartElement.RemoveHighlight();
+                        hoveredPartElement.SetHover(false);
+                    }
 
-                    hoveredPartOfPart = partOP;
-                    partOP.Highlight();
+                    hoveredPartElement = partElement;
+                    partElement.Highlight();
+                    partElement.SetHover(true);
                 }
                 return;
             }
         }
 
-        if (hoveredPartOfPart != null)
+        if (hoveredPartElement != null)
         {
-            hoveredPartOfPart.RemoveHighlight();
-            hoveredPartOfPart = null;
+            hoveredPartElement.RemoveHighlight();
+            hoveredPartElement.SetHover(false);
+            hoveredPartElement = null;
         }
     }
 }
