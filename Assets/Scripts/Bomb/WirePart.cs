@@ -3,22 +3,18 @@ using UnityEngine;
 
 public class WirePart : BombPart
 {
+    [Space(10)]
+    [Header("Wire Part")]
+    [Space(5)]
     [SerializeField] Wire[] wires;
     [SerializeField] bool inOrder = false;
-    [SerializeField] private BombTimer timer;
-    [SerializeField] private Tasks taskSystem;
 
     private int current = 0;
     public int wiresToCut;
 
-    private void Awake()
+    public override bool OnItemUsed(ItemActionType type)
     {
-   
-    }
-    //I think, that we can change it from void to bool, and if everything goes according to plan, it returns true, and item is consumed, else it returns false and item is not consumed
-    public override bool OnItemUsed(string item)
-    {
-        int cw = 0;
+        int elementID = 0;
 
         if (isLocked) { return false; }
 
@@ -27,23 +23,22 @@ public class WirePart : BombPart
         var hoverOverAnything = false;
         for (int i = 0; i < wires.Length; i++)
         {
-            if (wires[i] == BombHoveringManager.hoveredPartOfPart && !wires[i].isCut)
+            if (wires[i].mouseHover && !wires[i].isCut)
             {
                 hoverOverAnything = true;
-                cw = i; break;
+                elementID = i; break;
             }
         }
         if (!hoverOverAnything) { return false; }
         
-        if ((cw != current && inOrder) || (wires[cw].dontCut) || (!IsCompatibile(item)))
+        if ((elementID != current && inOrder) || (wires[elementID].dontCut) || (!IsCompatibile(type)))
         {
-            //Also shouldnt consume Item
-            OnWrongItem();
+            onPartWrongItem?.Invoke();
             return false;
         }
 
-        wires[cw].RemoveHighlight();
-        wires[cw].isCut = true;
+        wires[elementID].RemoveHighlight();
+        wires[elementID].isCut = true;
         current++;
 
         if (current >= wiresToCut)
@@ -51,30 +46,5 @@ public class WirePart : BombPart
             Solve();
         }
         return true;
-    }
-
-    protected override void Solve()
-    {
-        if (isSolved)
-        {
-            return;
-        }
-
-        if (sSolver != null)
-        {
-            sSolver.Solve();
-        }
-        if (countsToBomb)
-        {
-            bomb.OnPartSolved(this);
-        }else
-        {
-            isSolved = true;
-        }
-    }
-
-    protected override void OnWrongItem()
-    {
-        timer.RegisterStrike();
     }
 }

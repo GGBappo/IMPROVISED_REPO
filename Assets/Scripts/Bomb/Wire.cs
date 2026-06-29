@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Wire : PartOfPart
+public class Wire : PartElement
 {
     public bool isCut;
     public bool dontCut;
