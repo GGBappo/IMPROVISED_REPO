@@ -14,7 +14,6 @@ public class StartButton : MonoBehaviour
         myButton.onClick.AddListener(() => 
         {
             GameEvents.RequestLevelStart();
-            GameEvents.RequestSceneLoad(_targetSceneName, _transition);
             GameEvents.RequestSceneUnLoad(_unloadScene);
         });
         

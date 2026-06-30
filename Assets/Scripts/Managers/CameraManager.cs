@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour
         GameEvents.OnCameraMoveRequest += MoveCamera; 
         GameEvents.OnCameraLookAtRequest += LookAtTarget; 
         GameEvents.OnCameraLookAtGameObjectRequest += LookAtTarget;
+        GameEvents.OnCameraFOVChangeRequest += ChangeCameraFOV;
     }
 
     private void OnDisable()
@@ -20,6 +21,7 @@ public class CameraManager : MonoBehaviour
         GameEvents.OnCameraMoveRequest -= MoveCamera; 
         GameEvents.OnCameraLookAtRequest -= LookAtTarget; 
         GameEvents.OnCameraLookAtGameObjectRequest -= LookAtTarget;
+        GameEvents.OnCameraFOVChangeRequest -= ChangeCameraFOV;
     }
 
     private void Awake()
@@ -54,6 +56,10 @@ public class CameraManager : MonoBehaviour
             StopCoroutine(_moveCameraCoroutine);
         }
         _moveCameraCoroutine = StartCoroutine(LookAtTargetRoutine(targetPosition, duration));
+    }
+
+    private void ChangeCameraFOV(float FOV){
+        _mainCamera.fieldOfView = FOV;
     }
 
     private void LookAtTarget(GameObject target, float duration)

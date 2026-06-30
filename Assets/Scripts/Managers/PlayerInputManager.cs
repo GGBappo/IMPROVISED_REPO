@@ -22,6 +22,14 @@ public class PlayerInputManager : MonoBehaviour
     private void OnEnable() => GameEvents.OnGlobalStateChanged += UpdateLocalState;
     private void OnDisable() => GameEvents.OnGlobalStateChanged -= UpdateLocalState;
 
+    void Start()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+    }
+
     private void Update()
     {
         if (isHoldingItem)

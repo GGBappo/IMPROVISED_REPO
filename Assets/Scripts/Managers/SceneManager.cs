@@ -8,8 +8,17 @@ public class SceneOperator : MonoBehaviour
     private Scene _activeScene;
     private Scene _currentScene; // different from actiive scene, as this is the scene we want to load, but it may not be active yet
 
-    private void OnEnable() {GameEvents.OnRequestSceneLoad += Load; GameEvents.OnRequestSceneUnLoad += Unload;}
-    private void OnDisable() {GameEvents.OnRequestSceneLoad -= Load; GameEvents.OnRequestSceneUnLoad -= Unload;}
+    private void OnEnable() {
+        GameEvents.OnRequestSceneLoad += Load; 
+        GameEvents.OnRequestSceneUnLoad += Unload;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnDisable() {
+        GameEvents.OnRequestSceneLoad -= Load; 
+        GameEvents.OnRequestSceneUnLoad -= Unload; 
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
 
     /// <summary>
@@ -27,11 +36,17 @@ public class SceneOperator : MonoBehaviour
     /// Unloads a scene asynchronously.
     /// </summary>
     /// <param name="sceneName"> The name of the scene to unload. </param>
-    public void Unload(string sceneName)
+    private void Unload(string sceneName)
     {
         SceneManager.UnloadSceneAsync(sceneName);
     }
     
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"[SceneOperator] Scene loaded: {scene.name} with mode: {mode}");
+        GameEvents.SceneFullyLoaded(scene.name);
+    }
+
     private IEnumerator LoadCoroutine(string sceneName, TransitionType transition, bool setActive = true)
     {
         if (transition == TransitionType.None)

@@ -16,6 +16,7 @@ public static class GameEvents
     public static event Action<TransitionType> OnRequestLevelReset;
     public static event Action OnRequestLevelEnd;
     public static event Action OnRequestLevelStart;
+    public static event Action<string> OnSceneFullyLoaded; // (sceneName)
 
     /// UI events
     public static event Action OnShowGameOverRequested;
@@ -27,6 +28,7 @@ public static class GameEvents
     public static event Action<Vector3, Quaternion, float> OnCameraMoveRequest; // (position, rotation, duration)
     public static event Action<Vector3, float> OnCameraLookAtRequest; // (targetPosition, duration)
     public static event Action<GameObject, float> OnCameraLookAtGameObjectRequest; // (targetGameObject, duration)
+    public static event Action<float> OnCameraFOVChangeRequest; // (newFOV)
 
     #region Timer/Strike Calls
     /// <summary>
@@ -111,6 +113,11 @@ public static class GameEvents
         OnRequestLevelEnd?.Invoke();
     }
 
+    public static void SceneFullyLoaded(string sceneName)
+    {
+        Debug.Log($"[GameEvents] Scene fully loaded: {sceneName}");
+        OnSceneFullyLoaded?.Invoke(sceneName);
+    }
     #endregion
 
     #region UI Calls
@@ -172,6 +179,12 @@ public static class GameEvents
     {
         Debug.Log($"[GameEvents] Requesting camera to look at GameObject: {target.name}, duration: {duration}");
         OnCameraLookAtGameObjectRequest?.Invoke(target, duration);
+    }
+
+    public static void RequestCameraFOVChange(float FOV)
+    {
+        Debug.Log($"[GameEvents] Requesting camera FOV change to: {FOV}");
+        OnCameraFOVChangeRequest?.Invoke(FOV);
     }
     #endregion
 }
