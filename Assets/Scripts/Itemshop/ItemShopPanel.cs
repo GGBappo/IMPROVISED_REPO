@@ -126,4 +126,15 @@ public class ItemShopPanel : MonoBehaviour
                 }
             }
     }
+    public Vector3 GetSpawnPoint(InteractableItem item)
+    {
+        foreach (var kvp in purchasedItems)
+        {
+            if (kvp.Value == item)
+                return kvp.Key.position;
+        }
+
+        Debug.LogWarning("No spawn point found for item: " + item.name);
+        return item.transform.position;
+    }
 }
