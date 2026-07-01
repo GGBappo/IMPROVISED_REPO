@@ -73,8 +73,10 @@ public abstract class BombPart : MonoBehaviour
     protected virtual void Solve()
     {
         isSolved = true;
-        SilentLock();
+        SilentLock(); 
         onPartSolved?.Invoke();
+        if (tasks != null)
+            tasks.TaskCompleted();
     }
 
     protected bool IsCompatibile(ItemActionType type)

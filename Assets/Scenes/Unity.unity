@@ -1161,11 +1161,12 @@ MonoBehaviour:
   taskText: Tasks Completed!
   taskLists:
   - FInd a way to open the bomb
-  - disable the electricity
-  - Explode
-  - Explode
+  - Find a way to cut the wires...
+  - Those wires seem blocked off...
+  - Whats that paper mean?
   uiText: {fileID: 0}
   tmpText: {fileID: 1909969577}
+  budgetManager: {fileID: 911081569}
 --- !u!114 &1029154768
 MonoBehaviour:
   m_ObjectHideFlags: 0
