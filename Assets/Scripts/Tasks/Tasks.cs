@@ -18,6 +18,8 @@ public class Tasks : MonoBehaviour
     private int batchCompletedCount;
     private int totalCompletedCount;
 
+    [SerializeField] private BudgetManager budgetManager;
+
     private void Start()
     {
         InitializeBatches();
@@ -141,6 +143,7 @@ public class Tasks : MonoBehaviour
 
         var list = new List<string>(taskLists);
         list.RemoveAt(indexToRemove);
+        budgetManager.AddBudget(10); // Add budget for completing a task
         taskLists = list.ToArray();
 
         // If start is past the end, move it back so we show a valid batch.

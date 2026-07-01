@@ -45,4 +45,10 @@ public class BudgetManager : MonoBehaviour
     {
         budgetText.text = "$" + currentMoney.ToString();
     }
+
+    public void AddBudget(int amount)
+    {
+        currentMoney += amount;
+        UpdateBudgetText();
+    }
 }
