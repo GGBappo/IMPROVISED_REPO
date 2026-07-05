@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Shoe
   m_EditorClassIdentifier: Assembly-CSharp::Item_SO
   itemSprite: {fileID: 0}
-  prefab: {fileID: 5582822929142470915, guid: af8005e3115f53c4480c872667d23e43, type: 3}
+  prefab: {fileID: 4018537043638802152, guid: aac832bfed0f0ee42aa01fd911708968, type: 3}
   itemName: Shoe
   cost: 20
   sellValue: 15
   hint: A very sturdy shoe, can possibly block a fan to stop power
-  isSingleUse: 0
+  isSingleUse: 1
   hoverHeight: 1.432
   hoverRot: 1.757
-  dragHeight: 0
+  dragHeight: 1.757
   dragRot: 0

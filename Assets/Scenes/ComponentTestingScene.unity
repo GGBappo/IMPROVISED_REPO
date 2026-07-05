@@ -5026,6 +5026,7 @@ MonoBehaviour:
   - Explode
   uiText: {fileID: 0}
   tmpText: {fileID: 1909969577}
+  budgetManager: {fileID: 911081569}
 --- !u!114 &1029154768
 MonoBehaviour:
   m_ObjectHideFlags: 0

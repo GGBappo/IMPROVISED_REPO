@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29aa03c9f328f14fa46ac7f5a4777a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NailClipper
-  itemData: {fileID: 0}
+  itemData: {fileID: 11400000, guid: aa55060a76fd3e94c9c52d97a6606a31, type: 2}
   spawnPos: {x: 0, y: 0, z: 0}
 --- !u!65 &7584784631197688047
 BoxCollider:
