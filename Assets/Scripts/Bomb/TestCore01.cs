@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class TestCore01 : BombPart
 {
-    [Space(10)]
-    [Header("Test Core 01")]
-    [Space(5)]
     [SerializeField] Animator anim;
     public Material disabledMaterial;
     public MeshRenderer render;
