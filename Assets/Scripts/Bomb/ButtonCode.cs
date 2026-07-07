@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class ButtonCode : BombPart
 {
-    [Space(10)]
-    [Header("Button Code")]
-    [Space(5)]
     [SerializeField] BombButton[] buttons;
     [SerializeField] int[] code;
     public override bool OnItemUsed(ItemActionType type)
