@@ -4,21 +4,25 @@ using UnityEngine.Events;
 
 public class BombFragmentManager : MonoBehaviour
 {
+    [Tooltip("Reference to the parent BombManager")]
     [SerializeField] BombManager bomb;
+
+    [Tooltip("Parts, that are the part of the fragment")]
     [SerializeField] BombPart[] parts;
+
+    [Tooltip("How many of the parts need to be solved")]
     [SerializeField] int toSolveParts;
+
+
     protected int solvedParts;
-    [Space(10)]
-
-    [Header("Events")]
-    [Space(5)]
+    
+    [Tooltip("Triggers, when all necessary parts are solved")]
     public UnityEvent onFragmentSolved;
-    [Space(5)]
-    public UnityEvent onFragmentUlnocked;
-    [Space(10)]
 
-    [Header("Locks")]
-    [Space(5)]
+    [Tooltip("Triggers, when fragment is unlocked")]
+    public UnityEvent onFragmentUlnocked;
+
+    [Tooltip("Animator of the Lock")]
     public Animator lockAnim;
 
     public bool isFragmentLocked {  get; protected set; }

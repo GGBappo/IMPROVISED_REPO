@@ -3308,6 +3308,26 @@ PrefabInstance:
       propertyPath: highlight
       value: 
       objectReference: {fileID: 2092824757}
+    - target: {fileID: 5389684491635917822, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
+      propertyPath: selfLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389684491635917822, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
+      propertyPath: dontNeedTool
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389684491635917822, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
+      propertyPath: highlightable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389684491635917822, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
+      propertyPath: compatibileItems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389684491635917822, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
+      propertyPath: 'compatibileItems.Array.data[1]'
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9169072356992001283, guid: 3a5ddefcf81ace54e83e261f675aac59, type: 3}
       propertyPath: bomb
       value: 
@@ -3396,6 +3416,10 @@ PrefabInstance:
     - target: {fileID: 8378893865030575928, guid: 4e8393df817599943bcc4066eb2ad868, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8599929897153242931, guid: 4e8393df817599943bcc4066eb2ad868, type: 3}
+      propertyPath: highlightable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3494,6 +3518,26 @@ PrefabInstance:
     - target: {fileID: 85988525549864270, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
       propertyPath: onFragmentSolved.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480451048632836209, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
+      propertyPath: selfLocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480451048632836209, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
+      propertyPath: dontNeedTool
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807253463601080956, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807253463601080956, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807253463601080956, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.65882355
       objectReference: {fileID: 0}
     - target: {fileID: 7988773771798086193, guid: d82ca3382e97f4546a5723e01bfc4de6, type: 3}
       propertyPath: m_LocalScale.y
@@ -3653,6 +3697,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1923317049480370708, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      propertyPath: inOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923317049480370708, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      propertyPath: partHeader
+      value: Wire Part
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923317049480370708, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      propertyPath: selfLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923317049480370708, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      propertyPath: dontNeedTool
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923317049480370708, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      propertyPath: highlightable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3608673236341622440, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
       propertyPath: bomb
       value: 
@@ -3747,6 +3811,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7277934735475726438}
     m_Modifications:
+    - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}
+      propertyPath: selfLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}
+      propertyPath: dontNeedTool
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}
+      propertyPath: highlightable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 798654352006040446, guid: 23855542464397048b8c83478fa993e9, type: 3}
       propertyPath: bomb
       value: 
