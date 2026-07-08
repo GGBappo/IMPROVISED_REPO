@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class WirePart : BombPart
 {
-    [Space(10)]
-    [Header("Wire Part")]
-    [Space(5)]
     [SerializeField] Wire[] wires;
+
     [SerializeField] bool inOrder = false;
 
     private int current = 0;

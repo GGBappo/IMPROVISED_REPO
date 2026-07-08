@@ -1,58 +1,55 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class BombPart : MonoBehaviour
 {
-    [Header("Base")]
-    [Space(5)]
-    //[SerializeField] protected BombManager bomb;
+    [Tooltip("Reference to the parent BombFragmentManager")]
     [SerializeField] protected BombFragmentManager fragment;
+
+    [NonReorderable]
+    [Tooltip("Action Types, compatibile with the Part")]
     public ItemActionType[] compatibileItems;
-    //public string partName;
-    //public string hint;
-    public bool isSolved;
+
+    public bool isSolved {  get; protected set; }
+
+    [Tooltip("If True, you will be able to interact with this part ONLY without any item, so by simple mouse clicking")]
     public bool dontNeedTool;
-    //public bool countsToBomb;
-    //public SpecialSolve sSolver;
-    
-    [Space(10)]
 
-    [Header("Locks")]
-    [Space(5)]
-    
-    //public BombPart[] toUnlockParts;
+
+    [Tooltip("If True, part will not be unlocked the same moment the Fragment does. In order to unlock this part, you will need to trigger Unlock()")]
     public bool selfLocked = false;
+
+    [Tooltip("Animator of lock. Leave empty, if part isnt selfLocked")]
     [SerializeField] protected Animator lockAnim;
-    //public ItemType[] compatibileItems;
     public bool isLocked { get; protected set; } = true;
-    [Space(10)]
 
-    [Header("Highlights")]
-    [Space(5)]
-    public bool isHighlighted;
+
+    [HideInInspector] public bool isHighlighted;
+
+    [Tooltip("Will the part be highlighted, when mouse is over it(setting it to false dont interrupt children of being highlightable)")]
     [SerializeField] protected bool highlightable;
-    //Tmp
+
+    [Tooltip("Temporary white plane, that imitates Highlight")]
     public GameObject highlight;
-    [Space(10)]
 
-    [Header("Events")]
-    [Space(5)]
+
+    [Tooltip("Triggers, when part is Solved")]
     public UnityEvent onPartSolved;
-    [Space(5)]
+
+    [Tooltip("Triggers, when part is Unlocked")]
     public UnityEvent onPartUnlocked;
-    [Space(5)]
+
+    [Tooltip("Triggers, when the wrong item is used on the part")]
     public UnityEvent onPartWrongItem;
-    [Space(10)]
 
-    [Header("Timer System")]
-    [Space(5)]
+
     private BombTimer timer;
-    [SerializeField] private bool sendStrikeOnWrongItem = true;
-    [Space(10)]
 
-    [Header("Task System")]
-    [Space(5)]
+    [Tooltip("On Awake, adds the Strike as the listener of the onPartWrongItem")]
+    [SerializeField] private bool sendStrikeOnWrongItem = true;
+
     private Tasks tasks;
 
     public abstract bool OnItemUsed(ItemActionType type);
@@ -73,8 +70,10 @@ public abstract class BombPart : MonoBehaviour
     protected virtual void Solve()
     {
         isSolved = true;
-        SilentLock();
+        SilentLock(); 
         onPartSolved?.Invoke();
+        if (tasks != null)
+            tasks.TaskCompleted();
     }
 
     protected bool IsCompatibile(ItemActionType type)
@@ -93,6 +92,11 @@ public abstract class BombPart : MonoBehaviour
     {
         isLocked = false;
         if(lockAnim != null) lockAnim.SetBool("IsLocked", isLocked);
+        if (dontNeedTool && !compatibileItems.Contains(ItemActionType.Empty))
+        {
+            compatibileItems = new ItemActionType[1];
+            compatibileItems[0] = ItemActionType.Empty;
+        }
         onPartUnlocked?.Invoke();
     }
     public virtual void SilentLock()

@@ -11,7 +11,6 @@ public class Item_SO : ScriptableObject
     public float cost; // Cost of the item
     public float sellValue; // Sell value of the item
     public string hint; // Array of item hints
-    public string[] compatiblePartTypes; // Array of compatible part types for the item
     public bool isSingleUse;
 
     public float hoverHeight = 1.432f;
