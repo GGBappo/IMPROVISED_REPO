@@ -11,6 +11,14 @@ public class BombHoveringManager : MonoBehaviour
     static public BombPart hoveredBombPart;
     static public PartElement hoveredPartElement;
 
+    void Start()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+    }
+
     void Update()
     {
         CheckBombPart();

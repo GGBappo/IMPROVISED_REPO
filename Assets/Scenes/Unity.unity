@@ -3944,7 +3944,6 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1127580246}
   - {fileID: 304155212}
   - {fileID: 1148776065}
   - {fileID: 1735605494}

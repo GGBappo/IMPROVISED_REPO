@@ -14,6 +14,9 @@ public static class GameEvents
     public static event Action<string, TransitionType, bool> OnRequestSceneLoad;
     public static event Action<string> OnRequestSceneUnLoad;
     public static event Action<TransitionType> OnRequestLevelReset;
+    public static event Action OnRequestLevelEnd;
+    public static event Action OnRequestLevelStart;
+    public static event Action<string> OnSceneFullyLoaded; // (sceneName)
 
     /// UI events
     public static event Action OnShowGameOverRequested;
@@ -21,8 +24,11 @@ public static class GameEvents
     public static event Action<TransitionType, Action> OnTransitionINRequested; 
     public static event Action<TransitionType, Action> OnTransitionOUTRequested; 
 
-    
-    
+    // camera events
+    public static event Action<Vector3, Quaternion, float> OnCameraMoveRequest; // (position, rotation, duration)
+    public static event Action<Vector3, float> OnCameraLookAtRequest; // (targetPosition, duration)
+    public static event Action<GameObject, float> OnCameraLookAtGameObjectRequest; // (targetGameObject, duration)
+    public static event Action<float> OnCameraFOVChangeRequest; // (newFOV)
 
     #region Timer/Strike Calls
     /// <summary>
@@ -79,6 +85,15 @@ public static class GameEvents
     }
 
     /// <summary>
+    /// Requests the start of the current level. This should be used to notify subscribers that the current level has started and any necessary setup should be performed.
+    /// </summary>
+    public static void RequestLevelStart()
+    {
+        Debug.Log($"[GameEvents] Requesting start of current level");
+        OnRequestLevelStart?.Invoke();
+    }
+
+    /// <summary>
     /// Requests a level reset. This should be used to reset the current level.
     /// </summary>
     /// <param name="transition"></param>
@@ -88,6 +103,21 @@ public static class GameEvents
         OnRequestLevelReset?.Invoke(transition);
     }
 
+    /// <summary>
+    /// Requests the end of the current level. This should be used to notify subscribers that the current level has ended and any necessary cleanup should be performed.
+    /// <br>Note:</br> "End" here means after the level has been completed no matter the outcome. It is to quite literally END the level, meaning unload.
+    /// </summary>
+    public static void RequestEndLevel()
+    {
+        Debug.Log($"[GameEvents] Requesting end of current level");
+        OnRequestLevelEnd?.Invoke();
+    }
+
+    public static void SceneFullyLoaded(string sceneName)
+    {
+        Debug.Log($"[GameEvents] Scene fully loaded: {sceneName}");
+        OnSceneFullyLoaded?.Invoke(sceneName);
+    }
     #endregion
 
     #region UI Calls
@@ -128,6 +158,33 @@ public static class GameEvents
     {
         Debug.Log($"[GameEvents] Requesting transition OUT of type: {transition}");
         OnTransitionOUTRequested?.Invoke(transition, onComplete);
+    }
+    #endregion
+
+    #region Camera Calls
+
+    public static void RequestCameraMove(Vector3 position, Quaternion rotation, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera move to position: {position}, rotation: {rotation}, duration: {duration}");
+        OnCameraMoveRequest?.Invoke(position, rotation, duration);
+    }
+
+    public static void RequestCameraLookAt(Vector3 targetPosition, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera to look at position: {targetPosition}, duration: {duration}");
+        OnCameraLookAtRequest?.Invoke(targetPosition, duration);
+    }
+
+    public static void RequestCameraLookAt(GameObject target, float duration)
+    {
+        Debug.Log($"[GameEvents] Requesting camera to look at GameObject: {target.name}, duration: {duration}");
+        OnCameraLookAtGameObjectRequest?.Invoke(target, duration);
+    }
+
+    public static void RequestCameraFOVChange(float FOV)
+    {
+        Debug.Log($"[GameEvents] Requesting camera FOV change to: {FOV}");
+        OnCameraFOVChangeRequest?.Invoke(FOV);
     }
     #endregion
 }

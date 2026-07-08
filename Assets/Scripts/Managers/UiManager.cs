@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        HideGameOverScreen();
         _transitions.Add(TransitionType.Fade, new Fade());
     }
 
@@ -36,13 +37,13 @@ public class UIManager : MonoBehaviour
     private void HandleTransitionIn(TransitionType type, Action onComplete)
     {
         if (_transitions.TryGetValue(type, out ITransition activeTransition))
-            activeTransition.TransitionIN(_loadingScreen, _globalTransitionSpeed, onComplete);
+            activeTransition.TransitionIN(canvas: _loadingScreen, speed: _globalTransitionSpeed, onComplete: onComplete);
     }
 
     private void HandleTransitionOut(TransitionType type, Action onComplete)
     {
         if (_transitions.TryGetValue(type, out ITransition activeTransition))
-            activeTransition.TransitionOUT(_loadingScreen, _globalTransitionSpeed, onComplete);
+            activeTransition.TransitionOUT(canvas: _loadingScreen, speed: _globalTransitionSpeed, onComplete: onComplete);
     }
 
     private void ShowGameOverScreen()
@@ -59,5 +60,20 @@ public class UIManager : MonoBehaviour
         _gameOverScreen.interactable = false;
         _gameOverScreen.blocksRaycasts = false;
         Debug.Log("[UIManager] Hiding Game Over Screen");
+    }
+
+    private void ShowPauseScreen()
+    {
+        _pauseScreen.alpha = 1f;
+        _pauseScreen.interactable = true;
+        _pauseScreen.blocksRaycasts = true;
+        Debug.Log("[UIManager] Showing Pause Screen");
+    }
+    private void HidePauseScreen()
+    {
+        _pauseScreen.alpha = 0f;
+        _pauseScreen.interactable = false;
+        _pauseScreen.blocksRaycasts = false;
+        Debug.Log("[UIManager] Hiding Pause Screen");
     }
 }

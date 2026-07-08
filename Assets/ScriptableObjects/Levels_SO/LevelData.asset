@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelIndex: 0
-  levelName: 
-  levelLocation: 
+  levelName: Bla
+  sceneToLoad:
+    sceneAsset: {fileID: 102900000, guid: 4210ddc87dcbd25439e7b5739274892d, type: 3}
+    sceneName: Unity
   startingBudget: 0
   bombPrefab: {fileID: 9197622134547142398, guid: da9db4cf6e445a0419e7d5f572ce5112, type: 3}
   timerSeconds: 0
   isDud: 0
-  difficulty: 0
   storyEvents: []
   isUnlocked: 0
