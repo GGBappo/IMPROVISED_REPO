@@ -378,6 +378,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.2118964, y: 0.38377127, z: 3.9211802}
   m_Center: {x: 0.00438252, y: 0.08332075, z: 0.16152905}
+--- !u!1 &302347292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5680203483531871044, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+  m_PrefabInstance: {fileID: 7434993855776566518}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &304155210
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 148.47568, y: 0}
+  m_AnchoredPosition: {x: 136, y: 0}
   m_SizeDelta: {x: 631.3203, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &824483553
@@ -1610,8 +1615,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 2.1279, y: 0}
+  m_SizeDelta: {x: 602.2657, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200549230
 MonoBehaviour:
@@ -1660,8 +1665,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2085,7 +2090,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3608673236341622440, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
   m_PrefabInstance: {fileID: 7434993855776566518}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 302347292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d3013ff5babce64aa575900b10468d9, type: 3}
@@ -2096,6 +2101,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1069071278098775181, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
   m_PrefabInstance: {fileID: 7434993855776566518}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1636559186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302347292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b045a57a58bf18a408ab4c94b9fffe14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tooltips
+  tooltipLines:
+  - CUT IT USING THE NAIL CLIPPER
+  - CUT IT USING THE NAIL CLIPPER
+  - CUT IT USING THE NAIL CLIPPER
+  bombPartObject: {fileID: 302347292}
+  tooltipText: {fileID: 1200549230}
+  tooltipPanel: {fileID: 824483551}
 --- !u!1 &1663095013
 GameObject:
   m_ObjectHideFlags: 0
@@ -3593,7 +3617,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5680203483531871044, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1636559186}
   m_SourcePrefab: {fileID: 100100000, guid: e0e6fbaf8508374449dce7aa5822387b, type: 3}
 --- !u!1001 &7449100184607592030
 PrefabInstance:
