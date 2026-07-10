@@ -163,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonCode
   fragment: {fileID: 85988525549864270}
   compatibileItems: 04000000
+  isSolved: 0
   dontNeedTool: 1
   selfLocked: 0
   lockAnim: {fileID: 0}
@@ -623,7 +624,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1c9a1df6df76c48bb983cd99506a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Button
-  disabled: 0
   parentPart: {fileID: 8575833195746764045}
   highlightable: 1
   highlight: {fileID: 5691106288850802467}
@@ -877,11 +877,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2294187142002617094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36dc80f9e360c0146a9cb537d0fb054a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4731b660529fae74796cda6436fdc905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 85988525549864270}
   compatibileItems: 02000000
+  isSolved: 0
   dontNeedTool: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
@@ -909,9 +910,7 @@ MonoBehaviour:
   onPartWrongItem:
     m_PersistentCalls:
       m_Calls: []
-  sendStrikeOnWrongItem: 1
-  destroyOnSolve: 1
-  solveAnim: {fileID: 0}
+  sendStrikeOnWrongItem: 0
 --- !u!1 &2360596446081537944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1910,7 +1909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  disabled: 0
   parentPart: {fileID: 1480451048632836209}
   highlightable: 1
   highlight: {fileID: 4424151305285387995}
@@ -2125,6 +2123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
   fragment: {fileID: 85988525549864270}
   compatibileItems: 00000000
+  isSolved: 0
   dontNeedTool: 0
   selfLocked: 1
   lockAnim: {fileID: 2562560652267704653}
@@ -2677,7 +2676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1c9a1df6df76c48bb983cd99506a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Button
-  disabled: 0
   parentPart: {fileID: 8575833195746764045}
   highlightable: 1
   highlight: {fileID: 7862337990662310830}
@@ -2865,7 +2863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1c9a1df6df76c48bb983cd99506a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Button
-  disabled: 0
   parentPart: {fileID: 8575833195746764045}
   highlightable: 1
   highlight: {fileID: 1902072217071820657}
@@ -4228,7 +4225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  disabled: 0
   parentPart: {fileID: 1480451048632836209}
   highlightable: 1
   highlight: {fileID: 2693042897029373157}
@@ -4395,7 +4391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  disabled: 0
   parentPart: {fileID: 1480451048632836209}
   highlightable: 1
   highlight: {fileID: 6101298995896557076}
@@ -4557,7 +4552,7 @@ MonoBehaviour:
   bomb: {fileID: 0}
   parts:
   - {fileID: 8575833195746764045}
-  - {fileID: 0}
+  - {fileID: 2887626066654139555}
   - {fileID: 1480451048632836209}
   toSolveParts: 1
   onFragmentSolved:

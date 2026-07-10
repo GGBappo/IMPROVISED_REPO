@@ -8,7 +8,6 @@ public abstract class BombPart : MonoBehaviour
     [Tooltip("Reference to the parent BombFragmentManager")]
     [SerializeField] protected BombFragmentManager fragment;
 
-
     [NonReorderable]
     [Tooltip("Action Types, compatibile with the Part")]
     public ItemActionType[] compatibileItems;
@@ -18,11 +17,6 @@ public abstract class BombPart : MonoBehaviour
     [Tooltip("If True, you will be able to interact with this part ONLY without any item, so by simple mouse clicking")]
     public bool dontNeedTool;
 
-    [Tooltip("Animator of the bomb itself(not the lock)")]
-    [SerializeField] protected Animator bombAnim;
-
-    [Tooltip("If True, will send 'Solve' trigger to the bombAnim")]
-    [SerializeField] protected bool animateOnSolve;
 
     [Tooltip("If True, part will not be unlocked the same moment the Fragment does. In order to unlock this part, you will need to trigger Unlock()")]
     public bool selfLocked = false;
@@ -51,12 +45,11 @@ public abstract class BombPart : MonoBehaviour
     public UnityEvent onPartWrongItem;
 
 
-    protected BombTimer timer;
+    private BombTimer timer;
 
     [Tooltip("On Awake, adds the Strike as the listener of the onPartWrongItem")]
     [SerializeField] private bool sendStrikeOnWrongItem = true;
 
-    protected Tasks tasks;
 
     public abstract bool OnItemUsed(ItemActionType type);
 
@@ -78,14 +71,6 @@ public abstract class BombPart : MonoBehaviour
         isSolved = true;
         SilentLock(); 
         onPartSolved?.Invoke();
-        if (tasks != null)
-            tasks.TaskCompleted();
-
-        if (animateOnSolve && bombAnim != null)
-        {
-            bombAnim.SetTrigger("Solve");
-        }
-
     }
 
     protected bool IsCompatibile(ItemActionType type)
@@ -125,136 +110,4 @@ public abstract class BombPart : MonoBehaviour
             onPartWrongItem.AddListener(timer.RegisterStrike);
         }
     }
-
-    #region UseBase()
-
-    /// <summary>
-    ///Checks basic conditions, returns false, if any of them aren't met
-    /// </summary>
-    protected bool UseBase()
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-        return true;
-    }
-
-    /// <summary>
-    ///Checks basic conditions including checking if any element is hovered, returns false, if any of them aren't met
-    /// </summary>
-    protected bool UseBase(PartElement[] elements)
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-
-        var hoverOverAnything = false;
-        for (int i = 0; i < elements.Length; i++)
-        {
-            if (elements[i].mouseHover && !elements[i].disabled)
-            {
-                hoverOverAnything = true;
-                break;
-            }
-        }
-        if (!hoverOverAnything) { return false; }
-
-        return true;
-    }
-
-    /// <summary>
-    ///Checks basic conditions including checking item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met
-    /// </summary>
-    protected bool UseBase(ItemActionType itemType)
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-
-        if (!IsCompatibile(itemType))
-        {
-            onPartWrongItem?.Invoke();
-            return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    ///Checks basic conditions including checking if any element is hovered and item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met
-    /// </summary>
-    protected bool UseBase(PartElement[] elements, ItemActionType itemType)
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-
-        var hoverOverAnything = false;
-        for (int i = 0; i < elements.Length; i++)
-        {
-            if (elements[i].mouseHover && !elements[i].disabled)
-            {
-                hoverOverAnything = true;
-                break;
-            }
-        }
-        if (!hoverOverAnything) { return false; }
-
-        if (!IsCompatibile(itemType))
-        {
-            onPartWrongItem?.Invoke();
-            return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    ///Checks basic conditions including checking if any element is hovered, returns false, if any of them aren't met. Addtionally changes WhatIsHovered to the index of the hovered element
-    /// </summary>
-    protected bool UseBase(PartElement[] elements, ref int whatIsHovered)
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-
-        var hoverOverAnything = false;
-        for (int i = 0; i < elements.Length; i++)
-        {
-            if (elements[i].mouseHover && !elements[i].disabled)
-            {
-                hoverOverAnything = true;
-                whatIsHovered = i;
-                break;
-            }
-        }
-        if (!hoverOverAnything) { return false; }
-
-        return true;
-    }
-
-    /// <summary>
-    ///Checks basic conditions including checking if any element is hovered and item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met. Addtionally changes WhatIsHovered to the index of the hovered element
-    /// </summary>
-    protected bool UseBase(PartElement[] elements, ItemActionType itemType, ref int whatIsHovered)
-    {
-        if (isLocked) { return false; }
-        if (isSolved) { return false; }
-
-        var hoverOverAnything = false;
-        for (int i = 0; i < elements.Length; i++)
-        {
-            if (elements[i].mouseHover && !elements[i].disabled)
-            {
-                hoverOverAnything = true;
-                whatIsHovered = i;
-                break;
-            }
-        }
-        if (!hoverOverAnything) { return false; }
-
-        if (!IsCompatibile(itemType)) 
-        {
-            onPartWrongItem?.Invoke();
-            return false; 
-        }
-
-        return true;
-    }
-    #endregion
 }
