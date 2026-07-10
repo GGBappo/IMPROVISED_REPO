@@ -17,9 +17,14 @@ public class BombPartEditor : Editor
     SerializedProperty onPartUnlocked;
     SerializedProperty onPartWrongItem;
     SerializedProperty sendStrikeOnWrongItem;
+    SerializedProperty bombAnim;
+    SerializedProperty animateOnSolve;
+
 
     bool bases = false;
-    AnimBool basesAB;
+    AnimBool basesAB; 
+    bool animatior = false;
+    AnimBool animatorAB;
     bool locks = false;
     AnimBool locksAB;
     bool highs = false;
@@ -47,6 +52,7 @@ public class BombPartEditor : Editor
         selfLockAB = new AnimBool(false);
         highlightableAB = new AnimBool(false);
         dntAB = new AnimBool(false);
+        animatorAB = new AnimBool(false);
 
         partAB.valueChanged.AddListener(Repaint);
         locksAB.valueChanged.AddListener(Repaint);
@@ -56,6 +62,7 @@ public class BombPartEditor : Editor
         selfLockAB.valueChanged.AddListener(Repaint);
         highlightableAB.valueChanged.AddListener(Repaint);
         dntAB.valueChanged.AddListener(Repaint);
+        animatorAB.valueChanged.AddListener(Repaint);
 
         fragment = serializedObject.FindProperty("fragment");
         compatibileItems = serializedObject.FindProperty("compatibileItems");
@@ -68,6 +75,8 @@ public class BombPartEditor : Editor
         onPartUnlocked = serializedObject.FindProperty("onPartUnlocked");
         onPartWrongItem = serializedObject.FindProperty("onPartWrongItem");
         sendStrikeOnWrongItem = serializedObject.FindProperty("sendStrikeOnWrongItem");
+        bombAnim = serializedObject.FindProperty("bombAnim");
+        animateOnSolve = serializedObject.FindProperty("animateOnSolve");
     }
     #endregion
 
@@ -89,6 +98,24 @@ public class BombPartEditor : Editor
                 EditorGUILayout.PropertyField(compatibileItems);
             }
             EditorGUILayout.EndFadeGroup();
+            EditorGUILayout.Space(5);
+        }
+        EditorGUILayout.EndFadeGroup();
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        //ANIMATOR
+        animatior = EditorGUILayout.BeginFoldoutHeaderGroup(animatior, "Animations");
+        animatorAB.target = animatior;
+        if (EditorGUILayout.BeginFadeGroup(animatorAB.faded))
+        {
+            EditorGUILayout.PropertyField(bombAnim);
+            EditorGUILayout.PropertyField(animateOnSolve);
+            /*dntAB.target = !dontNeedTool.boolValue;
+            if (EditorGUILayout.BeginFadeGroup(dntAB.faded))
+            {
+                EditorGUILayout.PropertyField(compatibileItems);
+            }
+            EditorGUILayout.EndFadeGroup();*/
             EditorGUILayout.Space(5);
         }
         EditorGUILayout.EndFadeGroup();
@@ -156,7 +183,7 @@ public class BombPartEditor : Editor
 
         if (EditorGUILayout.BeginFadeGroup(partAB.faded))
         {
-            string[] toExclude = new string[12];
+            string[] toExclude = new string[14];
             toExclude[0] = "m_Script";
             toExclude[1] = "fragment";
             toExclude[2] = "compatibileItems";
@@ -169,6 +196,8 @@ public class BombPartEditor : Editor
             toExclude[9] = "onPartWrongItem";
             toExclude[10] = "sendStrikeOnWrongItem";
             toExclude[11] = "selfLocked";
+            toExclude[12] = "bombAnim";
+            toExclude[13] = "animateOnSolve";
 
             DrawPropertiesExcluding(serializedObject, toExclude);
 

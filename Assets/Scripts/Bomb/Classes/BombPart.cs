@@ -8,6 +8,7 @@ public abstract class BombPart : MonoBehaviour
     [Tooltip("Reference to the parent BombFragmentManager")]
     [SerializeField] protected BombFragmentManager fragment;
 
+
     [NonReorderable]
     [Tooltip("Action Types, compatibile with the Part")]
     public ItemActionType[] compatibileItems;
@@ -17,6 +18,11 @@ public abstract class BombPart : MonoBehaviour
     [Tooltip("If True, you will be able to interact with this part ONLY without any item, so by simple mouse clicking")]
     public bool dontNeedTool;
 
+    [Tooltip("Animator of the bomb itself(not the lock)")]
+    [SerializeField] protected Animator bombAnim;
+
+    [Tooltip("If True, will send 'Solve' trigger to the bombAnim")]
+    [SerializeField] protected bool animateOnSolve;
 
     [Tooltip("If True, part will not be unlocked the same moment the Fragment does. In order to unlock this part, you will need to trigger Unlock()")]
     public bool selfLocked = false;
@@ -74,6 +80,12 @@ public abstract class BombPart : MonoBehaviour
         onPartSolved?.Invoke();
         if (tasks != null)
             tasks.TaskCompleted();
+
+        if (animateOnSolve && bombAnim != null)
+        {
+            bombAnim.SetTrigger("Solve");
+        }
+
     }
 
     protected bool IsCompatibile(ItemActionType type)

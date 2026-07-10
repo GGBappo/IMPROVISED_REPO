@@ -365,13 +365,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838504546811196697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b0e4f5e7608c04db478a848de88f5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 318ab3c566daa07489f65aee806a20b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestCore01
   fragment: {fileID: 6908558771814485267}
   compatibileItems: 01000000
-  isSolved: 0
   dontNeedTool: 0
+  bombAnim: {fileID: 5582466335451639384}
+  animateOnSolve: 1
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -398,7 +399,7 @@ MonoBehaviour:
   onPartWrongItem:
     m_PersistentCalls:
       m_Calls: []
-  sendStrikeOnWrongItem: 0
+  sendStrikeOnWrongItem: 1
   anim: {fileID: 5582466335451639384}
   disabledMaterial: {fileID: 2100000, guid: 942bf432f858b0848938fa5a6792e269, type: 2}
   render: {fileID: 4767922268678814050}
