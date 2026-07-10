@@ -45,10 +45,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 149006528898439434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
+  m_Script: {fileID: 11500000, guid: 295c9635fc30491498b0e370cffbfd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  parentPart: {fileID: 1923317049480370708}
+  disabled: 0
+  parentPart: {fileID: 4012409010241056522}
   highlightable: 1
   highlight: {fileID: 4567709580378309340}
   isCut: 0
@@ -691,10 +692,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3953943259739170081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
+  m_Script: {fileID: 11500000, guid: 295c9635fc30491498b0e370cffbfd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  parentPart: {fileID: 1923317049480370708}
+  disabled: 0
+  parentPart: {fileID: 4012409010241056522}
   highlightable: 1
   highlight: {fileID: 2371945341961216129}
   isCut: 0
@@ -1127,10 +1129,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5173057851880876072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36d166903df98449a330d270bc6de86, type: 3}
+  m_Script: {fileID: 11500000, guid: 295c9635fc30491498b0e370cffbfd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wire
-  parentPart: {fileID: 1923317049480370708}
+  disabled: 0
+  parentPart: {fileID: 4012409010241056522}
   highlightable: 1
   highlight: {fileID: 8687708360991230223}
   isCut: 0
@@ -1204,7 +1207,7 @@ GameObject:
   - component: {fileID: 7531250786190175033}
   - component: {fileID: 7396275943102151499}
   - component: {fileID: 3608673236341622440}
-  - component: {fileID: 1923317049480370708}
+  - component: {fileID: 4012409010241056522}
   m_Layer: 6
   m_Name: WirePart(NailClipper)(Dont Cut Yellow)
   m_TagString: Untagged
@@ -1323,7 +1326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombFragmentManager
   bomb: {fileID: 0}
   parts:
-  - {fileID: 1923317049480370708}
+  - {fileID: 4012409010241056522}
   toSolveParts: 1
   onFragmentSolved:
     m_PersistentCalls:
@@ -1356,7 +1359,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 5559285343761751916}
---- !u!114 &1923317049480370708
+--- !u!114 &4012409010241056522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1365,13 +1368,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5680203483531871044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc619847f9bd5024195d1d08fd5eddbd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ced953f496f1a141b69ef86e9bdc301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
   fragment: {fileID: 3608673236341622440}
   compatibileItems: 00000000
-  isSolved: 0
   dontNeedTool: 0
+  bombAnim: {fileID: 0}
+  animateOnSolve: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -1401,7 +1405,6 @@ MonoBehaviour:
   sendStrikeOnWrongItem: 1
   wires:
   - {fileID: 6834546503307559373}
-  - {fileID: 5020527679238520426}
   - {fileID: 416919076638388169}
   inOrder: 0
   wiresToCut: 2

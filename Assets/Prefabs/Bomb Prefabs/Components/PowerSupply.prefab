@@ -81,12 +81,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5804747032558115131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4731b660529fae74796cda6436fdc905, type: 3}
+  m_Script: {fileID: 11500000, guid: 36dc80f9e360c0146a9cb537d0fb054a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 798654352006040446}
   compatibileItems: 04000000
-  isSolved: 0
   dontNeedTool: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
@@ -115,6 +114,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   sendStrikeOnWrongItem: 1
+  destroyOnSolve: 0
+  solveAnim: {fileID: 0}
 --- !u!65 &8386204072764511658
 BoxCollider:
   m_ObjectHideFlags: 0
