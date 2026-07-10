@@ -50,7 +50,6 @@ public abstract class BombPart : MonoBehaviour
     [Tooltip("On Awake, adds the Strike as the listener of the onPartWrongItem")]
     [SerializeField] private bool sendStrikeOnWrongItem = true;
 
-    private Tasks tasks;
 
     public abstract bool OnItemUsed(ItemActionType type);
 
@@ -72,8 +71,6 @@ public abstract class BombPart : MonoBehaviour
         isSolved = true;
         SilentLock(); 
         onPartSolved?.Invoke();
-        if (tasks != null)
-            tasks.TaskCompleted();
     }
 
     protected bool IsCompatibile(ItemActionType type)
@@ -107,7 +104,6 @@ public abstract class BombPart : MonoBehaviour
     public virtual void InitializePart()
     {
         timer = FindAnyObjectByType<BombTimer>();
-        tasks = FindAnyObjectByType<Tasks>();
 
         if (sendStrikeOnWrongItem)
         {
