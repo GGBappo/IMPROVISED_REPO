@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class SymbolIcon : MonoBehaviour
+public class LittleLamp : MonoBehaviour
 {
-    [SerializeField] Material[] iconMat;
-    [SerializeField] Material disabledMat;
+    [SerializeField] Material[] lightColors;
+    [SerializeField] Material disabledLight;
     [SerializeField] MeshRenderer render;
     public int current { private set; get; }
     public bool disabled;
@@ -12,14 +12,14 @@ public class SymbolIcon : MonoBehaviour
     {
         if (disabled)
         {
-            render.material = disabledMat;
+            render.material = disabledLight;
             return;
         }
         current++;
-        if(current >= iconMat.Length)
+        if(current >= lightColors.Length)
         {
             current = 0;
         }
-        render.material = iconMat[current];
+        render.material = lightColors[current];
     }
 }

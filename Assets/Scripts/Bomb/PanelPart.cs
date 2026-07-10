@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class SimpleItemPart : BombPart
+public class PanelPart : BombPart
 {
-    [SerializeField] bool destroyOnSolve/*, more different bools*/;
-
-
     public override bool OnItemUsed(ItemActionType type)
     {
-        if (!UseBase(type))
+        if (isLocked) return false;
+
+        if (isSolved) return false;
+
+        if (!IsCompatibile(type))
         {
+            onPartWrongItem?.Invoke();
             return false;
         }
-
         Solve();
         return true;
     }
@@ -19,9 +20,6 @@ public class SimpleItemPart : BombPart
     protected override void Solve()
     {
         base.Solve();
-        if (destroyOnSolve)
-        {
-            gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
     }
 }

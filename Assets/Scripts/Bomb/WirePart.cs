@@ -14,15 +14,24 @@ public class WirePart : BombPart
     {
         int elementID = 0;
 
-        if (!UseBase(wires, type, ref elementID))
-        {
-            return false;
-        }
+        if (isLocked) { return false; }
 
-        
-        if ((elementID != current && inOrder) || (wires[elementID].dontCut))
+        if (isSolved) { return false; }
+
+        var hoverOverAnything = false;
+        for (int i = 0; i < wires.Length; i++)
         {
-            timer.RegisterStrike();
+            if (wires[i].mouseHover && !wires[i].isCut)
+            {
+                hoverOverAnything = true;
+                elementID = i; break;
+            }
+        }
+        if (!hoverOverAnything) { return false; }
+        
+        if ((elementID != current && inOrder) || (wires[elementID].dontCut) || (!IsCompatibile(type)))
+        {
+            onPartWrongItem?.Invoke();
             return false;
         }
 

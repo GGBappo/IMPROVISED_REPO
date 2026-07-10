@@ -8,11 +8,15 @@ public class TestCore01 : BombPart
 
     public override bool OnItemUsed(ItemActionType type)
     {
-        if(!UseBase(type))
+        if (isLocked) return false;
+
+        if (isSolved) return false;
+
+        if (!IsCompatibile(type))
         {
+            onPartWrongItem?.Invoke();
             return false;
         }
-
         RemoveHighlight();
         Solve();
         return true;
@@ -22,5 +26,6 @@ public class TestCore01 : BombPart
     {
         base.Solve();
         render.material = disabledMaterial;
+        anim.SetTrigger("Defused");
     }
 }
