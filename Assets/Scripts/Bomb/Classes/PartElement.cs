@@ -3,7 +3,6 @@ using UnityEngine;
 
 public abstract class PartElement : MonoBehaviour
 {
-    public bool disabled;
     public bool mouseHover {  get; private set; } 
     [SerializeField] BombPart parentPart;
     [SerializeField] protected bool highlightable;
@@ -16,12 +15,12 @@ public abstract class PartElement : MonoBehaviour
     }
     public virtual void Highlight()
     {
-        if (!highlightable || parentPart.isSolved || parentPart.isLocked || disabled) return;
+        if (!highlightable || parentPart.isSolved || parentPart.isLocked) return;
         highlight.SetActive(true);
     }
     public virtual void RemoveHighlight()
     {
-        if (!highlightable || parentPart.isSolved || parentPart.isLocked || disabled) return;
+        if (!highlightable || parentPart.isSolved || parentPart.isLocked) return;
         highlight.SetActive(false);
     }
 }
