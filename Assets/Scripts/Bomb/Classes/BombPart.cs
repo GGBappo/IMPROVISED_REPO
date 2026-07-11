@@ -104,6 +104,7 @@ public abstract class BombPart : MonoBehaviour
     public virtual void InitializePart()
     {
         timer = FindAnyObjectByType<BombTimer>();
+        tasks = FindAnyObjectByType<Tasks>();
 
         if (sendStrikeOnWrongItem)
         {
