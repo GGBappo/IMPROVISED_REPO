@@ -67,6 +67,10 @@ public abstract class BombPart : MonoBehaviour
 
     protected virtual void Solve()
     {
+        if (highlightable)
+        {
+            RemoveHighlight();
+        }
         isSolved = true;
         SilentLock(); 
         onPartSolved?.Invoke();

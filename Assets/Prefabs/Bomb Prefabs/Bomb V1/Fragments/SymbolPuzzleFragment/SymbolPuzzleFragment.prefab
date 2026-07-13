@@ -97,6 +97,34 @@ PrefabInstance:
       propertyPath: fragment
       value: 
       objectReference: {fileID: 9188963107768660515}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5940343821332294017}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisableOvercharged
+      objectReference: {fileID: 0}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SymbolPuzzlePart, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 17728024108113266, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1551795828950836424, guid: 1fb5a4e9adf3225409922ac5d00b461c, type: 3}
       propertyPath: m_Name
       value: OverchargedWire
@@ -255,6 +283,34 @@ PrefabInstance:
       propertyPath: fragment
       value: 
       objectReference: {fileID: 9188963107768660515}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5940343821332294017}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableElectricity
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SymbolPuzzlePart, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869375091497561, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
+      propertyPath: onPartSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4389279150186804017, guid: 6eb1c16d302475742ab4f4e700a64f52, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.09
