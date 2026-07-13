@@ -45,12 +45,11 @@ public abstract class BombPart : MonoBehaviour
     public UnityEvent onPartWrongItem;
 
 
-    private BombTimer timer;
+    protected BombTimer timer;
 
     [Tooltip("On Awake, adds the Strike as the listener of the onPartWrongItem")]
     [SerializeField] private bool sendStrikeOnWrongItem = true;
-
-
+    
     public abstract bool OnItemUsed(ItemActionType type);
 
     public virtual void Highlight()
@@ -68,6 +67,10 @@ public abstract class BombPart : MonoBehaviour
 
     protected virtual void Solve()
     {
+        if (highlightable)
+        {
+            RemoveHighlight();
+        }
         isSolved = true;
         SilentLock(); 
         onPartSolved?.Invoke();
@@ -110,4 +113,136 @@ public abstract class BombPart : MonoBehaviour
             onPartWrongItem.AddListener(timer.RegisterStrike);
         }
     }
+
+    #region UseBase()
+
+    /// <summary>
+    ///Checks basic conditions, returns false, if any of them aren't met
+    /// </summary>
+    protected bool UseBase()
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+        return true;
+    }
+
+    /// <summary>
+    ///Checks basic conditions including checking if any element is hovered, returns false, if any of them aren't met
+    /// </summary>
+    protected bool UseBase(PartElement[] elements)
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+
+        var hoverOverAnything = false;
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].mouseHover && !elements[i].disabled)
+            {
+                hoverOverAnything = true;
+                break;
+            }
+        }
+        if (!hoverOverAnything) { return false; }
+
+        return true;
+    }
+
+    /// <summary>
+    ///Checks basic conditions including checking item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met
+    /// </summary>
+    protected bool UseBase(ItemActionType itemType)
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+
+        if (!IsCompatibile(itemType))
+        {
+            onPartWrongItem?.Invoke();
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///Checks basic conditions including checking if any element is hovered and item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met
+    /// </summary>
+    protected bool UseBase(PartElement[] elements, ItemActionType itemType)
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+
+        var hoverOverAnything = false;
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].mouseHover && !elements[i].disabled)
+            {
+                hoverOverAnything = true;
+                break;
+            }
+        }
+        if (!hoverOverAnything) { return false; }
+
+        if (!IsCompatibile(itemType))
+        {
+            onPartWrongItem?.Invoke();
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///Checks basic conditions including checking if any element is hovered, returns false, if any of them aren't met. Addtionally changes WhatIsHovered to the index of the hovered element
+    /// </summary>
+    protected bool UseBase(PartElement[] elements, ref int whatIsHovered)
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+
+        var hoverOverAnything = false;
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].mouseHover && !elements[i].disabled)
+            {
+                hoverOverAnything = true;
+                whatIsHovered = i;
+                break;
+            }
+        }
+        if (!hoverOverAnything) { return false; }
+
+        return true;
+    }
+
+    /// <summary>
+    ///Checks basic conditions including checking if any element is hovered and item compatibility(invokes OnPartWrongItem), returns false, if any of them aren't met. Addtionally changes WhatIsHovered to the index of the hovered element
+    /// </summary>
+    protected bool UseBase(PartElement[] elements, ItemActionType itemType, ref int whatIsHovered)
+    {
+        if (isLocked) { return false; }
+        if (isSolved) { return false; }
+
+        var hoverOverAnything = false;
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (elements[i].mouseHover && !elements[i].disabled)
+            {
+                hoverOverAnything = true;
+                whatIsHovered = i;
+                break;
+            }
+        }
+        if (!hoverOverAnything) { return false; }
+
+        if (!IsCompatibile(itemType)) 
+        {
+            onPartWrongItem?.Invoke();
+            return false; 
+        }
+
+        return true;
+    }
+    #endregion
 }
