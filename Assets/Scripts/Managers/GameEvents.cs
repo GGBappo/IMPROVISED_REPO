@@ -9,6 +9,7 @@ public static class GameEvents
 
     // state events
     public static event Action<GlobalStateType> OnGlobalStateChanged; // (newState)
+    public static event Action<StartMenuState> OnStartMenuStateChanged;
 
     // scene/level events
     public static event Action<string, TransitionType, bool> OnRequestSceneLoad;
@@ -17,18 +18,31 @@ public static class GameEvents
     public static event Action OnRequestLevelEnd;
     public static event Action OnRequestLevelStart;
     public static event Action<string> OnSceneFullyLoaded; // (sceneName)
+    public static event Action OnRequestDrawerOpen;
+    public static event Action OnRequestDrawerClose;
+    public static event Action OnRequestLatestAssignmentFolderSpawn;
 
     /// UI events
+    public static event Action OnStartButtonPressed; // please note this is to be depricated soon until i refactor the code to use the state manager more
+    public static event Action OnDialogueButtonPressed; // THIS EVENT IS HERE IF NEED BE, IT IS CURRENTLY NOT REFERENCED BY ANYTHING
+    public static event Action OnRequestSettingsMenuOpen;
+    public static event Action OnRequestSettingsMenuClose;
     public static event Action OnShowGameOverRequested;
     public static event Action OnHideGameOverRequested;
+    public static event Action OnShowWinScreenRequested;
+    public static event Action OnHideWinScreenRequested;
     public static event Action<TransitionType, Action> OnTransitionINRequested; 
     public static event Action<TransitionType, Action> OnTransitionOUTRequested; 
+    public static event Action<float, CanvasGroup, Canvas> OnFadeOutUIElementRequested; // (duration, canvasGroup, canvas)
 
     // camera events
-    public static event Action<Vector3, Quaternion, float> OnCameraMoveRequest; // (position, rotation, duration)
-    public static event Action<Vector3, float> OnCameraLookAtRequest; // (targetPosition, duration)
-    public static event Action<GameObject, float> OnCameraLookAtGameObjectRequest; // (targetGameObject, duration)
-    public static event Action<float> OnCameraFOVChangeRequest; // (newFOV)
+    public static event Action<Vector3, Quaternion, float, Vector3?, float?> OnCameraMoveRequest; // (position, rotation, duration, lookAtMarker, FOV)
+    public static event Action<Vector3, float, float> OnCameraLookAtRequest; // (targetPosition, duration, FOV)
+    public static event Action<GameObject, float, float> OnCameraLookAtGameObjectRequest; // (targetGameObject, duration, FOV)
+    public static event Action<float, bool, float> OnCameraFOVChangeRequest; // (newFOV, slowZoom, duration)
+    
+    // Start Screen events
+    public static event Action OnRequestNPCInteractionSequence; // (no parameters)
 
     #region Timer/Strike Calls
     /// <summary>
@@ -55,9 +69,13 @@ public static class GameEvents
     /// Invoke the OnGlobalStateChanged event to notify the state manager that the global state has changed
     /// </summary>
     /// <param name="newState"></param>
-    public static void StateChanged(GlobalStateType newState)
+    public static void GlobalStateChanged(GlobalStateType newState)
     {
         OnGlobalStateChanged?.Invoke(newState);
+    }
+    public static void StartMenuStateChanged(StartMenuState newState)
+    {
+        OnStartMenuStateChanged?.Invoke(newState);
     }
     #endregion
 
@@ -118,9 +136,32 @@ public static class GameEvents
         Debug.Log($"[GameEvents] Scene fully loaded: {sceneName}");
         OnSceneFullyLoaded?.Invoke(sceneName);
     }
+
+    public static void RequestDrawerOpen()
+    {
+        OnRequestDrawerOpen?.Invoke();
+    }
+    public static void RequestDrawerClose()
+    {
+        OnRequestDrawerClose?.Invoke();
+    }
+    public static void RequestLatestAssignmentFolderSpawn()
+    {
+        OnRequestLatestAssignmentFolderSpawn?.Invoke();
+    }
     #endregion
 
     #region UI Calls
+    public static void StartButtonPressed()
+    {
+        OnStartButtonPressed?.Invoke();
+        Debug.Log("[GameEvents] OnStartButtonPressed invoked");
+    }
+    public static void DialougeButtonPressed() // temporarily placed here if need be.
+    {
+        OnDialogueButtonPressed?.Invoke();
+        Debug.Log("[GameEvents] OnDialougeButtonPressed invoked");
+    }
     /// <summary>
     /// Requests the game over screen to be shown.
     /// </summary>
@@ -141,6 +182,18 @@ public static class GameEvents
         Debug.Log("[GameEvents] OnHideGameOverRequested invoked");
     }
 
+    public static void RequestShowWinScreen()
+    {
+        Debug.Log("[GameEvents] Requesting to show Win Screen");
+        OnShowWinScreenRequested?.Invoke();
+        Debug.Log("[GameEvents] OnShowWinScreenRequested invoked");
+    }
+    public static void RequestHideWinScreen()
+    {
+        Debug.Log("[GameEvents] Requesting to hide Win Screen");
+        OnHideWinScreenRequested?.Invoke();
+        Debug.Log("[GameEvents] OnHideWinScreenRequested invoked");
+    }
     /// <summary>
     /// Invokes the <see cref="OnTransitionINRequested"/> event to notify subscribers that a scene transition has been requested. Should be used in conjunction with the <see cref="RequestSceneLoad"/> and <see cref="RequestSceneUnLoad"/> events to trigger visual transitions when loading/unloading scenes.
     /// In addition, it should ALWAYS be followed by <see cref="RequestTransitionOUT"/> in order to complete the transition.
@@ -159,32 +212,56 @@ public static class GameEvents
         Debug.Log($"[GameEvents] Requesting transition OUT of type: {transition}");
         OnTransitionOUTRequested?.Invoke(transition, onComplete);
     }
+
+    public static void RequestFadeOutUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
+    {
+        Debug.Log($"[GameEvents] Requesting fade out of UI element: {canvasGroup?.name ?? canvas?.name} over duration: {duration}");
+        OnFadeOutUIElementRequested?.Invoke(duration, canvasGroup, canvas);
+    }
+    public static void RequestSettingsMenuOpen()
+    {
+        Debug.Log("[GameEvents] Requesting to open Settings Menu");
+        OnRequestSettingsMenuOpen?.Invoke();
+    }
+    public static void RequestSettingsMenuClose()
+    {
+        Debug.Log("[GameEvents] Requesting to close Settings Menu");
+        OnRequestSettingsMenuClose?.Invoke();
+    }
     #endregion
 
     #region Camera Calls
 
-    public static void RequestCameraMove(Vector3 position, Quaternion rotation, float duration)
+    public static void RequestCameraMove(Vector3 position, Quaternion rotation, float duration, Vector3? lookAtMarker = null, float? FOV = null)
     {
         Debug.Log($"[GameEvents] Requesting camera move to position: {position}, rotation: {rotation}, duration: {duration}");
-        OnCameraMoveRequest?.Invoke(position, rotation, duration);
+        OnCameraMoveRequest?.Invoke(position, rotation, duration, lookAtMarker, FOV);
     }
 
-    public static void RequestCameraLookAt(Vector3 targetPosition, float duration)
+    public static void RequestCameraLookAt(Vector3 targetPosition, float duration, float FOV = 50f)
     {
-        Debug.Log($"[GameEvents] Requesting camera to look at position: {targetPosition}, duration: {duration}");
-        OnCameraLookAtRequest?.Invoke(targetPosition, duration);
+        Debug.Log($"[GameEvents] Requesting camera to look at position: {targetPosition}, duration: {duration}, FOV: {FOV}");
+        OnCameraLookAtRequest?.Invoke(targetPosition, duration, FOV);
     }
 
-    public static void RequestCameraLookAt(GameObject target, float duration)
+    public static void RequestCameraLookAt(GameObject target, float duration, float FOV = 50f)
     {
-        Debug.Log($"[GameEvents] Requesting camera to look at GameObject: {target.name}, duration: {duration}");
-        OnCameraLookAtGameObjectRequest?.Invoke(target, duration);
+        Debug.Log($"[GameEvents] Requesting camera to look at GameObject: {target.name}, duration: {duration}, FOV: {FOV}");
+        OnCameraLookAtGameObjectRequest?.Invoke(target, duration, FOV);
     }
 
-    public static void RequestCameraFOVChange(float FOV)
+    public static void RequestCameraFOVChange(float FOV, bool slowZoom = false, float duration = 1f)
     {
-        Debug.Log($"[GameEvents] Requesting camera FOV change to: {FOV}");
-        OnCameraFOVChangeRequest?.Invoke(FOV);
+        Debug.Log($"[GameEvents] Requesting camera FOV change to: {FOV}, slowZoom: {slowZoom}, duration: {duration}");
+        OnCameraFOVChangeRequest?.Invoke(FOV, slowZoom, duration);
+    }
+    #endregion
+
+    #region Start Screen Calls
+    public static void RequestNPCInteractionSequence()
+    {
+        Debug.Log("[GameEvents] Requesting NPC interaction sequence");
+        OnRequestNPCInteractionSequence?.Invoke();
     }
     #endregion
 }

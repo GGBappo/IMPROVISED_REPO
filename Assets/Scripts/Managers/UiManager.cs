@@ -1,8 +1,8 @@
 using UnityEngine;
 using System;
+using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
-
-
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup _loadingScreen;
     [SerializeField] private CanvasGroup _gameOverScreen;
     [SerializeField] private CanvasGroup _pauseScreen;
+    [SerializeField] private CanvasGroup _winScreen;
+
     [SerializeField] private float _globalTransitionSpeed = 1f;
 
     private readonly Dictionary<TransitionType, ITransition> _transitions = new Dictionary<TransitionType, ITransition>();
@@ -17,6 +19,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         HideGameOverScreen();
+        HideWinScreen();
         _transitions.Add(TransitionType.Fade, new Fade());
     }
 
@@ -25,6 +28,9 @@ public class UIManager : MonoBehaviour
         GameEvents.OnTransitionOUTRequested += HandleTransitionOut;
         GameEvents.OnShowGameOverRequested += ShowGameOverScreen;
         GameEvents.OnHideGameOverRequested += HideGameOverScreen;
+        GameEvents.OnShowWinScreenRequested += ShowWinScreen;
+        GameEvents.OnHideWinScreenRequested += HideWinScreen;
+        GameEvents.OnFadeOutUIElementRequested += FadeOutUIElement;
     }
 
     private void OnDisable() {
@@ -32,6 +38,9 @@ public class UIManager : MonoBehaviour
         GameEvents.OnTransitionOUTRequested -= HandleTransitionOut;
         GameEvents.OnShowGameOverRequested -= ShowGameOverScreen;
         GameEvents.OnHideGameOverRequested -= HideGameOverScreen;
+        GameEvents.OnShowWinScreenRequested -= ShowWinScreen;
+        GameEvents.OnHideWinScreenRequested -= HideWinScreen;
+        GameEvents.OnFadeOutUIElementRequested -= FadeOutUIElement;
     }
 
     private void HandleTransitionIn(TransitionType type, Action onComplete)
@@ -61,7 +70,7 @@ public class UIManager : MonoBehaviour
         _gameOverScreen.blocksRaycasts = false;
         Debug.Log("[UIManager] Hiding Game Over Screen");
     }
-
+    
     private void ShowPauseScreen()
     {
         _pauseScreen.alpha = 1f;
@@ -75,5 +84,41 @@ public class UIManager : MonoBehaviour
         _pauseScreen.interactable = false;
         _pauseScreen.blocksRaycasts = false;
         Debug.Log("[UIManager] Hiding Pause Screen");
+    }
+
+    private void ShowWinScreen()
+    {
+        _winScreen.alpha = 1f;
+        _winScreen.interactable = true;
+        _winScreen.blocksRaycasts = true;
+        Debug.Log("[UIManager] Showing Win Screen");
+    }
+    private void HideWinScreen()
+    {
+        _winScreen.alpha = 0f;
+        _winScreen.interactable = false;
+        _winScreen.blocksRaycasts = false;
+        Debug.Log("[UIManager] Hiding Win Screen");
+    }
+    private void FadeOutUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
+    {
+        if (canvasGroup == null && canvas == null)
+        {
+            Debug.LogWarning("[UIManager] No CanvasGroup or Canvas provided for fade out.");
+            return;
+        }
+        else if(canvasGroup != null)
+        {
+            canvasGroup.DOFade(0f, duration);
+        }
+        else
+        {
+            CanvasGroup cg = canvas.GetComponent<CanvasGroup>();
+            if (cg == null)
+            {
+                cg = canvas.gameObject.AddComponent<CanvasGroup>();
+            }
+            cg.DOFade(0f, duration);
+        }
     }
 }

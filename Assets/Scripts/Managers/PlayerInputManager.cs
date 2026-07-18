@@ -35,11 +35,11 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (_currentGameState == GlobalStateType.Menu)
             {
-                GameEvents.StateChanged(GlobalStateType.Active);
+                GameEvents.GlobalStateChanged(GlobalStateType.Active);
             }
             else
             {
-                GameEvents.StateChanged(GlobalStateType.Menu);
+                GameEvents.GlobalStateChanged(GlobalStateType.Menu);
             }
         }
     }

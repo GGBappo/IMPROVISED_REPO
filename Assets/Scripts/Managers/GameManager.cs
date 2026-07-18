@@ -14,6 +14,6 @@ public class GameManager : MonoBehaviour
     private void HandleTimeExpiration()
     {
         GameSessionData.lostOnTime = true;
-        GameEvents.StateChanged(GlobalStateType.Outcome);
+        GameEvents.GlobalStateChanged(GlobalStateType.Outcome);
     }
 }
