@@ -47,12 +47,16 @@ public class BombManager : MonoBehaviour
     public void TriggerExplosion()
     {
         currentState = BombState.Exploded;
+        GameSessionData.lost = true;
+        GameEvents.GlobalStateChanged(GlobalStateType.Outcome);
         Debug.Log("BOMB EXPLODED! :(");
     }
 
     public void TriggerDefused()
     {
         currentState = BombState.Defused;
+        GameSessionData.won = true;
+        GameEvents.GlobalStateChanged(GlobalStateType.Outcome);
         Debug.Log("BOMB DEFUSED! :)");
     }
 

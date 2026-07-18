@@ -10,8 +10,8 @@ public class TestButton : MonoBehaviour
 
         myButton.onClick.AddListener(() => 
         {
-            GameEvents.RequestCameraLookAt(_targetObject.transform.position, 1.5f);
+            GameEvents.StartButtonPressed();
+            GameEvents.StartMenuStateChanged(StartMenuState.TaskHandout);
         });
-        
     }
 }

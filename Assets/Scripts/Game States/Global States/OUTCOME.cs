@@ -6,10 +6,9 @@ public class OUTCOME : IGameState
     {
         if (GameSessionData.won)
         {
-            // for the time being till we work on a win screen it'll call a game over
-            GameEvents.RequestShowGameOverScreen();
+            GameEvents.RequestShowWinScreen();
         }
-        else if (GameSessionData.lostOnTime || GameSessionData.lostOnStrikes) // should we have two different screens for cause of death?
+        else if (GameSessionData.lostOnTime || GameSessionData.lostOnStrikes || GameSessionData.lost) // should we have two different screens for cause of death?
         {
             GameEvents.RequestShowGameOverScreen();
         }
@@ -23,5 +22,6 @@ public class OUTCOME : IGameState
     public void ExitState()
     {
         GameEvents.RequestHideGameOverScreen();
+        GameEvents.RequestHideWinScreen();
     }
 }

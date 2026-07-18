@@ -18,6 +18,7 @@ public static class GameSessionData
     #region Level Outcomes
     public static bool lostOnTime;
     public static bool lostOnStrikes;
+    public static bool lost;
     public static bool won;  
     #endregion
 }
