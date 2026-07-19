@@ -2951,6 +2951,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2120810071}
     m_Modifications:
+    - target: {fileID: 2200779374380500421, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2858091072978514354, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
       propertyPath: tooltipText
       value: 
@@ -2962,6 +2966,10 @@ PrefabInstance:
     - target: {fileID: 2859857582711791080, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
       propertyPath: onFragmentSolved.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132722936063746872, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5633663394580436338, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
       propertyPath: m_IsActive

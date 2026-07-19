@@ -50,14 +50,18 @@ public class Tooltips : MonoBehaviour
 
     private void ShowToolTip()
     {
-        if (tooltipPanel == null || tooltipText == null || bombPartManager == null)
+        if (tooltipPanel == null || tooltipText == null || bombPartManager == null || bombPartManager.isSolved)
+        {
+            HideToolTip();
             return;
+        }
 
         bool isHovered = BombHoveringManager.hoveredBombPart == bombPartManager;
 
-        if (bombPartManager.isSolved || !isHovered || tooltipLines.Count == 0)
+        if (!isHovered)
         {
-            HideToolTip();
+            if (tooltipPanel.activeSelf && tooltipLines.Contains(tooltipText.text))
+                HideToolTip();
             return;
         }
 

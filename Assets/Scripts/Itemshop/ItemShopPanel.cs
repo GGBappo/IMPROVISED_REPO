@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 //This class controls the item shop panel.
@@ -136,5 +137,11 @@ public class ItemShopPanel : MonoBehaviour
 
         Debug.LogWarning("No spawn point found for item: " + item.name);
         return item.transform.position;
+    }
+
+    //Used for when item is let go. Item when let go returns to spawnpoint in which it came from.
+    public void ReturnToSpawnPoint(InteractableItem item)
+    {
+        
     }
 }
