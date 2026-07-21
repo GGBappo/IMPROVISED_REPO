@@ -35,7 +35,7 @@ public class BombHoveringManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, bombPartMask))
         {
-            BombPart part = hit.collider.GetComponent<BombPart>();
+            BombPart part = hit.collider.GetComponentInParent<BombPart>();
 
             if (part != null)
             {
