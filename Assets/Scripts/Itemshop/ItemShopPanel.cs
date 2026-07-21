@@ -142,6 +142,7 @@ public class ItemShopPanel : MonoBehaviour
     //Used for when item is let go. Item when let go returns to spawnpoint in which it came from.
     public void ReturnToSpawnPoint(InteractableItem item)
     {
+        //get the spawn point of the item and set its position to it
         
     }
 }
