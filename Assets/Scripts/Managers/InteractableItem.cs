@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 //such as dragging and dropping, using, and hovering over them.
 public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-
     public Item_SO itemData;
     public Vector3 spawnPos;
     private Vector3 spawnRot;
@@ -20,6 +19,9 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private bool isHovered = false;
     private bool isDragging = false;
+    private bool isReturning = false;
+
+    private Coroutine returner;
 
     public virtual ItemActionType ActionType
     {
@@ -34,7 +36,7 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         budgetManager = FindObjectOfType<BudgetManager>();
         itemShopPanel = FindObjectOfType<ItemShopPanel>();
-    }   
+    }
 
     private void Start()
     {
@@ -49,7 +51,7 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Update()
     {
-        if (itemData == null) return;
+        if (itemData == null || isReturning) return;
 
         // If not being interacted with, do not apply any updates
         if (!isHovered && !isDragging) return;
@@ -73,8 +75,8 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
             OnRightClick();
         }
 
-            // Smoothly transition Y position
-            Vector3 pos = transform.position;
+        // Smoothly transition Y position
+        Vector3 pos = transform.position;
         pos.y = Mathf.Lerp(pos.y, targetY, Time.deltaTime * 10f);
 
         if (isDragging)
@@ -97,7 +99,7 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (rb != null)
         {
-            if (isDragging || isHovered)
+            if (isDragging || isHovered || isReturning)
             {
                 rb.useGravity = false;
                 rb.linearVelocity = Vector3.zero;
@@ -108,6 +110,18 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 rb.useGravity = wasGravityEnabled;
             }
         }
+    }
+
+    private void StopReturnRoutine()
+    {
+        if (returner != null)
+        {
+            StopCoroutine(returner);
+            returner = null;
+        }
+
+        isReturning = false;
+        UpdateGravityState();
     }
 
     public virtual void OnUse()
@@ -127,14 +141,14 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isDragging) return;
+        if (isDragging || isReturning) return;
         isHovered = true;
         UpdateGravityState();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isDragging) return;
+        if (isDragging || isReturning) return;
         isHovered = false;
         UpdateGravityState();
     }
@@ -145,8 +159,13 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isReturning) return;
+
+        StopReturnRoutine();
+
         isDragging = true;
         UpdateGravityState();
+
         itemCollider = GetComponent<Collider>();
         if (itemCollider != null)
         {
@@ -156,6 +175,8 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isReturning) return;
+
         isDragging = false;
         isHovered = false;
         UpdateGravityState();
@@ -165,15 +186,16 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
             itemCollider.enabled = true;
         }
 
-        // Reset spawnPos to the drop location if it's placed in the world
-        spawnPos = new Vector3(transform.position.x, spawnPos.y, transform.position.z);
-
         OnUse();
-        Debug.Log("Dropped: " + gameObject.name);
+        OnDrop(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        LocateSpecialItem(this);
+
+        if (isReturning) return;
+
         Camera cam = eventData.pressEventCamera != null ? eventData.pressEventCamera : Camera.main;
         if (cam == null) return;
 
@@ -198,43 +220,55 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (isReturning) return;
+
+        Debug.Log("Dropped on: " + gameObject.name);
+
+        StopReturnRoutine();
+        returner = StartCoroutine(ReturnToSpawnPoint());
     }
 
     // Fallbacks for standard physics mouse events
     private void OnMouseEnter()
     {
-        if (isDragging) return;
+        if (isDragging || isReturning) return;
         isHovered = true;
         UpdateGravityState();
     }
 
     private void OnMouseExit()
     {
-        if (isDragging) return;
+        if (isDragging || isReturning) return;
         isHovered = false;
         UpdateGravityState();
     }
 
     private void OnMouseDown()
     {
+        if (isReturning) return;
+
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         OnBeginDrag(eventData);
     }
 
     private void OnMouseDrag()
     {
+        if (isReturning) return;
+
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         OnDrag(eventData);
     }
 
     private void OnMouseUp()
     {
+        if (isReturning) return;
+
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         OnEndDrag(eventData);
     }
 
     //While Item is not being dragged or used and the mouse is on it and then
-    //the player right clicks, the item will be sold. 
+    //the player right clicks, the item will be sold.
     private void OnRightClick()
     {
         budgetManager.SellItem(itemData);
@@ -244,5 +278,64 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         Debug.Log("Sold: " + gameObject.name);
         budgetManager.CurrentMoney();
+    }
+
+    //Used for when item is let go. Item when let go returns to spawnpoint in which it came from.
+    public IEnumerator ReturnToSpawnPoint()
+    {
+
+        yield return new WaitForSeconds(3f);
+
+        isReturning = true;
+        UpdateGravityState();
+
+        Debug.Log("Waiting 3 seconds Returning " + gameObject.name + " to spawn point.");
+
+        if (itemCollider != null)
+        {
+            itemCollider.enabled = false;
+        }
+
+        if (rb != null)
+        {
+            rb.useGravity = false;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+        }
+
+        while (Vector3.Distance(transform.position, spawnPos) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, spawnPos, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(spawnRot), Time.deltaTime * 10f);
+            yield return null;
+        }
+
+        transform.position = spawnPos;
+        transform.rotation = Quaternion.Euler(spawnRot);
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = wasGravityEnabled;
+        }
+
+        if (itemCollider != null)
+        {
+            itemCollider.enabled = true;
+        }
+
+        isReturning = false;
+        returner = null;
+
+        Debug.Log("Returned " + gameObject.name + " to spawn point.");
+    }
+
+    private void LocateSpecialItem(InteractableItem item)
+    {
+        if(item.CompareTag("Special-Item"))
+        {
+            Debug.Log("Special Item Found: " + item.name);
+        }
     }
 }
