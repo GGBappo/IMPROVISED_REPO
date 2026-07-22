@@ -23,7 +23,7 @@ public class ItemShopPanel : MonoBehaviour
 
     private void Awake()
     {
-        if(budgetManager == null)
+        if (budgetManager == null)
         {
             //find the budget manager in the scene if it is not assigned in the inspector
             budgetManager = FindObjectOfType<BudgetManager>();
@@ -44,8 +44,8 @@ public class ItemShopPanel : MonoBehaviour
     }
 
     public void OnItemBought(Item_SO item)
-    {        
-        if(purchasedItems.Count >= 5 || boughtItems[item.itemName])
+    {
+        if (boughtItems[item.itemName])
         {
             Debug.LogWarning("Cant buy this item");
             return;
@@ -114,18 +114,18 @@ public class ItemShopPanel : MonoBehaviour
         //ContainsValue is used to check if the item is in the table,
         //if it is, it finds the corresponding spawn point and sets it to null
 
-            //find the spawn point that corresponds to the item and set it to null
-            foreach (var kvp in purchasedItems)
-            {
-                if (kvp.Value == null) continue;
+        //find the spawn point that corresponds to the item and set it to null
+        foreach (var kvp in purchasedItems)
+        {
+            if (kvp.Value == null) continue;
 
-                if (kvp.Value.itemData.itemName == item.itemData.itemName)
-                {
-                    boughtItems[item.itemData.itemName] = false;
-                    purchasedItems[kvp.Key] = null;
-                    break;
-                }
+            if (kvp.Value.itemData.itemName == item.itemData.itemName)
+            {
+                boughtItems[item.itemData.itemName] = false;
+                purchasedItems[kvp.Key] = null;
+                break;
             }
+        }
     }
     public Vector3 GetSpawnPoint(InteractableItem item)
     {
@@ -137,12 +137,5 @@ public class ItemShopPanel : MonoBehaviour
 
         Debug.LogWarning("No spawn point found for item: " + item.name);
         return item.transform.position;
-    }
-
-    //Used for when item is let go. Item when let go returns to spawnpoint in which it came from.
-    public void ReturnToSpawnPoint(InteractableItem item)
-    {
-        //get the spawn point of the item and set its position to it
-        
     }
 }

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0797c409cd8c3f34fab78edf126c344b, type: 3}
-  m_Name: Potato
+  m_Name: IceCube
   m_EditorClassIdentifier: Assembly-CSharp::Item_SO
   itemSprite: {fileID: 0}
-  prefab: {fileID: -2952815541480023075, guid: 2032dd8c1096be64894657fc1689b816, type: 3}
-  itemName: Potato
-  cost: 20
-  sellValue: 15
-  hint: Potatos are known for their ability to be prettyyyy conductive!
+  prefab: {fileID: 360312784840501975, guid: e3895eebbd0781e42ab2ed8a80d3718a, type: 3}
+  itemName: IceCube
+  cost: 5
+  sellValue: 0
+  hint: This thing is cold as shit!
   isSingleUse: 1
   hoverHeight: 1.432
   hoverRot: 1.757
