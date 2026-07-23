@@ -2824,6 +2824,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Special-Item
       objectReference: {fileID: 0}
+    - target: {fileID: 4679197577131479792, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: specialSpawnPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4679197577131479792, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: 'specialSpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 913187641}
+    - target: {fileID: 4679197577131479792, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: 'specialSpawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 245345835}
+    - target: {fileID: 4679197577131479792, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: 'specialSpawnPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 497757632}
     - target: {fileID: 5633663394580436338, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
       propertyPath: m_IsActive
       value: 1

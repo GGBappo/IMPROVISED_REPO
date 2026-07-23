@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,6 +21,9 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private bool isHovered = false;
     private bool isDragging = false;
     private bool isReturning = false;
+
+    [Header("Special Item Spawn Points")]
+    [SerializeField] private List<Transform> specialSpawnPoints = new List<Transform>();
 
     private Coroutine returner;
 
@@ -284,12 +288,12 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public IEnumerator ReturnToSpawnPoint()
     {
 
+        Debug.Log("Waiting 3 seconds Returning " + gameObject.name + " to spawn point.");
+
         yield return new WaitForSeconds(3f);
 
         isReturning = true;
         UpdateGravityState();
-
-        Debug.Log("Waiting 3 seconds Returning " + gameObject.name + " to spawn point.");
 
         if (itemCollider != null)
         {
@@ -304,20 +308,35 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
             rb.isKinematic = true;
         }
 
-        while (Vector3.Distance(transform.position, spawnPos) > 0.01f)
+        Vector3 targetPosition = spawnPos;
+        Quaternion targetRotation = Quaternion.Euler(spawnRot);
+
+        if (CompareTag("Special-Item"))
         {
-            transform.position = Vector3.Lerp(transform.position, spawnPos, Time.deltaTime * 10f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(spawnRot), Time.deltaTime * 10f);
+            Transform specialSpawnPoint = GetAvailableSpecialSpawnPoint();
+            if (specialSpawnPoint != null)
+            {
+                targetPosition = specialSpawnPoint.position;
+                targetRotation = specialSpawnPoint.rotation;
+            }
+        }
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
             yield return null;
         }
 
-        transform.position = spawnPos;
-        transform.rotation = Quaternion.Euler(spawnRot);
+        transform.position = targetPosition;
+        transform.rotation = targetRotation;
 
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.useGravity = wasGravityEnabled;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         if (itemCollider != null)
@@ -329,6 +348,24 @@ public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
         returner = null;
 
         Debug.Log("Returned " + gameObject.name + " to spawn point.");
+    }
+
+    private Transform GetAvailableSpecialSpawnPoint()
+    {
+        for (int i = 0; i < specialSpawnPoints.Count; i++)
+        {
+            if (specialSpawnPoints[i] == null)
+            {
+                continue;
+            }
+
+            if (specialSpawnPoints[i].childCount == 0)
+            {
+                return specialSpawnPoints[i];
+            }
+        }
+
+        return null;
     }
 
     private void LocateSpecialItem(InteractableItem item)
