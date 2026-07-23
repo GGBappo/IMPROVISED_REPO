@@ -18,11 +18,8 @@ MonoBehaviour:
   cost: 20
   sellValue: 15
   hint: If only I had some RUBBER to stop electricity flow!
-  compatiblePartTypes:
-  - Battery
-  - Electric Motor
-  isSingleUse: 0
+  isSingleUse: 1
   hoverHeight: 1.432
-  hoverRot: {x: 0, y: 0, z: 0, w: 0}
+  hoverRot: 1.757
   dragHeight: 1.757
-  dragRot: {x: 0, y: 0, z: 0, w: 0}
+  dragRot: 0
