@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aacfc17af882564eb8bdb8a1ed588fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _sceneToStartOn: StartMenu
 --- !u!1 &191555933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,7 +2431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   levelDatabase: {fileID: 11400000, guid: d41d9de383c41db4c995c04478931251, type: 2}
   currentLevel: {fileID: 0}
-  currentLevelIndex: 0
+  currentLevelIndex: 1
 --- !u!1 &1620416120
 GameObject:
   m_ObjectHideFlags: 0

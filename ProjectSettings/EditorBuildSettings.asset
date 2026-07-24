@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 1b1bf97f28d8eae41b88e3d0e5c4c3e6
+  - enabled: 1
+    path: Assets/Scenes/Bootstrapper.unity
+    guid: 81da6d91a01c0134896952ec2b45db4a
+  - enabled: 1
+    path: Assets/Scenes/BappoMiniGameTest.unity
+    guid: 6a2e21ed731c25e44b5deae574ac1b9a
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

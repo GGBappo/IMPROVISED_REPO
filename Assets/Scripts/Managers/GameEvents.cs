@@ -34,6 +34,7 @@ public static class GameEvents
     public static event Action<TransitionType, Action> OnTransitionINRequested; 
     public static event Action<TransitionType, Action> OnTransitionOUTRequested; 
     public static event Action<float, CanvasGroup, Canvas> OnFadeOutUIElementRequested; // (duration, canvasGroup, canvas)
+    public static event Action<float, CanvasGroup, Canvas> OnFadeInUIElementRequested; // (duration, canvasGroup, canvas)
 
     // camera events
     public static event Action<Vector3, Quaternion, float, Vector3?, float?> OnCameraMoveRequest; // (position, rotation, duration, lookAtMarker, FOV)
@@ -217,6 +218,11 @@ public static class GameEvents
     {
         Debug.Log($"[GameEvents] Requesting fade out of UI element: {canvasGroup?.name ?? canvas?.name} over duration: {duration}");
         OnFadeOutUIElementRequested?.Invoke(duration, canvasGroup, canvas);
+    }
+    public static void RequestFadeInUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
+    {
+        Debug.Log($"[GameEvents] Requesting fade in of UI element: {canvasGroup?.name ?? canvas?.name} over duration: {duration}");
+        OnFadeInUIElementRequested?.Invoke(duration, canvasGroup, canvas);
     }
     public static void RequestSettingsMenuOpen()
     {
