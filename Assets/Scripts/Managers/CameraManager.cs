@@ -47,26 +47,25 @@ public class CameraManager : MonoBehaviour
     {
         _mainCamera.transform.DOKill();
         _mainCamera.DOKill();
-        Sequence cameraMoveSequence = DOTween.Sequence();
         if (lookAtMarker.HasValue)
         {
-            cameraMoveSequence.Append(_mainCamera.transform.DOLookAt(lookAtMarker.Value, duration)
-                .SetEase(Ease.InOutSine));
+            _mainCamera.transform.DOLookAt(lookAtMarker.Value, duration)
+                .SetEase(Ease.InOutSine);
         } 
         else
         {
-            cameraMoveSequence.Append(_mainCamera.transform.DORotateQuaternion(rotation, duration))
+            _mainCamera.transform.DORotateQuaternion(rotation, duration)
                 .SetEase(Ease.InOutSine);
         }
 
         if (FOV.HasValue && FOV.Value != _mainCamera.fieldOfView)
         {
-            cameraMoveSequence.Append(_mainCamera.DOFieldOfView(FOV.Value, duration)
-                .SetEase(Ease.InOutSine));
+            _mainCamera.DOFieldOfView(FOV.Value, duration)
+                .SetEase(Ease.InOutSine);
         }
 
-        cameraMoveSequence.Append(_mainCamera.transform.DOMove(position, duration)
-            .SetEase(Ease.InOutSine));
+        _mainCamera.transform.DOMove(position, duration)
+            .SetEase(Ease.InOutSine);
     }
     
     private void LookAtTarget(Vector3 targetPosition, float duration, float FOV = _defaultFOV)

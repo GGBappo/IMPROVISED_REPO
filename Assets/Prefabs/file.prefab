@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2057707356369169829}
   - component: {fileID: 6821295882159365507}
+  - component: {fileID: 3358724007512113028}
   m_Layer: 0
   m_Name: file
   m_TagString: Untagged
@@ -50,6 +51,29 @@ MonoBehaviour:
   _levelNameText: {fileID: 0}
   _moduleAmountText: {fileID: 0}
   _bestTimeText: {fileID: 0}
+--- !u!114 &3358724007512113028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719599333822726224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineAnimate
+  m_Target: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_LoopMode: 0
+  m_Method: 0
+  m_Duration: 0.7
+  m_MaxSpeed: 10
+  m_EasingMode: 2
+  m_AlignmentMode: 1
+  m_ObjectForwardAxis: 2
+  m_ObjectUpAxis: 1
+  m_StartOffset: 0
 --- !u!1 &5423865641189592059
 GameObject:
   m_ObjectHideFlags: 0
