@@ -4,7 +4,7 @@ public class DraggableIItems : MonoBehaviour
 {
     private float lockedY;
     private float lockedZ;
-
+    private GameObject pongBall;
 
     private Vector3 mousePos;
 

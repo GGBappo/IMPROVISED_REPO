@@ -18,8 +18,8 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: 6a2e21ed731c25e44b5deae574ac1b9a, type: 3}
     sceneName: BappoMiniGameTest
   startingBudget: 0
-  bombPrefab: {fileID: 0}
-  timerSeconds: 0
+  bombPrefab: {fileID: 8543234668498080712, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+  timerSeconds: 1000
   isDud: 0
   storyEvents: []
   isUnlocked: 0
