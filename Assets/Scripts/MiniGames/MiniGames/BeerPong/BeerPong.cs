@@ -6,29 +6,42 @@ public class BeerPong : MiniGame
     [SerializeField] private QTE qte; // Reference to the QTE script
     [SerializeField] private GameObject pongBall;// Reference to the pong ball GameObject
     [SerializeField] private Transform pongBallSpawnPoint; // Reference to the spawn point for the pong ball
+    [SerializeField] private PhysicsMaterial bounceMaterial; // Bouncy material for the ball
 
 
-    private float lockedY;
-    private float lockedZ;
-
+    private float lockedZ; // Fixed depth from camera
+    private Rigidbody ballRb; // Cached Rigidbody
     private Vector3 mousePos;
 
 
     private void Start()
     {
-        lockedY = pongBallSpawnPoint.position.y;
-        lockedZ = pongBallSpawnPoint.position.z;
+        // Cache Rigidbody and disable physics while dragging
+        ballRb = pongBall.GetComponent<Rigidbody>();
+        if (ballRb != null)
+        {
+            ballRb.isKinematic = true;
+            ballRb.useGravity = false;
+        }
+        else
+        {
+            Debug.LogWarning("[BeerPong] Pong ball missing Rigidbody component.");
+        }
 
-        mousePos = new Vector3(mousePos.x, lockedY, lockedZ);
+        // Fixed Z depth for dragging
+        lockedZ = pongBallSpawnPoint.position.z;
     }
 
     private void OnMouseDrag()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos = new Vector3(mousePos.x, lockedY, lockedZ);
-        pongBall.transform.position = mousePos;
-
-        Debug.Log("Mouse Position: " + mousePos);
+        // Convert mouse position to world position on fixed Z plane
+        Vector3 screenPoint = Input.mousePosition;
+        // Distance from camera to the fixed Z plane
+        screenPoint.z = Mathf.Abs(Camera.main.transform.position.z - lockedZ);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPoint);
+        worldPos.z = lockedZ; // lock depth
+        pongBall.transform.position = worldPos;
+        Debug.Log("[BeerPong] Dragging ball to: " + worldPos);
     }
 
 
