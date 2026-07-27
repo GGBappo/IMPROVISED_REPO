@@ -11,7 +11,7 @@ public class MainMenuButton : MonoBehaviour
         myButton.onClick.AddListener(() => 
         {
             //GameEvents.RequestEndLevel();
-            GameEvents.RequestCameraFOVChange(50f);
+            //GameEvents.RequestCameraFOVChange(50f);
         });
         
     }

@@ -205,20 +205,19 @@ public abstract class InteractableItem : MonoBehaviour, IPointerEnterHandler, IP
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        // Raycast against the environment/world
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        // To fix the cursor desync, we project onto a mathematical plane at the object's current height.
+        // This naturally accounts for camera FOV and perspective, keeping the object perfectly under the cursor!
+        Plane plane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
+        
+        if (plane.Raycast(ray, out float enter))
         {
-            transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        }
-        else
-        {
-            // Fallback: project onto a horizontal plane at spawnPos height
-            Plane plane = new Plane(Vector3.up, spawnPos);
-            if (plane.Raycast(ray, out float enter))
-            {
-                Vector3 planePoint = ray.GetPoint(enter);
-                transform.position = new Vector3(planePoint.x, transform.position.y, planePoint.z);
-            }
+            Vector3 planePoint = ray.GetPoint(enter);
+
+            // Optional: If you explicitly want to multiply movement by FOV, you can scale the difference here,
+            // but the plane raycast above perfectly synchronizes the cursor out-of-the-box.
+            //float fovMultiplier = cam.fieldOfView / 60f; 
+            
+            transform.position = new Vector3(planePoint.x, transform.position.y, planePoint.z);
         }
     }
 

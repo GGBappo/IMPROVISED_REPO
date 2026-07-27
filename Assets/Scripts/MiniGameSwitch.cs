@@ -15,6 +15,10 @@ public class MiniGameSwitch : MonoBehaviour
 
     private void Start()
     {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
         arrowLeft.SetActive(false);
     }
 

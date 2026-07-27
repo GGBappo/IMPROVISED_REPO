@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
             
             if (cameraMarker != null)
             {
-                GameEvents.RequestCameraMove(cameraMarker.transform.position, cameraMarker.transform.rotation, 0f, FOV: 5f);
+                GameEvents.RequestCameraMove(cameraMarker.transform.position, cameraMarker.transform.rotation, 0f, FOV: 50f);
             }
         }
     }
