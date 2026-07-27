@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 //Controls all the interactions with the items in the inventory,
 //such as dragging and dropping, using, and hovering over them.
-public class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public abstract class InteractableItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     public Item_SO itemData;
     public Vector3 spawnPos;
