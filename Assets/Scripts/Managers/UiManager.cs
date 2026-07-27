@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnShowWinScreenRequested += ShowWinScreen;
         GameEvents.OnHideWinScreenRequested += HideWinScreen;
         GameEvents.OnFadeOutUIElementRequested += FadeOutUIElement;
+        GameEvents.OnFadeInUIElementRequested += FadeInUIElement;
     }
 
     private void OnDisable() {
@@ -41,6 +42,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnShowWinScreenRequested -= ShowWinScreen;
         GameEvents.OnHideWinScreenRequested -= HideWinScreen;
         GameEvents.OnFadeOutUIElementRequested -= FadeOutUIElement;
+        GameEvents.OnFadeInUIElementRequested -= FadeInUIElement;
     }
 
     private void HandleTransitionIn(TransitionType type, Action onComplete)
@@ -119,6 +121,27 @@ public class UIManager : MonoBehaviour
                 cg = canvas.gameObject.AddComponent<CanvasGroup>();
             }
             cg.DOFade(0f, duration);
+        }
+    }
+    private void FadeInUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
+    {
+        if (canvasGroup == null && canvas == null)
+        {
+            Debug.LogWarning("[UIManager] No CanvasGroup or Canvas provided for fade in.");
+            return;
+        }
+        else if(canvasGroup != null)
+        {
+            canvasGroup.DOFade(1f, duration);
+        }
+        else
+        {
+            CanvasGroup cg = canvas.GetComponent<CanvasGroup>();
+            if (cg == null)
+            {
+                cg = canvas.gameObject.AddComponent<CanvasGroup>();
+            }
+            cg.DOFade(1f, duration);
         }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Splines;
 using static RuntimeSettings;
 
 public class StartScreenManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class StartScreenManager : MonoBehaviour
     private GameObject _folderSpawnPosition;
     [SerializeField]
     private GameObject _folder;
+    [SerializeField]
+    private SplineContainer _folderSplinePath;
 
     void OnEnable(){
         GameEvents.OnRequestNPCInteractionSequence += NPCInteraction; 
@@ -77,7 +80,11 @@ public class StartScreenManager : MonoBehaviour
 
     private void SpawnLatestAssignmentFolder()
     {
-        Instantiate(_folder, _folderSpawnPosition.transform.position, _folderSpawnPosition.transform.rotation);
+        GameObject instantiatedFolder = Instantiate(_folder, _npc.transform.position, _npc.transform.rotation);
+        SplineAnimate splineAnimate = instantiatedFolder.GetComponent<SplineAnimate>();
+        splineAnimate.Container = _folderSplinePath;
+
+        splineAnimate.Play();
     }
 }
 

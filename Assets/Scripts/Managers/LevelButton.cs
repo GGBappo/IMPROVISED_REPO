@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Splines;
 
 public class LevelButton : MonoBehaviour, IPointerClickHandler
 {
@@ -8,7 +9,6 @@ public class LevelButton : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text _moduleAmountText;
     [SerializeField] private TMP_Text _bestTimeText;
     
-
     public void SetLevelButtonInfo(LevelData levelData)
     {
         _levelNameText.text = levelData.levelName;
@@ -16,6 +16,7 @@ public class LevelButton : MonoBehaviour, IPointerClickHandler
         //_moduleAmountText.text = $"Modules: {levelData.moduleCount}";
         //_bestTimeText.text = $"Best Time: {levelData.bestTime:F2}s";
     }
+    
     public void OnPointerClick(PointerEventData eventData)
     {
         GameEvents.RequestSceneUnLoad("StartMenu");
