@@ -38,7 +38,11 @@ public class SceneOperator : MonoBehaviour
     /// <param name="sceneName"> The name of the scene to unload. </param>
     private void Unload(string sceneName)
     {
-        SceneManager.UnloadSceneAsync(sceneName);
+        UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
+        if (scene.isLoaded)
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
+        }
     }
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -51,7 +55,7 @@ public class SceneOperator : MonoBehaviour
     {
         if (transition == TransitionType.None)
         {
-            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             while(!operation.isDone)
             {
                 Debug.Log("Loading progress: " + operation.progress);
@@ -73,7 +77,7 @@ public class SceneOperator : MonoBehaviour
         {
             GameEvents.RequestTransitionIN(transition);
 
-            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             while (!operation.isDone)
             {
                 Debug.Log("Loading progress: " + operation.progress + " for scene: " + sceneName);

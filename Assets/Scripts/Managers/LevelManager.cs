@@ -5,7 +5,7 @@ public class LevelManager : MonoBehaviour
 {
     public LevelDatabase levelDatabase;
     public LevelData currentLevel;
-    public int currentLevelIndex = 0;
+    private int currentLevelIndex = 0;
     
     private void OnEnable() {
         GameEvents.OnRequestLevelStart += StartLevel; 
@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
             
             if (cameraMarker != null)
             {
-                GameEvents.RequestCameraMove(cameraMarker.transform.position, cameraMarker.transform.rotation, 0f, FOV: 5f);
+                GameEvents.RequestCameraMove(cameraMarker.transform.position, cameraMarker.transform.rotation, 0f, FOV: 50f);
             }
         }
     }
@@ -53,8 +53,8 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
-        currentLevelIndex = 0;
         GameEvents.RequestSceneUnLoad(currentLevel.sceneToLoad.SceneName);
+        currentLevelIndex++;
         currentLevel = null;
         GameEvents.RequestSceneLoad("StartMenu", TransitionType.Fade);
         GameEvents.GlobalStateChanged(GlobalStateType.Active);
