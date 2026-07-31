@@ -1,69 +1,53 @@
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class QTE : MonoBehaviour
 {
     [Header("QTE Settings")]
-    [SerializeField] private Transform pointA; // Reference to the starting point
-    [SerializeField] private Transform pointB; // Reference to the ending point
-    [SerializeField] private RectTransform safeZone; // Reference to the safe zone RectTransform
-    [SerializeField] private float moveSpeed = 100f; // Speed of the pointer movement
-    private float direction = 1f; // 1 for moving towards B, -1 for moving towards A
-    private RectTransform pointerTransform;
-    private Vector3 targetPosition;
+    [SerializeField] private float moveSpeed = 0.02f; // Speed of the pointer movement
+    [SerializeField] private float strenght = 0f; // Strenght of the throw
+    [SerializeField] private Slider slider;
+    
+    public float Strenght { get => strenght; }
 
-
-
-    void Start()
+    private void OnValidate()
     {
-        pointerTransform = GetComponent<RectTransform>();
-        targetPosition = pointB.position;
+        if (slider == null)
+        {
+            slider = GetComponent<Slider>();
+        }
     }
 
     void Update()
     {
-        // Move the pointer towards the target position
-        pointerTransform.position = Vector3.MoveTowards(pointerTransform.position, targetPosition, moveSpeed * Time.deltaTime);
+        slider.value += moveSpeed;
 
-        // Change direction if the pointer reaches one of the points
-        if (Vector3.Distance(pointerTransform.position, pointA.position) < 0.1f)
+        if ((slider.value <= 0) && moveSpeed < 0)
         {
-            targetPosition = pointB.position;
-            direction = 1f;
+            moveSpeed *= -1;
         }
-        else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
+        else if ((slider.value >= 1f) && moveSpeed > 0)
         {
-            targetPosition = pointA.position;
-            direction = -1f;
+            moveSpeed *= -1;
         }
 
-        // Check for input
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CheckSuccess();
-        }
+        strenght = slider.value;
     }
 
-    void CheckSuccess()
+    public void Stop()
     {
-        // Check if the pointer is within the safe zone
-        if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
-        {
-            QTESuccess();
-            Debug.Log("Success!");
-        }
-        else
-        {
-            QTEFailure();
-            Debug.Log("Fail!");
-        }
+        moveSpeed = 0;
     }
 
-    void QTESuccess()
+    public void Start()
     {
-        //UpdateIdentityMeter(-10f); // Decrease identity meter on success
+        slider.value = 0;
+        moveSpeed = 0.02f;
     }
-    void QTEFailure()
+
+    public void IncreaseSpeed(float value)
     {
-        //UpdateIdentityMeter(10f); // Increase identity meter on failure
+        moveSpeed *= value;
     }
 }
