@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelIndex: 0
   levelName: Bla
+  levelLocation: bla
+  levelDescription: bla
   sceneToLoad:
     sceneAsset: {fileID: 102900000, guid: 4210ddc87dcbd25439e7b5739274892d, type: 3}
     sceneName: Unity
@@ -23,4 +25,3 @@ MonoBehaviour:
   isDud: 0
   storyEvents: []
   isUnlocked: 1
-  levelLocation: 

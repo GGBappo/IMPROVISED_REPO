@@ -33,6 +33,12 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (_currentGameState == GlobalStateType.Dialogue)
+            {
+                GameEvents.RequestDialogueEnd();
+                return;
+            }
+
             if (_currentGameState == GlobalStateType.Menu)
             {
                 GameEvents.GlobalStateChanged(GlobalStateType.Active);
@@ -40,6 +46,14 @@ public class PlayerInputManager : MonoBehaviour
             else
             {
                 GameEvents.GlobalStateChanged(GlobalStateType.Menu);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (_currentGameState == GlobalStateType.Dialogue)
+            {
+                GameEvents.DialougeButtonPressed();
             }
         }
     }

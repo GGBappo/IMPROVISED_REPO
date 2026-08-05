@@ -12,7 +12,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup _pauseScreen;
     [SerializeField] private CanvasGroup _winScreen;
 
+    [Header("Scene Transition Speed")]
     [SerializeField] private float _globalTransitionSpeed = 1f;
+
+    [Header("Outline Shader References")]
+    [SerializeField] private Material _blackHighlight;
+    [SerializeField] private Material _yellowHighlight;
 
     private readonly Dictionary<TransitionType, ITransition> _transitions = new Dictionary<TransitionType, ITransition>();
 

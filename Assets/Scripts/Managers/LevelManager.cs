@@ -5,7 +5,7 @@ public class LevelManager : MonoBehaviour
 {
     public LevelDatabase levelDatabase;
     public LevelData currentLevel;
-    private int currentLevelIndex = 0;
+    private int _currentlevelIndex;
     
     private void OnEnable() {
         GameEvents.OnRequestLevelStart += StartLevel; 
@@ -20,12 +20,13 @@ public class LevelManager : MonoBehaviour
         GameEvents.OnSceneFullyLoaded -= InitializeLevel;
     }
 
-    private void StartLevel()
+    private void StartLevel(int levelIndex)
     {
+        _currentlevelIndex = levelIndex;
         GameSessionData.won = false;
         GameSessionData.lostOnTime = false;
         GameSessionData.lostOnStrikes = false;
-        currentLevel = levelDatabase.allLevels[currentLevelIndex];
+        currentLevel = levelDatabase.allLevels[_currentlevelIndex];
         GameEvents.RequestSceneLoad(currentLevel.sceneToLoad.SceneName, TransitionType.Fade);
     }
 
@@ -54,8 +55,12 @@ public class LevelManager : MonoBehaviour
     private void EndLevel()
     {
         GameEvents.RequestSceneUnLoad(currentLevel.sceneToLoad.SceneName);
-        currentLevelIndex++;
+        if (_currentlevelIndex == levelDatabase.latestLevelIndex)
+        {
+            levelDatabase.latestLevelIndex++;
+        }
         currentLevel = null;
+        // no need to change the level index since its passed as a parameter in the StartLevel method
         GameEvents.RequestSceneLoad("StartMenu", TransitionType.Fade);
         GameEvents.GlobalStateChanged(GlobalStateType.Active);
     }

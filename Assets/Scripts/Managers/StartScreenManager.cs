@@ -1,90 +1,117 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.Splines;
 using static RuntimeSettings;
+using TMPro;
 
 public class StartScreenManager : MonoBehaviour
 {
+    [Header("References")]
+
+    [Header("Markers & Spawn Positions")]
+
+    [SerializeField]
+    [Tooltip("These are camera markers for the camera to move to. This array will soon be depricated for a better solution across the entire game.")] 
+    private CameraMarkersHolder _cameraMarkerholder;
+
+    [Header("UI References")]
     [SerializeField] 
-    private GameObject[] _cameraMarkers;
+    private NPCController _npc;
     [SerializeField] 
-    private NPCController _npc; 
-    [SerializeField] 
-    private GameObject _dialogueCanvas;
+    private Image _manilaFolderBackdrop;
     [SerializeField]
-    private CabinetController _drawer;
+    private TMP_Text _LevelNameTextBox;
     [SerializeField]
-    private GameObject _folderSpawnPosition;
+    private TMP_Text _LocationTextBox;
     [SerializeField]
-    private GameObject _folder;
+    private TMP_Text _DescriptionBox;
     [SerializeField]
-    private SplineContainer _folderSplinePath;
+    private GameObject _canvas;
+    [SerializeField]
+    private GameObject _folderUI;
+    [SerializeField]
+    private PlayButton _playButton;
+
+    [Header("UI Positions")]
+    [SerializeField]
+    private Vector2 _closedPosition;
+    [SerializeField]
+    private Vector2 _openPosition;    
 
     void OnEnable(){
-        GameEvents.OnRequestNPCInteractionSequence += NPCInteraction; 
-        GameEvents.OnRequestDrawerOpen += LevelChooserEntranceSequence; 
-        GameEvents.OnRequestDrawerClose += LevelChooserExitSequence; 
+        GameEvents.OnRequestNPCInteractionSequence += NPCInteraction;  
         GameEvents.OnRequestSettingsMenuOpen += OpenSettingsMenu; 
         GameEvents.OnRequestSettingsMenuClose += CloseSettingsMenu;
-        GameEvents.OnRequestLatestAssignmentFolderSpawn += SpawnLatestAssignmentFolder;
+        GameEvents.OnRequestOpenFileScreen += OpenFileScreen;
+        GameEvents.OnRequestCloseFileScreen += CloseFileScreen;
+        GameEvents.OnRequestLatestAssignmentFolderSpawn += ProcessLatestFolderSpawning;
     }
+
     void OnDisable(){
-        GameEvents.OnRequestNPCInteractionSequence -= NPCInteraction; 
-        GameEvents.OnRequestDrawerOpen -= LevelChooserEntranceSequence; 
-        GameEvents.OnRequestDrawerClose -= LevelChooserExitSequence; 
+        GameEvents.OnRequestNPCInteractionSequence -= NPCInteraction;  
         GameEvents.OnRequestSettingsMenuOpen -= OpenSettingsMenu; 
         GameEvents.OnRequestSettingsMenuClose -= CloseSettingsMenu; 
-        GameEvents.OnRequestLatestAssignmentFolderSpawn -= SpawnLatestAssignmentFolder;
+        GameEvents.OnRequestOpenFileScreen -= OpenFileScreen;
+        GameEvents.OnRequestCloseFileScreen += CloseFileScreen;
+        GameEvents.OnRequestLatestAssignmentFolderSpawn -= ProcessLatestFolderSpawning;
     }
 
     private void Start()
     {
-        GameEvents.RequestCameraMove(_cameraMarkers[0].transform.position, _cameraMarkers[0].transform.rotation, 0f);
-        _drawer.Close();
+        GameEvents.RequestCameraMove(_cameraMarkerholder.cameraMarkers[0].transform.position, _cameraMarkerholder.cameraMarkers[0].transform.rotation, 0f);
+        CloseFileScreen();
     }
 
     private void NPCInteraction()
     {
         Sequence startInteraction = DOTween.Sequence();
 
-        startInteraction.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkers[2].transform.position, _cameraMarkers[2].transform.rotation, defaultTweenDuration));
+        startInteraction.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkerholder.cameraMarkers[1].transform.position, _cameraMarkerholder.cameraMarkers[1].transform.rotation, defaultTweenDuration));
         startInteraction.Append(_npc.WalkToTarget()); 
         
-        startInteraction.AppendCallback(() => _dialogueCanvas.SetActive(true));
+        startInteraction.AppendCallback(() =>
+        {
+            GameEvents.RequestShowDialogueUI();
+            _npc.Interact();
+        });
     }
     
-    private void LevelChooserEntranceSequence()
+    private void ProcessLatestFolderSpawning()
     {
-        Sequence movingSequence = DOTween.Sequence();
-
-        movingSequence.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkers[4].transform.position, _cameraMarkers[4].transform.rotation, defaultTweenDuration));
-        movingSequence.Append(_drawer.Open());
-    }
-
-    private void LevelChooserExitSequence()
-    {
-        Sequence movingSequence = DOTween.Sequence();
-
-        movingSequence.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkers[0].transform.position, _cameraMarkers[0].transform.rotation, defaultTweenDuration));
-        movingSequence.Append(_drawer.Close());
+        GameEvents.DataPassLatestAssignmentFolderSpawn(_npc.transform);
     }
 
     private void OpenSettingsMenu()
     {
-        GameEvents.RequestCameraLookAt(_cameraMarkers[1].transform.position, defaultTweenDuration, FOV: 16f);
+        GameEvents.RequestCameraLookAt(_cameraMarkerholder.cameraMarkers[4].transform.position, defaultTweenDuration, FOV: 16f);
     }
+
     private void CloseSettingsMenu()
     {
-        GameEvents.RequestCameraLookAt(_cameraMarkers[0].transform.position, defaultTweenDuration);
+        GameEvents.RequestCameraLookAt(_cameraMarkerholder.cameraMarkers[0].transform.position, defaultTweenDuration);
     }
 
-    private void SpawnLatestAssignmentFolder()
+    private void OpenFileScreen(string levelName, string levelLocation, string levelDescription, int levelIndex)
     {
-        GameObject instantiatedFolder = Instantiate(_folder, _npc.transform.position, _npc.transform.rotation);
-        SplineAnimate splineAnimate = instantiatedFolder.GetComponent<SplineAnimate>();
-        splineAnimate.Container = _folderSplinePath;
+        _LevelNameTextBox.text = levelName;
+        _LocationTextBox.text = levelLocation;
+        _DescriptionBox.text = levelDescription;
+        _playButton.levelIndex = levelIndex;
 
-        splineAnimate.Play();
+        _canvas.SetActive(true);
+        _manilaFolderBackdrop.DOColor(new Color(64f,64f,64f,0.4f), defaultTweenDuration).OnComplete(() =>
+        {
+            _folderUI.transform.DOMoveY(_openPosition.y, defaultTweenDuration).SetEase(Ease.OutSine);
+        });
+    }
+
+    private void CloseFileScreen()
+    {
+        _folderUI.transform.DOMoveY(_closedPosition.y, defaultTweenDuration).OnComplete(() =>
+        {
+            _manilaFolderBackdrop.DOColor(new Color(64f,64f,64f,0f), defaultTweenDuration);
+        });
+        _canvas.SetActive(false);
     }
 }
 

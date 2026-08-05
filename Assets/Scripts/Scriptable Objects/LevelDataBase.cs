@@ -4,4 +4,7 @@ using UnityEngine;
 public class LevelDatabase : ScriptableObject
 {
     public LevelData[] allLevels;
+    public int latestLevelIndex;
+
+
 }

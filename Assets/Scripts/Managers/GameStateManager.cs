@@ -8,6 +8,7 @@ public class GameStateManager : MonoBehaviour
     private readonly MENU menuState = new MENU();
     private readonly ACTIVE activeState = new ACTIVE();
     private readonly HUB hubState = new HUB();
+    private readonly DIALOGUE dialogueState = new DIALOGUE();
     private readonly OUTCOME outcomeState = new OUTCOME();
 
     private IGameState currentState;
@@ -43,6 +44,7 @@ public class GameStateManager : MonoBehaviour
             case GlobalStateType.Menu: currentState = menuState; break;
             case GlobalStateType.Active: currentState = activeState; break;
             case GlobalStateType.Hub: currentState = hubState; break;
+            case GlobalStateType.Dialogue: currentState = dialogueState; break;
             case GlobalStateType.Outcome: currentState = outcomeState; break;
         }
 
