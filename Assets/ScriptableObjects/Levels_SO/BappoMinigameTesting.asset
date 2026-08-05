@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: BappoMinigameTesting
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelIndex: 1
-  levelName: 
+  levelName: test level
+  levelLocation: my house
+  levelDescription: please blow me up
   sceneToLoad:
     sceneAsset: {fileID: 102900000, guid: 6a2e21ed731c25e44b5deae574ac1b9a, type: 3}
     sceneName: BappoMiniGameTest
@@ -23,4 +25,3 @@ MonoBehaviour:
   isDud: 0
   storyEvents: []
   isUnlocked: 0
-  levelLocation: 

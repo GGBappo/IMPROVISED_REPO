@@ -10,6 +10,12 @@ public class LevelData : ScriptableObject
     [Tooltip("The screen name of the level. This is what will be displayed on the level select menu.")]
     public string levelName;
 
+    [Tooltip("The location of the level. This is what will be displayed on the level select menu.")]
+    public string levelLocation;
+
+    [Tooltip("The description of the level. This is what will be displayed on the level select menu.")]
+    public string levelDescription;
+
     [Tooltip("Drag the physical scene file here in order for the scene manager to load the level. This pulls the level's name in order to load. See the SceneOperator for more information.")]
     public SceneReference sceneToLoad;
 
@@ -34,6 +40,4 @@ public class LevelData : ScriptableObject
     [Tooltip("Whether the level is unlocked. If checked, this means the player is able to access the level at any time.")]
     public bool isUnlocked;
 
-    //Temporary, to fix one error
-    public string levelLocation;
 }

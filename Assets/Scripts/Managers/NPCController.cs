@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using static RuntimeSettings;
 
-public class NPCController : MonoBehaviour
+public class NPCController : NPC
 {
     [SerializeField] private Transform _targetPosition;
 
