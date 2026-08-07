@@ -26,6 +26,8 @@ public class DrawerButton : MonoBehaviour
 
     public void OnStateChanged(StartMenuState newState)
     {
+        _isPressed = newState == StartMenuState.LevelChoose;
+
         if (newState == StartMenuState.Await || newState == StartMenuState.LevelChoose)
         {
             eventTrigger.enabled = true;
@@ -34,6 +36,8 @@ public class DrawerButton : MonoBehaviour
         {
             eventTrigger.enabled = false;
         }
+
+        TextHoverHandlerOUT();
     }
 
     public void HandleOpenAndClose()
@@ -41,14 +45,10 @@ public class DrawerButton : MonoBehaviour
         if (!_isPressed)
         {
             GameEvents.StartMenuStateChanged(StartMenuState.LevelChoose);
-            TextHoverHandlerOUT();
-            _isPressed = true;
         }
         else
         {
             GameEvents.StartMenuStateChanged(StartMenuState.Await);
-            TextHoverHandlerOUT();
-            _isPressed = false;
         }
     }
     

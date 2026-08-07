@@ -10,6 +10,7 @@ public static class GameEvents
     // state events
     public static event Action<GlobalStateType> OnGlobalStateChanged; // (newState)
     public static event Action<StartMenuState> OnStartMenuStateChanged;
+    public static event Action OnRequestRestorePreviousStartMenuState;
 
     // scene/level events
     public static event Action<string, TransitionType, bool> OnRequestSceneLoad;
@@ -55,6 +56,7 @@ public static class GameEvents
     
     // Start Screen events
     public static event Action OnRequestNPCInteractionSequence; // (no parameters)
+    public static event Action OnRequestNPCInteractionSequenceExit; // (no parameters)
 
     #region Timer & Strike Calls
     /// <summary>
@@ -92,6 +94,14 @@ public static class GameEvents
     public static void StartMenuStateChanged(StartMenuState newState)
     {
         OnStartMenuStateChanged?.Invoke(newState);
+    }
+
+    /// <summary>
+    /// Requests that the start menu restore its previous state after the file screen closes.
+    /// </summary>
+    public static void RestorePreviousStartMenuState()
+    {
+        OnRequestRestorePreviousStartMenuState?.Invoke();
     }
     #endregion
 
@@ -458,6 +468,15 @@ public static class GameEvents
     {
         Debug.Log("[GameEvents] Requesting NPC interaction sequence");
         OnRequestNPCInteractionSequence?.Invoke();
+    }
+
+    /// <summary>
+    /// Invoke the OnRequestNPCInteractionSequenceExit event to request the exit of the NPC interaction sequence.
+    /// </summary>
+    public static void RequestNPCInteractionSequenceExit()
+    {
+        Debug.Log("[GameEvents] Requesting exit of NPC interaction sequence");
+        OnRequestNPCInteractionSequenceExit?.Invoke();
     }
     #endregion
 }

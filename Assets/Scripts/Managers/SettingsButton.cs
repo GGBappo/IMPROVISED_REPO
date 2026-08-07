@@ -4,23 +4,22 @@ using UnityEngine;
 public class SettingsButton : MonoBehaviour
 {
     private bool _isSettingsOpen = false;
+
+    private void OnEnable() => GameEvents.OnStartMenuStateChanged += OnStartMenuStateChanged;
+    private void OnDisable() => GameEvents.OnStartMenuStateChanged -= OnStartMenuStateChanged;
+
     private void Awake()
     {
         UnityEngine.UI.Button myButton = GetComponent<UnityEngine.UI.Button>();
 
         myButton.onClick.AddListener(() => 
         {
-            if (_isSettingsOpen)
-            {
-                GameEvents.StartMenuStateChanged(StartMenuState.Await);
-                _isSettingsOpen = false;
-                return;
-            }
-            else
-            {
-                GameEvents.StartMenuStateChanged(StartMenuState.Settings);
-                _isSettingsOpen = true;
-            }
+            GameEvents.StartMenuStateChanged(_isSettingsOpen ? StartMenuState.Await : StartMenuState.Settings);
         });
+    }
+
+    private void OnStartMenuStateChanged(StartMenuState newState)
+    {
+        _isSettingsOpen = newState == StartMenuState.Settings;
     }
 }

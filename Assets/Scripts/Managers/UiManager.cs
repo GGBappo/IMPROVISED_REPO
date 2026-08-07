@@ -69,7 +69,6 @@ public class UIManager : MonoBehaviour
         _gameOverScreen.blocksRaycasts = true;
         Debug.Log("[UIManager] Showing Game Over Screen");
     }
-
     private void HideGameOverScreen()
     {
         _gameOverScreen.alpha = 0f;
@@ -107,27 +106,7 @@ public class UIManager : MonoBehaviour
         _winScreen.blocksRaycasts = false;
         Debug.Log("[UIManager] Hiding Win Screen");
     }
-    private void FadeOutUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
-    {
-        if (canvasGroup == null && canvas == null)
-        {
-            Debug.LogWarning("[UIManager] No CanvasGroup or Canvas provided for fade out.");
-            return;
-        }
-        else if(canvasGroup != null)
-        {
-            canvasGroup.DOFade(0f, duration);
-        }
-        else
-        {
-            CanvasGroup cg = canvas.GetComponent<CanvasGroup>();
-            if (cg == null)
-            {
-                cg = canvas.gameObject.AddComponent<CanvasGroup>();
-            }
-            cg.DOFade(0f, duration);
-        }
-    }
+
     private void FadeInUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
     {
         if (canvasGroup == null && canvas == null)
@@ -135,18 +114,54 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("[UIManager] No CanvasGroup or Canvas provided for fade in.");
             return;
         }
-        else if(canvasGroup != null)
+
+        CanvasGroup cg = canvasGroup;
+        if (cg == null)
         {
-            canvasGroup.DOFade(1f, duration);
-        }
-        else
-        {
-            CanvasGroup cg = canvas.GetComponent<CanvasGroup>();
+            cg = canvas.GetComponent<CanvasGroup>();
             if (cg == null)
             {
                 cg = canvas.gameObject.AddComponent<CanvasGroup>();
             }
-            cg.DOFade(1f, duration);
         }
+
+        if (canvas != null) 
+        {
+            canvas.enabled = true; 
+        }
+        cg.gameObject.SetActive(true);
+        cg.DOFade(1f, duration).OnComplete(() => 
+        {
+            cg.interactable = true;
+            cg.blocksRaycasts = true;
+        });
+    }
+
+    private void FadeOutUIElement(float duration, CanvasGroup canvasGroup = null, Canvas canvas = null)
+    {
+        if (canvasGroup == null && canvas == null)
+        {
+            Debug.LogWarning("[UIManager] No CanvasGroup or Canvas provided for fade out.");
+            return;
+        }
+
+        CanvasGroup cg = canvasGroup;
+        if (cg == null)
+        {
+            cg = canvas.GetComponent<CanvasGroup>();
+            if (cg == null)
+            {
+                cg = canvas.gameObject.AddComponent<CanvasGroup>();
+            }
+        }
+
+        // disable interaction and raycasting before starting the fade
+        cg.interactable = false;
+        cg.blocksRaycasts = false;
+
+        cg.DOFade(0f, duration).OnComplete(() => 
+        {
+            cg.gameObject.SetActive(false);
+        });
     }
 }

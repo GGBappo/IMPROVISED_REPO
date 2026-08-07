@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// This state is used to display the folder itself, not to be confused with LEVELCHOOSE, which is used to display the level selection itself.
+/// This state represents the file screen opening for a chosen level.
 /// </summary>
 public class LEVELSELECT : IGameState
 {

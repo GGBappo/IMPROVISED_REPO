@@ -451,7 +451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _startButtonCanvasGroup: {fileID: 215469650}
-  _cameraMarker: {fileID: 794142130}
+  _cameraMarkerHolder: {fileID: 1176453763}
+  currentStateType: 0
 --- !u!1 &104005455
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +852,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 215469647}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215469649}
+        m_TargetAssemblyTypeName: StartButton, Assembly-CSharp
+        m_MethodName: PressStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &215469647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,10 +912,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 215469643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d709947b2ee1db14db0969c895d88d42, type: 3}
+  m_Script: {fileID: 11500000, guid: 23f34b2a84f4cc54b8e72bc3194654e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _targetObject: {fileID: 967658221}
 --- !u!225 &215469650
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5409,7 +5421,8 @@ MonoBehaviour:
   _npcSprite: {fileID: 21300000, guid: e6321823c7608744b8fb2977021c6d93, type: 3}
   _dialogueGraph: {fileID: 3277075055506750867, guid: 79e00a5b0cd0aa540af51b2d453a1dca, type: 3}
   _spriteRenderer: {fileID: 1470922607}
-  _targetPosition: {fileID: 2118365084}
+  _positionOne: {fileID: 1982704386}
+  _positionTwo: {fileID: 2118365084}
 --- !u!1 &1058928863
 GameObject:
   m_ObjectHideFlags: 0

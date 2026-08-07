@@ -45,6 +45,7 @@ public class StartScreenManager : MonoBehaviour
         GameEvents.OnRequestOpenFileScreen += OpenFileScreen;
         GameEvents.OnRequestCloseFileScreen += CloseFileScreen;
         GameEvents.OnRequestLatestAssignmentFolderSpawn += ProcessLatestFolderSpawning;
+        GameEvents.OnRequestNPCInteractionSequenceExit += ExitNPCInteraction;
     }
 
     void OnDisable(){
@@ -52,13 +53,13 @@ public class StartScreenManager : MonoBehaviour
         GameEvents.OnRequestSettingsMenuOpen -= OpenSettingsMenu; 
         GameEvents.OnRequestSettingsMenuClose -= CloseSettingsMenu; 
         GameEvents.OnRequestOpenFileScreen -= OpenFileScreen;
-        GameEvents.OnRequestCloseFileScreen += CloseFileScreen;
+        GameEvents.OnRequestCloseFileScreen -= CloseFileScreen;
         GameEvents.OnRequestLatestAssignmentFolderSpawn -= ProcessLatestFolderSpawning;
+        GameEvents.OnRequestNPCInteractionSequenceExit -= ExitNPCInteraction;
     }
 
     private void Start()
     {
-        GameEvents.RequestCameraMove(_cameraMarkerholder.cameraMarkers[0].transform.position, _cameraMarkerholder.cameraMarkers[0].transform.rotation, 0f);
         CloseFileScreen();
     }
 
@@ -67,13 +68,18 @@ public class StartScreenManager : MonoBehaviour
         Sequence startInteraction = DOTween.Sequence();
 
         startInteraction.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkerholder.cameraMarkers[1].transform.position, _cameraMarkerholder.cameraMarkers[1].transform.rotation, defaultTweenDuration));
-        startInteraction.Append(_npc.WalkToTarget()); 
+        startInteraction.Append(_npc.WalkToPlayer()); 
         
         startInteraction.AppendCallback(() =>
         {
             GameEvents.RequestShowDialogueUI();
             _npc.Interact();
         });
+    }
+    
+    private void ExitNPCInteraction()
+    {
+        _npc.WalkAwayFromPlayer();
     }
     
     private void ProcessLatestFolderSpawning()
@@ -107,6 +113,8 @@ public class StartScreenManager : MonoBehaviour
 
     private void CloseFileScreen()
     {
+        GameEvents.RestorePreviousStartMenuState();
+
         _folderUI.transform.DOMoveY(_closedPosition.y, defaultTweenDuration).OnComplete(() =>
         {
             _manilaFolderBackdrop.DOColor(new Color(64f,64f,64f,0f), defaultTweenDuration);
