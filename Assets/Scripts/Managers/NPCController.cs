@@ -4,11 +4,16 @@ using static RuntimeSettings;
 
 public class NPCController : NPC
 {
-    [SerializeField] private Transform _targetPosition;
+    [SerializeField] private Transform _positionOne;
+    [SerializeField] private Transform _positionTwo;
 
-    public Tween WalkToTarget()
+    public Tween WalkToPlayer()
     {
-        return transform.DOMove(_targetPosition.position, defaultTweenDuration).SetEase(Ease.InOutSine);
+        return transform.DOMove(_positionTwo.position, defaultTweenDuration).SetEase(Ease.InOutSine);
+    }
+    public Tween WalkAwayFromPlayer()
+    {
+        return transform.DOMove(_positionOne.position, defaultTweenDuration).SetEase(Ease.InOutSine);
     }
 }
 

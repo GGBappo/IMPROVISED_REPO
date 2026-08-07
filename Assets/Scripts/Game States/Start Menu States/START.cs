@@ -9,13 +9,15 @@ public class START : IGameState
     // to provide a simple constructor for the button
     // instead of making a billion events to pass it
     private CanvasGroup _startButtonCanvasGroup;
-    public START(CanvasGroup startButtonCanvasGroup)
+    private CameraMarkersHolder _cameraMarkerHolder;
+    public START(CanvasGroup startButtonCanvasGroup, CameraMarkersHolder cameraMarkerHolder)
     {
         _startButtonCanvasGroup = startButtonCanvasGroup;
+        _cameraMarkerHolder = cameraMarkerHolder;
     }
     public void EnterState()
     {
-        
+        GameEvents.RequestCameraMove(_cameraMarkerHolder.cameraMarkers[0].transform.position, _cameraMarkerHolder.cameraMarkers[0].transform.rotation, 0f);
     }
 
     public void UpdateState()
@@ -26,5 +28,6 @@ public class START : IGameState
     public void ExitState()
     {
         GameEvents.RequestFadeOutUIElement(defaultTweenDuration, canvasGroup: _startButtonCanvasGroup);
+        
     }
 }

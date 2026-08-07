@@ -14,6 +14,6 @@ public class TASKHANDOUT : IGameState
 
     public void ExitState()
     {
-        
+        GameEvents.RequestNPCInteractionSequenceExit();
     }
 }
