@@ -272,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &574446876
 RectTransform:
   m_ObjectHideFlags: 0
@@ -903,11 +903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224912494374580308, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 222.5
       objectReference: {fileID: 0}
     - target: {fileID: 5224912494374580308, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 80.009995
       objectReference: {fileID: 0}
     - target: {fileID: 5224912494374580308, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -959,27 +959,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 122.5
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 40.009995
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 111.25
       objectReference: {fileID: 0}
     - target: {fileID: 8384998329139075334, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40.004997
       objectReference: {fileID: 0}
     - target: {fileID: 8486235024696264694, guid: 21c927b2910c10b4db3c045b96a74ecc, type: 3}
       propertyPath: m_Color.b
