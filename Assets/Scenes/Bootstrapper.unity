@@ -272,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &574446876
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1189,7 +1189,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 373061344057312700, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3939297696311041526, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
       propertyPath: m_Alpha
