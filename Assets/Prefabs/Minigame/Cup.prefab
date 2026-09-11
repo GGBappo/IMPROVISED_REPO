@@ -51,8 +51,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.008746264
+  m_Center: {x: 0, y: -0.0000000026029872, z: 0.003746268}
 --- !u!1 &5821821546851260481
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,6 +65,8 @@ GameObject:
   - component: {fileID: 2265132863816894250}
   - component: {fileID: 7156377639188477121}
   - component: {fileID: 341677315823230987}
+  - component: {fileID: 8441792263474430633}
+  - component: {fileID: 8185571867040362523}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -167,3 +169,42 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5518979842351520427, guid: d04c4b0b84c0cc54bba8b1b1e3bf07fd, type: 3}
+--- !u!114 &8441792263474430633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821821546851260481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc15b0b3af0131045bef937a1999e2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!54 &8185571867040362523
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821821546851260481}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

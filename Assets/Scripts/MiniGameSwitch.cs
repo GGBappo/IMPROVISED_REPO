@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static RuntimeSettings;
 
 public class MiniGameSwitch : MonoBehaviour
 {
@@ -31,7 +32,9 @@ public class MiniGameSwitch : MonoBehaviour
     {
         mainCamera.fieldOfView = 50f;
         switchState = SwitchState.MiniGame;
-        StartCoroutine(SwitchToMiniGame());
+        GameEvents.ChangeBeerPongState(BeerPongMinigameStates.PlayerTurn);
+        //StartCoroutine(SwitchToMiniGame());
+        SwitchToMiniGame();
         arrowLeft.SetActive(true);
         arrowRight.SetActive(false);
         curvedArrowLeft.SetActive(false);
@@ -42,15 +45,17 @@ public class MiniGameSwitch : MonoBehaviour
     {
         mainCamera.fieldOfView = 50f;
         switchState = SwitchState.MainGame;
-        StartCoroutine(SwitchToMainGame());
+        //StartCoroutine(SwitchToMainGame());
+        SwitchToMainGame();
         arrowLeft.SetActive(false);
         arrowRight.SetActive(true);
         curvedArrowLeft.SetActive(true);
         curvedArrowRight.SetActive(true);
     }
 
-    private IEnumerator SwitchToMiniGame()
+    private void SwitchToMiniGame()
     {
+        /*
         float duration = 1f; // Duration of the transition
         float elapsedTime = 0f;
         Vector3 startPosition = mainCamera.transform.position;
@@ -67,10 +72,14 @@ public class MiniGameSwitch : MonoBehaviour
         // Ensure final position and rotation are set
         mainCamera.transform.position = miniGameCameraPos.position;
         mainCamera.transform.rotation = miniGameCameraPos.rotation;
+        */
+        GameEvents.RequestCameraMove(miniGameCameraPos.position, miniGameCameraPos.rotation, defaultTweenDuration);
+        GameEvents.RequestHideLevelUI();
     }
 
-    private IEnumerator SwitchToMainGame()
+    private void SwitchToMainGame()
     {
+        /*
         float duration = 1f; // Duration of the transition
         float elapsedTime = 0f;
         Vector3 startPosition = mainCamera.transform.position;
@@ -87,12 +96,17 @@ public class MiniGameSwitch : MonoBehaviour
         // Ensure final position and rotation are set
         mainCamera.transform.position = mainGameCameraPos.position;
         mainCamera.transform.rotation = mainGameCameraPos.rotation;
+        */
+
+        GameEvents.RequestCameraMove(mainGameCameraPos.position, mainGameCameraPos.rotation, defaultTweenDuration);
+        GameEvents.RequestShowLevelUI();
     }
     public void OnClickSwitchToLeftGame()
     {
         if (switchState == SwitchState.RightGame)
         {
-            StartCoroutine(SwitchToMainGame());
+            //StartCoroutine(SwitchToMainGame());
+            SwitchToMainGame();
             switchState = SwitchState.MainGame;
             curvedArrowLeft.SetActive(true);
         }
@@ -113,7 +127,8 @@ public class MiniGameSwitch : MonoBehaviour
     {
         if (switchState == SwitchState.LeftGame)
         {
-            StartCoroutine(SwitchToMainGame());
+            //StartCoroutine(SwitchToMainGame());
+            SwitchToMainGame();
             switchState = SwitchState.MainGame;
             curvedArrowRight.SetActive(true);
         }

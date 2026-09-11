@@ -8,8 +8,18 @@ public class QTE : MonoBehaviour
     [SerializeField] private float moveSpeed = 0.02f; // Speed of the pointer movement
     [SerializeField] private float strenght = 0f; // Strenght of the throw
     [SerializeField] private Slider slider;
+    [SerializeField] private float minStrenght = 0.25f; 
+    [SerializeField] private float maxStrenght = 2.25f;
     
     public float Strenght { get => strenght; }
+    void Reset()
+    {
+        slider = GetComponent<Slider>();
+        moveSpeed = 0.02f;
+        strenght = 0f;
+        minStrenght = 0.25f;
+        maxStrenght = 2.25f;
+    }
 
     private void OnValidate()
     {
@@ -32,7 +42,7 @@ public class QTE : MonoBehaviour
             moveSpeed *= -1;
         }
 
-        strenght = slider.value;
+        strenght = slider.value * (maxStrenght - minStrenght) + minStrenght;
     }
 
     public void Stop()

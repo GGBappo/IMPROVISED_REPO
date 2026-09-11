@@ -36,8 +36,6 @@ public class DrawerButton : MonoBehaviour
         {
             eventTrigger.enabled = false;
         }
-
-        TextHoverHandlerOUT();
     }
 
     public void HandleOpenAndClose()
@@ -50,6 +48,7 @@ public class DrawerButton : MonoBehaviour
         {
             GameEvents.StartMenuStateChanged(StartMenuState.Await);
         }
+        ForceClearAllHoverText();
     }
     
     public void TextHoverHandlerIN()
@@ -57,11 +56,13 @@ public class DrawerButton : MonoBehaviour
         if (!_isPressed)
         {
             GameEvents.RequestFadeInUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringClosedDrawer);
+            hoverTextDuringClosedDrawer.transform.DOKill();
             hoverTextDuringClosedDrawer.transform.DOLocalMoveY(0.4f, defaultTweenDuration).SetEase(Ease.OutSine);
         }
         if (_isPressed)
         {
             GameEvents.RequestFadeInUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringOpenDrawer);
+            hoverTextDuringOpenDrawer.transform.DOKill();
             hoverTextDuringOpenDrawer.transform.DOLocalMoveX(0.1f, defaultTweenDuration).SetEase(Ease.OutSine);
         }
     }
@@ -70,12 +71,25 @@ public class DrawerButton : MonoBehaviour
         if (!_isPressed)
         {
             GameEvents.RequestFadeOutUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringClosedDrawer);
+            hoverTextDuringClosedDrawer.transform.DOKill();
             hoverTextDuringClosedDrawer.transform.DOLocalMoveY(0.2f, defaultTweenDuration).SetEase(Ease.InSine);
         }
         if (_isPressed)
         {
             GameEvents.RequestFadeOutUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringOpenDrawer);
+            hoverTextDuringOpenDrawer.transform.DOKill();
             hoverTextDuringOpenDrawer.transform.DOLocalMoveX(-0.078f, defaultTweenDuration).SetEase(Ease.InSine);
         }
+    }
+
+    private void ForceClearAllHoverText()
+    {
+        GameEvents.RequestFadeOutUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringClosedDrawer);
+        hoverTextDuringClosedDrawer.transform.DOKill();
+        hoverTextDuringClosedDrawer.transform.DOLocalMoveY(0.2f, defaultTweenDuration).SetEase(Ease.InSine);
+
+        GameEvents.RequestFadeOutUIElement(defaultTweenDuration, canvasGroup: hoverTextDuringOpenDrawer);
+        hoverTextDuringOpenDrawer.transform.DOKill();
+        hoverTextDuringOpenDrawer.transform.DOLocalMoveX(-0.078f, defaultTweenDuration).SetEase(Ease.InSine);
     }
 }

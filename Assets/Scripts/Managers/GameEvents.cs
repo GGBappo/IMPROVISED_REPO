@@ -25,6 +25,9 @@ public static class GameEvents
     public static event Action<Transform> OnDataPassLatestAssignmentFolderSpawn;
     public static event Action<RuntimeDialogueGraph, string> OnRequestDialogueStart;
     public static event Action OnRequestDialogueEnd;
+    public static event Action OnRequestShowBudgetUI;
+    public static event Action OnRequestHideBudgetUI;
+    public static event Action<BeerPongMinigameStates> OnRequestBeerPongMinigameStateChange;
 
     /// UI events
     public static event Action OnStartButtonPressed; // please note this is to be depricated soon until i refactor the code to use the state manager more
@@ -46,7 +49,10 @@ public static class GameEvents
     public static event Action<string> OnPingObjectToUnhighlight;
     public static event Action<string, string, string, int> OnRequestOpenFileScreen;
     public static event Action OnRequestCloseFileScreen;
-
+    public static event Action OnRequestShowLevelUI;
+    public static event Action OnRequestHideLevelUI;
+    public static event Action OnRequestShowQTE;
+    public static event Action OnRequestHideQTE;
 
     // camera events
     public static event Action<Vector3, Quaternion, float, Vector3?, float?> OnCameraMoveRequest; // (position, rotation, duration, lookAtMarker, FOV)
@@ -55,8 +61,13 @@ public static class GameEvents
     public static event Action<float, bool, float> OnCameraFOVChangeRequest; // (newFOV, slowZoom, duration)
     
     // Start Screen events
-    public static event Action OnRequestNPCInteractionSequence; // (no parameters)
+    public static event Action OnRequestNPCInteractionSequenceEnter; // (no parameters)
     public static event Action OnRequestNPCInteractionSequenceExit; // (no parameters)
+
+    // Minigame events
+    public static event Action<int, Transform> OnPingPongBallEnterCup;
+    public static event Action OnPingPongBallMissedCup;
+
 
     #region Timer & Strike Calls
     /// <summary>
@@ -200,6 +211,22 @@ public static class GameEvents
     public static void DataPassLatestAssignmentFolderSpawn(Transform spawnPosition)
     {
         OnDataPassLatestAssignmentFolderSpawn?.Invoke(spawnPosition);
+    }
+
+    public static void RequestShowBudgetUI()
+    {
+        Debug.Log("[GameEvents] Requesting to show Budget UI");
+        OnRequestShowBudgetUI?.Invoke();
+    }
+    public static void RequestHideBudgetUI()
+    {
+        Debug.Log("[GameEvents] Requesting to hide Budget UI");
+        OnRequestHideBudgetUI?.Invoke();
+    }
+
+    public static void ChangeBeerPongState(BeerPongMinigameStates beerPongMinigameStates)
+    {
+        OnRequestBeerPongMinigameStateChange?.Invoke(beerPongMinigameStates);
     }
     #endregion
 
@@ -405,6 +432,26 @@ public static class GameEvents
         Debug.Log("[GameEvents] Closing file screen");
         OnRequestCloseFileScreen?.Invoke();
     }
+
+    public static void RequestHideLevelUI()
+    {
+        OnRequestHideLevelUI?.Invoke();
+    }
+
+    public static void RequestShowLevelUI()
+    {
+        OnRequestShowLevelUI?.Invoke();
+    }
+
+    public static void RequestShowQTE()
+    {
+        OnRequestShowQTE?.Invoke();
+    }
+
+    public static void RequestHideQTE()
+    {
+        OnRequestHideQTE?.Invoke();
+    }
     #endregion
 
     #region Camera Calls
@@ -464,19 +511,28 @@ public static class GameEvents
     /// <summary>
     /// Invoke the OnRequestNPCInteractionSequence event to request the NPC interaction sequence.
     /// </summary>
-    public static void RequestNPCInteractionSequence()
+    public static void RequestNPCInteractionSequenceEnter()
     {
         Debug.Log("[GameEvents] Requesting NPC interaction sequence");
-        OnRequestNPCInteractionSequence?.Invoke();
+        OnRequestNPCInteractionSequenceEnter?.Invoke();
     }
 
-    /// <summary>
-    /// Invoke the OnRequestNPCInteractionSequenceExit event to request the exit of the NPC interaction sequence.
-    /// </summary>
     public static void RequestNPCInteractionSequenceExit()
     {
-        Debug.Log("[GameEvents] Requesting exit of NPC interaction sequence");
+        Debug.Log("[GameEvents] Requesting exit from NPC interaction sequence");
         OnRequestNPCInteractionSequenceExit?.Invoke();
+    }
+    #endregion
+
+    #region Minigame Calls
+    public static void PingPongBallEnteredCup(int ID, Transform cupTransform){
+        Debug.Log("[GameEvents] you acc made it good job");
+        OnPingPongBallEnterCup?.Invoke(ID, cupTransform);
+    }
+
+    public static void PingPongBallMissedCup(){
+        Debug.Log("[GameEvents] LMAOOOOOOOOO SKILL ISSUE");
+        OnPingPongBallMissedCup?.Invoke();
     }
     #endregion
 }

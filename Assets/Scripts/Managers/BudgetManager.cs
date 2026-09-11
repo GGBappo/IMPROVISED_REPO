@@ -1,11 +1,26 @@
 using TMPro;
 using UnityEngine;
+using static RuntimeSettings;
 
 public class BudgetManager : MonoBehaviour
 {
     [SerializeField] private float startingBudget = 45f;
     [SerializeField] private float currentMoney;
     [SerializeField] private TextMeshProUGUI budgetText;
+    [SerializeField] private CanvasGroup budgetCanvasGroup;
+
+    void OnEnable() 
+    {
+        GameEvents.OnRequestShowBudgetUI += ShowBudgetUI;
+        GameEvents.OnRequestHideBudgetUI += HideBudgetUI;
+    }
+    
+    void OnDisable()
+    {
+        GameEvents.OnRequestShowBudgetUI -= ShowBudgetUI;
+        GameEvents.OnRequestHideBudgetUI -= HideBudgetUI;
+    }
+
     public void Awake()
     {
         currentMoney = startingBudget;
@@ -49,5 +64,15 @@ public class BudgetManager : MonoBehaviour
     {
         currentMoney += amount;
         UpdateBudgetText();
+    }
+
+    private void ShowBudgetUI()
+    {
+        GameEvents.RequestFadeInUIElement(defaultTweenDuration, budgetCanvasGroup);
+    }
+
+    private void HideBudgetUI()
+    {
+        GameEvents.RequestFadeOutUIElement(defaultTweenDuration, budgetCanvasGroup);
     }
 }
