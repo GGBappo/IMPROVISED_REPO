@@ -6,8 +6,7 @@ public class DraggableBall : MonoBehaviour
     [Tooltip("Material that gives the ball its bounciness")]
     public PhysicsMaterial bounceMaterial; // assign in inspector
 
-    Vector3 ballStartPosition;
-
+    public Vector3 ballStartPosition;
     private BeerPong beerPong;
     private Rigidbody rb;
     private float fixedZ;           // Z depth locked while dragging
@@ -33,6 +32,7 @@ public class DraggableBall : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (!beerPong.IsPlayerTurn()) return;
         // Build a screen‑space point that includes the distance to the fixed Z plane
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = Mathf.Abs(Camera.main.transform.position.z - fixedZ);
@@ -52,6 +52,7 @@ public class DraggableBall : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (!beerPong.IsPlayerTurn()) return;
         // Enable physics and apply bounce material
         // Enable physics and reset any residual velocity before release
         rb.isKinematic = false;
@@ -84,8 +85,6 @@ public class DraggableBall : MonoBehaviour
 
     public void ResetMiniGame()
     {
-        gameObject.transform.position = ballStartPosition;
-        // Reset the ball's position and physics state
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;

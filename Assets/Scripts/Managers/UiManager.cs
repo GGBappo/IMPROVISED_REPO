@@ -129,6 +129,9 @@ public class UIManager : MonoBehaviour
         {
             canvas.enabled = true; 
         }
+
+        cg.DOKill();
+    
         cg.gameObject.SetActive(true);
         cg.DOFade(1f, duration).OnComplete(() => 
         {
@@ -155,6 +158,8 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        cg.DOKill();
+
         // disable interaction and raycasting before starting the fade
         cg.interactable = false;
         cg.blocksRaycasts = false;
@@ -162,6 +167,10 @@ public class UIManager : MonoBehaviour
         cg.DOFade(0f, duration).OnComplete(() => 
         {
             cg.gameObject.SetActive(false);
+            if (canvas != null) 
+            {
+                canvas.enabled = false;
+            }
         });
     }
 }

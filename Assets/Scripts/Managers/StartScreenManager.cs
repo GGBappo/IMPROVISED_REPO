@@ -38,23 +38,23 @@ public class StartScreenManager : MonoBehaviour
     [SerializeField]
     private Vector2 _openPosition;    
 
-    void OnEnable(){
-        GameEvents.OnRequestNPCInteractionSequence += NPCInteraction;  
+    void OnEnable(){  
         GameEvents.OnRequestSettingsMenuOpen += OpenSettingsMenu; 
         GameEvents.OnRequestSettingsMenuClose += CloseSettingsMenu;
         GameEvents.OnRequestOpenFileScreen += OpenFileScreen;
         GameEvents.OnRequestCloseFileScreen += CloseFileScreen;
         GameEvents.OnRequestLatestAssignmentFolderSpawn += ProcessLatestFolderSpawning;
+        GameEvents.OnRequestNPCInteractionSequenceEnter += EnterNPCInteraction;
         GameEvents.OnRequestNPCInteractionSequenceExit += ExitNPCInteraction;
     }
 
-    void OnDisable(){
-        GameEvents.OnRequestNPCInteractionSequence -= NPCInteraction;  
+    void OnDisable(){  
         GameEvents.OnRequestSettingsMenuOpen -= OpenSettingsMenu; 
         GameEvents.OnRequestSettingsMenuClose -= CloseSettingsMenu; 
         GameEvents.OnRequestOpenFileScreen -= OpenFileScreen;
         GameEvents.OnRequestCloseFileScreen -= CloseFileScreen;
         GameEvents.OnRequestLatestAssignmentFolderSpawn -= ProcessLatestFolderSpawning;
+        GameEvents.OnRequestNPCInteractionSequenceEnter -= EnterNPCInteraction;
         GameEvents.OnRequestNPCInteractionSequenceExit -= ExitNPCInteraction;
     }
 
@@ -63,7 +63,7 @@ public class StartScreenManager : MonoBehaviour
         CloseFileScreen();
     }
 
-    private void NPCInteraction()
+    private void EnterNPCInteraction()
     {
         Sequence startInteraction = DOTween.Sequence();
 
