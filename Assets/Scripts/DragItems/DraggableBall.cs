@@ -11,12 +11,13 @@ public class DraggableBall : MonoBehaviour
     private Rigidbody rb;
     private float fixedZ;           // Z depth locked while dragging
     private float fixedY = 1.6f;    // Y depth locked while dragging
-
+    public LineRenderer lineRenderer;
     public Rigidbody Rb { get => rb; }
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        lineRenderer = GetComponent<LineRenderer>();
         // Start as kinematic so we can move it manually
         rb.isKinematic = true;
         rb.useGravity = false;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using DG.Tweening;
 using UnityEngine;
@@ -50,6 +51,8 @@ public class BeerPong : MiniGame
     private float angle = 45f;
     private Coroutine activeMonitor;
     private bool isTransitioning = false;
+    private Vector3[] futureBallPositions = new Vector3[5];
+    [SerializeField] private bool allowErrorMargin = true;
     
     void OnEnable()
     {
@@ -88,6 +91,36 @@ public class BeerPong : MiniGame
         {
             StartCoroutine(ResetMinigame(currentState));
         }
+        if (IsPlayerTurn() && dragBall.Rb.isKinematic)
+        {
+            CalculateFutureBall();
+            dragBall.lineRenderer.positionCount = futureBallPositions.Length;
+            dragBall.lineRenderer.SetPositions(futureBallPositions);
+        }
+        else if (dragBall.lineRenderer != null)
+        {
+            dragBall.lineRenderer.positionCount = 0;
+        }
+    }
+
+    public void CalculateFutureBall()
+    {
+        var startPosition = dragBall.transform.position;
+        var timeInterval = 0.1f;
+        Vector3 throwDirection = (dragBall.transform.forward).normalized;
+        float throwForce = baseStrenght + strenghtModifier * qte.Strenght;
+        
+        for (int i = 0; i <= futureBallPositions.Length - 1; i++){
+            
+            var simulatedTime = i * timeInterval;
+
+            var initialVelocity = (throwDirection * throwForce) * simulatedTime;
+
+            var gravity = 0.5f * (Physics.gravity * Mathf.Pow(simulatedTime, 2));
+
+            var calculatedFuturePosition = startPosition + initialVelocity + gravity;
+            futureBallPositions[i] = calculatedFuturePosition;
+        }
     }
 
     public void OnBallRelease()
@@ -125,10 +158,11 @@ public class BeerPong : MiniGame
         Vector3 errorMargin = new Vector3(randomX, 0, randomZ);
         var targetCupID = CalculateNearestCupNeighbour();
         Vector3 targetCupTransform = playerCupsDict[targetCupID].position;
+        if (!allowErrorMargin) errorMargin = Vector3.zero;
         Vector3 e_targetCupTransform = targetCupTransform + errorMargin;
-        float cupHeight = 0.647f;
+        float cupHeight = 0.5f;
         e_targetCupTransform.y += cupHeight; // im adding the cup's height in order for the ball to hit the rim, rather than hit the bottom of the cup
-        Vector3 requiredVel = CalculateDistanceToCup(aiBallPosition.position, e_targetCupTransform);
+        Vector3 requiredVel = CalculateDistanceToCup(dragBall.transform.position, e_targetCupTransform);
         Rigidbody ballRigidbody = dragBall.Rb;
 
         // firing sequence
