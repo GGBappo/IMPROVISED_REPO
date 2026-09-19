@@ -20,6 +20,7 @@ public class ItemShopPanel : MonoBehaviour
     [SerializeField] private Dictionary<Transform, InteractableItem> purchasedItems = new Dictionary<Transform, InteractableItem>();
     [SerializeField] private Dictionary<string, bool> boughtItems = new Dictionary<string, bool>();
     [SerializeField] private BudgetManager budgetManager;
+    private bool isShopOpen = false;
 
     private void Awake()
     {
@@ -139,10 +140,25 @@ public class ItemShopPanel : MonoBehaviour
         return item.transform.position;
     }
 
+    public void IsShopOpen()
+    {
+        if (isShopOpen)
+        {
+            isShopOpen = false;
+        }
+        else
+        {
+            isShopOpen = true;
+        }
+    }
+
     //Used for when item is let go. Item when let go returns to spawnpoint in which it came from.
     public void ReturnToSpawnPoint(InteractableItem item)
     {
         //get the spawn point of the item and set its position to it
         
     }
+
+
+
 }

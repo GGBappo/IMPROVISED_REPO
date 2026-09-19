@@ -53,6 +53,8 @@ public static class GameEvents
     public static event Action OnRequestHideLevelUI;
     public static event Action OnRequestShowQTE;
     public static event Action OnRequestHideQTE;
+    public static event Action OnRequestShowShop;
+    public static event Action OnRequestHideShop;
 
     // camera events
     public static event Action<Vector3, Quaternion, float, Vector3?, float?> OnCameraMoveRequest; // (position, rotation, duration, lookAtMarker, FOV)
@@ -68,6 +70,8 @@ public static class GameEvents
     public static event Action<int, Transform> OnPingPongBallEnterCup;
     public static event Action OnPingPongBallMissedCup;
 
+    // data events
+    public static event Action<float> OnRequestMousePositionFromDragBall;
 
     #region Timer & Strike Calls
     /// <summary>
@@ -452,6 +456,15 @@ public static class GameEvents
     {
         OnRequestHideQTE?.Invoke();
     }
+
+    public static void RequestShowShop()
+    {
+        OnRequestShowShop?.Invoke();
+    }
+    public static void RequestHideShop()
+    {
+        OnRequestHideShop?.Invoke();
+    }
     #endregion
 
     #region Camera Calls
@@ -533,6 +546,14 @@ public static class GameEvents
     public static void PingPongBallMissedCup(){
         Debug.Log("[GameEvents] LMAOOOOOOOOO SKILL ISSUE");
         OnPingPongBallMissedCup?.Invoke();
+    }
+    #endregion
+
+    #region Data Calls
+    public static void RequestMousePositionFromDragBall(float mousePositionY)
+    {
+        Debug.Log("[GameEvents] Requesting mouse position from drag ball");
+        OnRequestMousePositionFromDragBall?.Invoke(mousePositionY);
     }
     #endregion
 }

@@ -30,6 +30,10 @@ public class DraggableBall : MonoBehaviour
         // Lock to the initial Z position of the ball (its spawn depth)
         fixedZ = transform.position.z;
     }
+    void OnMouseDown()
+    {
+        GameEvents.RequestMousePositionFromDragBall(Input.mousePosition.y);
+    }
 
     void OnMouseDrag()
     {
@@ -78,6 +82,7 @@ public class DraggableBall : MonoBehaviour
 
         beerPong.OnBallRelease();
     }
+
 
     public void SetBeerPong(BeerPong beerPong)
     {
