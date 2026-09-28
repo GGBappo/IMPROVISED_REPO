@@ -43,15 +43,16 @@ public class Item_SOEditor : Editor
         }
 
         EditorGUI.BeginChangeCheck();
-        mask = (int)(ItemActionTypeFlags)(int)EditorGUILayout.EnumFlagsField("Actions (function)", (ItemActionTypeFlags)mask);
+        ItemActionTypeFlags newMask = (ItemActionTypeFlags)EditorGUILayout.EnumFlagsField("Actions (function)", (ItemActionTypeFlags)mask);
         if (EditorGUI.EndChangeCheck())
         {
+            mask = (int)newMask;
             actions.arraySize = 0;
             for (int v = 0; v < 32; v++)
             {
                 if ((mask & (1 << v)) != 0)
                 {
-                    actions.InsertArrayElementAtIndex(actions.arraySize);
+                    actions.arraySize++;
                     actions.GetArrayElementAtIndex(actions.arraySize - 1).intValue = v;
                 }
             }

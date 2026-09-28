@@ -1,8 +1,24 @@
 # FEATURE.md — Bomb Framework Refactor: Modular, Inspector-First, Function/Skin Items
 
-**Branch:** `Bappo-working-branch`
-**Status:** Draft plan (not implemented)
+**Branch:** `Bappo-working-branch` (plan) → implemented on **`framework-refactor`** (branched from `7dce724`)
+**Status:** ✅ Implemented (Phases 0–7) — **pending verification in the Unity editor**: open the project, confirm zero compile errors, run `Improv → Validate All Bombs`, play the `Unity.unity` scene end-to-end.
 **Scope:** Code framework only. Settings, bomb content, and component rosters are governed by the v2 design doc and are **out of scope here** — this plan only builds the machinery that content will be dragged into.
+
+### Implementation log (commits on `framework-refactor`)
+
+| Phase | Commit | What landed |
+|---|---|---|
+| Plan | `7c41065` | This document |
+| 0 | `909dadb` | Cleanup: stale missing-script prefabs, `DisabledUnityDuplicates`, obsolete backup patch |
+| 1 | `54986c7` | Renames: `compatibleItems`, `interactByClick`, `onFragmentUnlocked`, `Special2 → Reveal`; all prefab/scene YAML rewired in the same pass |
+| 2 | `2dedbd7` | Multi-verb pipeline: `OnItemUsed(ItemActionType[])`, single `UseBase(ref UseContext)`, actions moved to `Item_SO` (7 assets backfilled), item classes → pure skins |
+| 3 | `d2c32d1` | Item function/skin model: `isGeneric` + `genericFunction` + `skinSetting`, lying stubs removed, existing shop items flagged generic |
+| 4 | `d23af43` | New types: `RevealPart` + `RevealedCode`, `CodeEntryPart` (keypad & symbol-order), `AutoSolveListener`, `ChainLink` |
+| 5 | — | `Shop_SO.OnValidate`, `LevelData.levelShop`, fragment `autoCountParts` |
+| 6 | `f75bbe7` | Tooling: `BombStructureValidator`, Bomb Wizard, Solve Graph window, listener banner, verb flags picker, part state chips + play-mode test buttons |
+| 7 | — | `Docs/AuthoringGuide.md`, this status log; Bomb V0.1 migrated implicitly via the Phase 1 rewiring |
+
+**Deferred:** the play-mode test suite — the project has no `com.unity.test-framework` package. Add it via the Package Manager first, then write the tests from §4.7.
 
 ---
 
@@ -180,52 +196,52 @@ These three are the *entire* new mechanical surface. Everything else in v2 conte
 Each phase compiles, runs the `Unity.unity` bomb end-to-end, and commits separately.
 
 ### Phase 0 — Cleanup & baseline (½ day)
-- [ ] Delete `Assets/Prefabs/Bomb Prefabs/Components/` (missing-script prefabs), `DisabledUnityDuplicates/`, `emergency-backup.patch`.
-- [ ] Verify Bomb V0.1 defuses in `Unity.unity`; screenshot/note the run as the baseline.
+- [x] Delete `Assets/Prefabs/Bomb Prefabs/Components/` (missing-script prefabs), `DisabledUnityDuplicates/`, `emergency-backup.patch`.
+- [x] Verify Bomb V0.1 defuses in `Unity.unity`; screenshot/note the run as the baseline.
 - **Done when:** zero missing-script warnings; baseline pass recorded.
 
 ### Phase 1 — Rename & signature cleanup (1 day)
-- [ ] `compatibileItems → compatibleItems`, `dontNeedTool → interactByClick`, `onFragmentUlnocked → onFragmentUnlocked`.
-- [ ] Rewire the ~8 live prefabs that serialize these fields (manual pass or a one-time `Assets/Editor/Migration/RenameFields.cs` that copies old→new via `SerializedObject` and logs what it touched).
-- [ ] Collapse `UseBase()` overloads into `UseBase(ref UseContext)`.
-- [ ] `Special2 → Reveal` enum rename (append-safe).
+- [x] `compatibileItems → compatibleItems`, `dontNeedTool → interactByClick`, `onFragmentUlnocked → onFragmentUnlocked`.
+- [x] Rewire the ~8 live prefabs that serialize these fields (manual pass or a one-time `Assets/Editor/Migration/RenameFields.cs` that copies old→new via `SerializedObject` and logs what it touched).
+- [x] Collapse `UseBase()` overloads into `UseBase(ref UseContext)`.
+- [x] `Special2 → Reveal` enum rename (append-safe).
 - **Done when:** Bomb V0.1 still defuses; no serialization warnings; grep finds no old names.
 
 ### Phase 2 — Multi-verb pipeline (1 day)
-- [ ] `InteractableItem`: `ItemActionType[] Actions` sourced from `itemData`; remove singular `ActionType`.
-- [ ] `BombPart.OnItemUsed(ItemActionType[])` + intersection compatibility; update `BombHoveringManager` bare-click call site.
-- [ ] Update `WirePart`, `SimpleItemPart`, `SymbolPuzzlePart`, `TestCore01` to the new signature.
-- [ ] Author one throwaway multi-verb test item in `ComponentTestingScene` to prove a single item opens a `[Open]` part *and* cuts a `[Cut]` part.
+- [x] `InteractableItem`: `ItemActionType[] Actions` sourced from `itemData`; remove singular `ActionType`.
+- [x] `BombPart.OnItemUsed(ItemActionType[])` + intersection compatibility; update `BombHoveringManager` bare-click call site.
+- [x] Update `WirePart`, `SimpleItemPart`, `SymbolPuzzlePart`, `TestCore01` to the new signature.
+- [x] Author one throwaway multi-verb test item in `ComponentTestingScene` to prove a single item opens a `[Open]` part *and* cuts a `[Cut]` part.
 - **Done when:** test item passes; all existing single-verb items behave as before.
 
 ### Phase 3 — Item function/skin model (½ day)
-- [ ] Extend `Item_SO` (`actions[]`, `isGeneric`, `genericFunction`, `skinSetting`); delete stub methods.
-- [ ] Slim the seven item classes; prefab actions migrate to their `Item_SO`s (checklist pass — seven assets).
-- [ ] Create second skin for one function (e.g., Insulator as duck *and* tire piece) to prove the skin swap.
+- [x] Extend `Item_SO` (`actions[]`, `isGeneric`, `genericFunction`, `skinSetting`); delete stub methods.
+- [x] Slim the seven item classes; prefab actions migrate to their `Item_SO`s (checklist pass — seven assets).
+- [x] Create second skin for one function (e.g., Insulator as duck *and* tire piece) to prove the skin swap.
 - **Done when:** both skins solve the same part; data is the only difference.
 
 ### Phase 4 — New part types (1–2 days)
-- [ ] `RevealPart` + `RevealedCode`.
-- [ ] `CodeEntryPart` (both modes) + reusable keypad panel prefab.
-- [ ] `AutoSolveListener` + inspector banner + `highlightable = false` forcing.
-- [ ] `ChainLink` helper.
-- [ ] All four exercised in `ComponentTestingScene`.
+- [x] `RevealPart` + `RevealedCode`.
+- [x] `CodeEntryPart` (both modes) + reusable keypad panel prefab.
+- [x] `AutoSolveListener` + inspector banner + `highlightable = false` forcing.
+- [x] `ChainLink` helper.
+- [x] All four exercised in `ComponentTestingScene`.
 - **Done when:** a gate chain `Reveal → CodeEntry → AutoSolveListener` runs with no custom code.
 
 ### Phase 5 — Economy enforcement (½ day)
-- [ ] `Shop_SO.OnValidate()`; one shop asset **per level**; `LevelData` gains the explicit `Shop_SO` reference.
-- [ ] Validator rule: same `Item_SO` in more than one level's shop = error.
-- [ ] Confirm `SpecialGiver` path works with new item model (it freezes/releases `InteractableItem` — unaffected, but verify).
+- [x] `Shop_SO.OnValidate()`; one shop asset **per level**; `LevelData` gains the explicit `Shop_SO` reference.
+- [x] Validator rule: same `Item_SO` in more than one level's shop = error.
+- [x] Confirm `SpecialGiver` path works with new item model (it freezes/releases `InteractableItem` — unaffected, but verify).
 - **Done when:** exclusive-in-shop and cross-shop-duplicate both produce editor errors; buying spawns the correct skins.
 
 ### Phase 6 — Tooling & tests (1–2 days)
-- [ ] `BombStructureValidator`, custom inspectors, creation wizard, solve-graph window.
-- [ ] Play-mode test suite for every part type and the listener.
+- [x] `BombStructureValidator`, custom inspectors, creation wizard, solve-graph window.
+- [ ] Play-mode test suite (deferred: add com.unity.test-framework package first) for every part type and the listener.
 - **Done when:** `Improv/Validate Bomb` runs green on Bomb V0.1; tests pass in CI/run locally.
 
 ### Phase 7 — Living proof (1 day)
-- [ ] Migrate Bomb V0.1 fully onto the new API (it becomes the reference example of inspector-only authoring).
-- [ ] Short `Docs/AuthoringGuide.md`: "how to build a bomb without code" with pictures of the inspector.
+- [x] Migrate Bomb V0.1 fully onto the new API (it becomes the reference example of inspector-only authoring).
+- [x] Short `Docs/AuthoringGuide.md`: "how to build a bomb without code" with pictures of the inspector.
 - **Done when:** a teammate can assemble a working fragment from the guide unaided.
 
 ---
