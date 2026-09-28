@@ -22,6 +22,10 @@ public class LevelData : ScriptableObject
     [Tooltip("The starting budget for the level.")]
     public int startingBudget;
 
+    [Header("Economy")]
+    [Tooltip("This level's item shop. Every level uses its OWN shop asset — no item may appear in two levels' shops (checked by Improv/Validate All Bombs).")]
+    public Shop_SO levelShop;
+
     [Header("Bomb Info")]
     [Tooltip("The prefab for the bomb. Once added, you can use the inspector preview to view the bomb.")]
     public GameObject bombPrefab;

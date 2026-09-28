@@ -76,6 +76,27 @@ public class BombPartEditor : Editor
         BombPart part = (BombPart)target;
         serializedObject.Update();
 
+        // STATE CHIPS + play-mode test buttons
+        EditorGUILayout.BeginHorizontal();
+        string state = part.isSolved ? "SOLVED" : (part.isLocked ? "LOCKED" : "OPEN");
+        EditorGUILayout.LabelField("State:", EditorStyles.miniBoldLabel);
+        EditorGUILayout.LabelField(state, EditorStyles.boldLabel);
+        EditorGUILayout.EndHorizontal();
+
+        if (Application.isPlaying)
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUI.enabled = !part.isSolved;
+            if (GUILayout.Button("Solve")) part.ForceSolve();
+            GUI.enabled = part.isLocked;
+            if (GUILayout.Button("Unlock")) part.Unlock();
+            GUI.enabled = !part.isLocked;
+            if (GUILayout.Button("Lock")) part.SilentLock();
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space(5);
+        }
+
         //BASE
         bases = EditorGUILayout.BeginFoldoutHeaderGroup(bases, "Base");
         basesAB.target = bases;

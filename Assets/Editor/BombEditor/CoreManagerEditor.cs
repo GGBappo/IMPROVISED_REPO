@@ -10,6 +10,7 @@ public class CoreManagerEditor : Editor
     SerializedProperty bomb;
     SerializedProperty parts;
     SerializedProperty toSolveParts;
+    SerializedProperty autoCountParts;
     SerializedProperty onFragmentSolved;
     SerializedProperty onFragmentUnlocked;
     SerializedProperty lockAnim;
@@ -35,6 +36,7 @@ public class CoreManagerEditor : Editor
         bomb = serializedObject.FindProperty("bomb");
         parts = serializedObject.FindProperty("parts");
         toSolveParts = serializedObject.FindProperty("toSolveParts");
+        autoCountParts = serializedObject.FindProperty("autoCountParts");
         onFragmentSolved = serializedObject.FindProperty("onFragmentSolved");
         onFragmentUnlocked = serializedObject.FindProperty("onFragmentUnlocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
@@ -48,6 +50,7 @@ public class CoreManagerEditor : Editor
         EditorGUILayout.PropertyField(bomb);
         EditorGUILayout.PropertyField(parts);
         EditorGUILayout.PropertyField(toSolveParts);
+        EditorGUILayout.PropertyField(autoCountParts);
 
         events = EditorGUILayout.BeginFoldoutHeaderGroup(events, "Events");
         eventsAB.target = events;
