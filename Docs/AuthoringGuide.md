@@ -3,6 +3,7 @@
 How to build a bomb **without writing code**. Everything below is Inspector drag-and-drop.
 
 > Applies to the `framework-refactor` branch. Verify your work with **Improv → Validate All Bombs** early and often.
+> Need to write a new component *type* in C#, or the full API reference? See **`Docs/BombCodeManual.md`**.
 
 ---
 

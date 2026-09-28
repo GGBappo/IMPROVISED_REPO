@@ -1,7 +1,7 @@
 # FEATURE.md — Bomb Framework Refactor: Modular, Inspector-First, Function/Skin Items
 
 **Branch:** `Bappo-working-branch` (plan) → implemented on **`framework-refactor`** (branched from `7dce724`)
-**Status:** ✅ Implemented (Phases 0–7) — **pending verification in the Unity editor**: open the project, confirm zero compile errors, run `Improv → Validate All Bombs`, play the `Unity.unity` scene end-to-end.
+**Status:** ✅ Implemented (Phases 0–7) — **verified in Unity 6000.3.8f1**: clean compile (zero errors, only pre-existing warnings), `Improv → Validate All Bombs` clean, Bomb V0.1 defused end-to-end on the new pipeline. Developer reference: `Docs/BombCodeManual.md`, designer quick-guide: `Docs/AuthoringGuide.md`.
 **Scope:** Code framework only. Settings, bomb content, and component rosters are governed by the v2 design doc and are **out of scope here** — this plan only builds the machinery that content will be dragged into.
 
 ### Implementation log (commits on `framework-refactor`)
