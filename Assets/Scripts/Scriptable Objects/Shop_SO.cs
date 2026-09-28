@@ -22,8 +22,10 @@ public class Shop_SO : ScriptableObject
             {
                 Debug.LogError($"[Shop] '{name}' lists setting-exclusive item '{item.itemName}'. Only generic items (Insulator/Multitool/Heat Source skins) may be sold. Deliver exclusive items in-bomb via SpecialGiver instead.", this);
             }
-            else if (!seenFunctions.Add(item.genericFunction))
+            else if (item.genericFunction != GenericItemFunction.None && !seenFunctions.Add(item.genericFunction))
             {
+                // None = legacy/unassigned function — exempt from the one-skin-per-function rule
+                // until items are migrated onto the real generic functions.
                 Debug.LogError($"[Shop] '{name}' lists more than one skin of generic function '{item.genericFunction}'. A level's shop carries exactly one skin per function.", this);
             }
         }

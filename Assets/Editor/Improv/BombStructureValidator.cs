@@ -44,8 +44,9 @@ public static class BombStructureValidator
                     Debug.LogError($"[Validate] {path}: setting-exclusive item '{SafeName(item)}' is listed in a shop. Exclusive items must be delivered in-bomb via SpecialGiver.");
                     errors++;
                 }
-                else if (!seenFunctions.Add(item.genericFunction))
+                else if (item.genericFunction != GenericItemFunction.None && !seenFunctions.Add(item.genericFunction))
                 {
+                    // None = legacy/unassigned function — exempt from the one-skin-per-function rule.
                     Debug.LogError($"[Validate] {path}: more than one skin of generic function '{item.genericFunction}' — a level's shop carries exactly one skin per function.");
                     errors++;
                 }
