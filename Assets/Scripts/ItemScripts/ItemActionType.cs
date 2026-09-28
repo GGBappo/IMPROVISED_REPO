@@ -9,6 +9,6 @@ public enum ItemActionType
     Disable,  // Shoe
     Cool,     // IceCube
     Special1,  // Special, in Bomb Item 1
-    Special2,  // Special, in Bomb Item 2
+    Reveal,  // Special, in Bomb Item 2
     Empty,  //NoItem
 }

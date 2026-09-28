@@ -7,8 +7,8 @@ public class BombPartEditor : Editor
 {
     #region Properites
     SerializedProperty fragment;
-    SerializedProperty compatibileItems;
-    SerializedProperty dontNeedTool;
+    SerializedProperty compatibleItems;
+    SerializedProperty interactByClick;
     SerializedProperty selfLocked;
     SerializedProperty lockAnim;
     SerializedProperty highlightable;
@@ -58,8 +58,8 @@ public class BombPartEditor : Editor
         dntAB.valueChanged.AddListener(Repaint);
 
         fragment = serializedObject.FindProperty("fragment");
-        compatibileItems = serializedObject.FindProperty("compatibileItems");
-        dontNeedTool = serializedObject.FindProperty("dontNeedTool");
+        compatibleItems = serializedObject.FindProperty("compatibleItems");
+        interactByClick = serializedObject.FindProperty("interactByClick");
         selfLocked = serializedObject.FindProperty("selfLocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
         highlightable = serializedObject.FindProperty("highlightable");
@@ -82,11 +82,11 @@ public class BombPartEditor : Editor
         if (EditorGUILayout.BeginFadeGroup(basesAB.faded))
         {
             EditorGUILayout.PropertyField(fragment);
-            EditorGUILayout.PropertyField(dontNeedTool);
-            dntAB.target = !dontNeedTool.boolValue;
+            EditorGUILayout.PropertyField(interactByClick);
+            dntAB.target = !interactByClick.boolValue;
             if (EditorGUILayout.BeginFadeGroup(dntAB.faded))
             {
-                EditorGUILayout.PropertyField(compatibileItems);
+                EditorGUILayout.PropertyField(compatibleItems);
             }
             EditorGUILayout.EndFadeGroup();
             EditorGUILayout.Space(5);
@@ -159,8 +159,8 @@ public class BombPartEditor : Editor
             string[] toExclude = new string[12];
             toExclude[0] = "m_Script";
             toExclude[1] = "fragment";
-            toExclude[2] = "compatibileItems";
-            toExclude[3] = "dontNeedTool";
+            toExclude[2] = "compatibleItems";
+            toExclude[3] = "interactByClick";
             toExclude[4] = "lockAnim";
             toExclude[5] = "highlightable";
             toExclude[6] = "highlight";

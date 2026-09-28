@@ -10,12 +10,12 @@ public abstract class BombPart : MonoBehaviour
 
     [NonReorderable]
     [Tooltip("Action Types, compatibile with the Part")]
-    public ItemActionType[] compatibileItems;
+    public ItemActionType[] compatibleItems;
 
     public bool isSolved {  get; protected set; }
 
     [Tooltip("If True, you will be able to interact with this part ONLY without any item, so by simple mouse clicking")]
-    public bool dontNeedTool;
+    public bool interactByClick;
 
 
     [Tooltip("If True, part will not be unlocked the same moment the Fragment does. In order to unlock this part, you will need to trigger Unlock()")]
@@ -76,11 +76,11 @@ public abstract class BombPart : MonoBehaviour
         onPartSolved?.Invoke();
     }
 
-    protected bool IsCompatibile(ItemActionType type)
+    protected bool IsCompatible(ItemActionType type)
     {
-        for (int i = 0; i < compatibileItems.Length; i++)
+        for (int i = 0; i < compatibleItems.Length; i++)
         {
-            if (compatibileItems[i] == type)
+            if (compatibleItems[i] == type)
             {
                 return true;
             }
@@ -92,10 +92,10 @@ public abstract class BombPart : MonoBehaviour
     {
         isLocked = false;
         if(lockAnim != null) lockAnim.SetBool("IsLocked", isLocked);
-        if (dontNeedTool && !compatibileItems.Contains(ItemActionType.Empty))
+        if (interactByClick && !compatibleItems.Contains(ItemActionType.Empty))
         {
-            compatibileItems = new ItemActionType[1];
-            compatibileItems[0] = ItemActionType.Empty;
+            compatibleItems = new ItemActionType[1];
+            compatibleItems[0] = ItemActionType.Empty;
         }
         onPartUnlocked?.Invoke();
     }
@@ -156,7 +156,7 @@ public abstract class BombPart : MonoBehaviour
         if (isLocked) { return false; }
         if (isSolved) { return false; }
 
-        if (!IsCompatibile(itemType))
+        if (!IsCompatible(itemType))
         {
             onPartWrongItem?.Invoke();
             return false;
@@ -184,7 +184,7 @@ public abstract class BombPart : MonoBehaviour
         }
         if (!hoverOverAnything) { return false; }
 
-        if (!IsCompatibile(itemType))
+        if (!IsCompatible(itemType))
         {
             onPartWrongItem?.Invoke();
             return false;
@@ -236,7 +236,7 @@ public abstract class BombPart : MonoBehaviour
         }
         if (!hoverOverAnything) { return false; }
 
-        if (!IsCompatibile(itemType)) 
+        if (!IsCompatible(itemType)) 
         {
             onPartWrongItem?.Invoke();
             return false; 

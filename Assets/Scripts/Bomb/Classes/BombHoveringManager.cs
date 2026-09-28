@@ -23,7 +23,7 @@ public class BombHoveringManager : MonoBehaviour
     {
         CheckBombPart();
         CheckPartElement();
-        if (Input.GetMouseButtonDown(0) && hoveredBombPart != null && hoveredBombPart.dontNeedTool)
+        if (Input.GetMouseButtonDown(0) && hoveredBombPart != null && hoveredBombPart.interactByClick)
         {
             hoveredBombPart.OnItemUsed(ItemActionType.Empty);
         }

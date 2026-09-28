@@ -12,7 +12,7 @@ public class TestCore01 : BombPart
 
         if (isSolved) return false;
 
-        if (!IsCompatibile(type))
+        if (!IsCompatible(type))
         {
             onPartWrongItem?.Invoke();
             return false;

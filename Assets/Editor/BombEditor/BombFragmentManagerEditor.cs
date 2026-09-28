@@ -9,7 +9,7 @@ public class BombFragmentManagerEditor : Editor
     SerializedProperty parts;
     SerializedProperty toSolveParts;
     SerializedProperty onFragmentSolved;
-    SerializedProperty onFragmentUlnocked;
+    SerializedProperty onFragmentUnlocked;
     SerializedProperty lockAnim;
 
     bool events = false;
@@ -30,7 +30,7 @@ public class BombFragmentManagerEditor : Editor
         parts = serializedObject.FindProperty("parts");
         toSolveParts = serializedObject.FindProperty("toSolveParts");
         onFragmentSolved = serializedObject.FindProperty("onFragmentSolved");
-        onFragmentUlnocked = serializedObject.FindProperty("onFragmentUlnocked");
+        onFragmentUnlocked = serializedObject.FindProperty("onFragmentUnlocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
     }
     #endregion
@@ -50,7 +50,7 @@ public class BombFragmentManagerEditor : Editor
             EditorGUILayout.Space(5);
             EditorGUILayout.PropertyField(onFragmentSolved);
             EditorGUILayout.Space(5);
-            EditorGUILayout.PropertyField(onFragmentUlnocked);
+            EditorGUILayout.PropertyField(onFragmentUnlocked);
             EditorGUILayout.Space(5);
         }
         EditorGUILayout.EndFadeGroup();

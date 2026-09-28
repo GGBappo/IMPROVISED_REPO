@@ -471,11 +471,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}
-      propertyPath: compatibileItems.Array.size
+      propertyPath: compatibleItems.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}
-      propertyPath: 'compatibileItems.Array.data[1]'
+      propertyPath: 'compatibleItems.Array.data[1]'
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 34339846102221162, guid: 23855542464397048b8c83478fa993e9, type: 3}

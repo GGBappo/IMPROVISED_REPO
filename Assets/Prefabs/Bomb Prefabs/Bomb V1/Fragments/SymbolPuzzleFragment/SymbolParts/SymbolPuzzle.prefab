@@ -1601,8 +1601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SymbolPuzzlePart
   fragment: {fileID: 0}
-  compatibileItems: 02000000
-  dontNeedTool: 0
+  compatibleItems: 02000000
+  interactByClick: 0
   selfLocked: 1
   lockAnim: {fileID: 0}
   isHighlighted: 0

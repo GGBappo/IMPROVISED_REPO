@@ -20,7 +20,7 @@ public class BombFragmentManager : MonoBehaviour
     public UnityEvent onFragmentSolved;
 
     [Tooltip("Triggers, when fragment is unlocked")]
-    public UnityEvent onFragmentUlnocked;
+    public UnityEvent onFragmentUnlocked;
 
     [Tooltip("Animator of the Lock")]
     public Animator lockAnim;
