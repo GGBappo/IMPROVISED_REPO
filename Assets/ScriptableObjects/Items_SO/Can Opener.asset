@@ -21,6 +21,7 @@ MonoBehaviour:
   compatiblePartTypes:
   - Wires
   - Broken Wire
+  isGeneric: 1
   actions:
   - 2
   isSingleUse: 0

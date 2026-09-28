@@ -18,6 +18,7 @@ MonoBehaviour:
   cost: 5
   sellValue: 0
   hint: This thing is cold as shit!
+  isGeneric: 1
   actions:
   - 5
   isSingleUse: 1

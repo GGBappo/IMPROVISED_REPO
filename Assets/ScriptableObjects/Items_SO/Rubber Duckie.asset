@@ -18,6 +18,7 @@ MonoBehaviour:
   cost: 20
   sellValue: 15
   hint: If only I had some RUBBER to stop electricity flow!
+  isGeneric: 1
   actions:
   - 1
   isSingleUse: 1

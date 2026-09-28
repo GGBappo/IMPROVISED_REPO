@@ -18,6 +18,7 @@ MonoBehaviour:
   cost: 20
   sellValue: 15
   hint: A very sturdy shoe, can possibly block a fan to stop power
+  isGeneric: 1
   actions:
   - 4
   isSingleUse: 1

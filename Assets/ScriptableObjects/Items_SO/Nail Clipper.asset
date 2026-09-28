@@ -21,6 +21,7 @@ MonoBehaviour:
   compatiblePartTypes:
   - Wire
   - Screw
+  isGeneric: 1
   actions:
   - 0
   isSingleUse: 0
