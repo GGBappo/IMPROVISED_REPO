@@ -268,4 +268,4 @@ Each phase compiles, runs the `Unity.unity` bomb end-to-end, and commits separat
 
 ## 8. Open Questions
 
-None — all decisions are recorded in §7. The plan is ready for implementation on `Bappo-working-branch`.
+None — all decisions are recorded in the Decisions Log (§7). Implemented and verified; see the status at the top.
