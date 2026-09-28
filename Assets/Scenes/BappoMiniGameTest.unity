@@ -7132,6 +7132,10 @@ PrefabInstance:
       propertyPath: tooltipPanel
       value: 
       objectReference: {fileID: 824483551}
+    - target: {fileID: 7264105420194549877, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
+      propertyPath: 'compatibleItems.Array.data[0]'
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8543234668498080712, guid: e0755797f3967544bb2282caf05d24a3, type: 3}
       propertyPath: m_Name
       value: Bomb V0.1
