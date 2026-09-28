@@ -11,6 +11,9 @@ public class BombHoveringManager : MonoBehaviour
     static public BombPart hoveredBombPart;
     static public PartElement hoveredPartElement;
 
+    /// <summary> The verb set a bare mouse click offers. </summary>
+    private static readonly ItemActionType[] bareClickActions = { ItemActionType.Empty };
+
     void Start()
     {
         if (mainCamera == null)
@@ -25,7 +28,7 @@ public class BombHoveringManager : MonoBehaviour
         CheckPartElement();
         if (Input.GetMouseButtonDown(0) && hoveredBombPart != null && hoveredBombPart.interactByClick)
         {
-            hoveredBombPart.OnItemUsed(ItemActionType.Empty);
+            hoveredBombPart.OnItemUsed(bareClickActions);
         }
     }
 

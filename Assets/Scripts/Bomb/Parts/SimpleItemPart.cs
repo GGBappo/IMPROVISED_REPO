@@ -1,14 +1,20 @@
 using UnityEngine;
 
+/// <summary>
+/// One-shot component: correct item (or bare click) -> solved. Optional solve animation / destroy.
+/// </summary>
+[AddComponentMenu("Improv/Bomb/Simple Item Part")]
 public class SimpleItemPart : BombPart
 {
     [SerializeField] bool destroyOnSolve/*, more different bools*/;
     [SerializeField] Animator solveAnim;
 
 
-    public override bool OnItemUsed(ItemActionType type)
+    public override bool OnItemUsed(ItemActionType[] itemActions)
     {
-        if (!UseBase(type))
+        var ctx = new UseContext { itemActions = itemActions };
+
+        if (!UseBase(ref ctx))
         {
             return false;
         }

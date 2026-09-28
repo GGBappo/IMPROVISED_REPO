@@ -18,6 +18,8 @@ MonoBehaviour:
   cost: 5
   sellValue: 0
   hint: This thing is cold as shit!
+  actions:
+  - 5
   isSingleUse: 1
   hoverHeight: 1.432
   hoverRot: 1.757

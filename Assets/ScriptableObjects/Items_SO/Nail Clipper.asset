@@ -21,6 +21,8 @@ MonoBehaviour:
   compatiblePartTypes:
   - Wire
   - Screw
+  actions:
+  - 0
   isSingleUse: 0
   hoverHeight: 1.432
   hoverRot: 1.757

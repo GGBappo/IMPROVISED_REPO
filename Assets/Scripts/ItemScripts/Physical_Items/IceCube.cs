@@ -1,11 +1,2 @@
-using UnityEngine;
-
-public class IceCube : InteractableItem
-{
-    public override ItemActionType ActionType => ItemActionType.Cool;
-
-    public override void OnUse()
-    {
-        base.OnUse();
-    }
-}
+// Item behaviour now lives entirely in the Item_SO (actions, classification, economy).
+public class IceCube : InteractableItem { }

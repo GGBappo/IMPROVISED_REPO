@@ -18,6 +18,8 @@ MonoBehaviour:
   cost: 20
   sellValue: 15
   hint: Potatos are known for their ability to be prettyyyy conductive!
+  actions:
+  - 3
   isSingleUse: 1
   hoverHeight: 1.432
   hoverRot: 1.757

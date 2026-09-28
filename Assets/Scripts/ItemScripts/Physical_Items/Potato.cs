@@ -1,12 +1,2 @@
-using System.Security.Cryptography;
-using UnityEngine;
-
-public class Potato : InteractableItem
-{
-    public override ItemActionType ActionType => ItemActionType.Place;
-
-    public override void OnUse()
-    {
-        base.OnUse();
-    }
-}
+// Item behaviour now lives entirely in the Item_SO (actions, classification, economy).
+public class Potato : InteractableItem { }

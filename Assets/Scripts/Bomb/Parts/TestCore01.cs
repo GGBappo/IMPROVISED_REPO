@@ -6,17 +6,15 @@ public class TestCore01 : BombPart
     public Material disabledMaterial;
     public MeshRenderer render;
 
-    public override bool OnItemUsed(ItemActionType type)
+    public override bool OnItemUsed(ItemActionType[] itemActions)
     {
-        if (isLocked) return false;
+        var ctx = new UseContext { itemActions = itemActions };
 
-        if (isSolved) return false;
-
-        if (!IsCompatible(type))
+        if (!UseBase(ref ctx))
         {
-            onPartWrongItem?.Invoke();
             return false;
         }
+
         RemoveHighlight();
         Solve();
         return true;

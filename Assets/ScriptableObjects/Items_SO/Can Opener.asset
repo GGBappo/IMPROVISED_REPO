@@ -21,6 +21,8 @@ MonoBehaviour:
   compatiblePartTypes:
   - Wires
   - Broken Wire
+  actions:
+  - 2
   isSingleUse: 0
   hoverHeight: 1.432
   hoverRot: 1.757

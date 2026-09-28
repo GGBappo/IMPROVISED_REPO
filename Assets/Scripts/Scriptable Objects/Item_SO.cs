@@ -8,6 +8,10 @@ public class Item_SO : ScriptableObject
     public Sprite itemSprite; // Sprite representing the item
     public InteractableItem prefab; // GameObject representing the item in the world
     public string itemName; // Name of the item
+
+    [Tooltip("Verbs this item can fulfill. Multiple entries make a multi-tool (e.g. Cut + Open). This is the item's FUNCTION - prefabs are just skins.")]
+    public ItemActionType[] actions = new ItemActionType[0];
+
     public float cost; // Cost of the item
     public float sellValue; // Sell value of the item
     public string hint; // Array of item hints

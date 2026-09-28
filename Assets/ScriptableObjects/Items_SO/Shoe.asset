@@ -18,6 +18,8 @@ MonoBehaviour:
   cost: 20
   sellValue: 15
   hint: A very sturdy shoe, can possibly block a fan to stop power
+  actions:
+  - 4
   isSingleUse: 1
   hoverHeight: 1.432
   hoverRot: 1.757
