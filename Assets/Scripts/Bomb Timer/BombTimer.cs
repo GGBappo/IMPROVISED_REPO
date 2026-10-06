@@ -142,6 +142,11 @@ public class BombTimer : MonoBehaviour
         bombTimer.text = $"{minutes:00}:{seconds:00}";
     }
 
+    public void AddTime(int amount)
+    {
+        remaining = Mathf.Max(0f, remaining + amount);
+        UpdateTimerText();
+    }
 
 #if UNITY_EDITOR
     private void OnValidate()
