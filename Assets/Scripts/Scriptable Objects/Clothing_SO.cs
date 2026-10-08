@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum BuffType { Time, Money, Sus }
+public enum BuffType { Time, Money, Sus, None }
 
 [CreateAssetMenu(fileName = "New Clothing", menuName = "Clothing/New Clothing")]
 public class Clothing_SO : ScriptableObject
@@ -19,6 +19,7 @@ public class Clothing_SO : ScriptableObject
             case BuffType.Time: stats.IncreaseTime((int)buffAmount); break;
             case BuffType.Money: stats.IncreaseMoney((int)buffAmount); break;
             case BuffType.Sus: stats.UpdateSusStat(buffAmount); break;
+            case BuffType.None: break;
         }
     }
 }
