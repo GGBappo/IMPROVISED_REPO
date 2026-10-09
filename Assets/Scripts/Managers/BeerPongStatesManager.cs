@@ -9,6 +9,7 @@ public class BeerPongStateManager : MonoBehaviour
     
     
     private IGameState currentState;
+    public BeerPongMinigameStates CurrentState { get; private set; }
 
     // subscribe to events
     private void OnEnable()
@@ -51,11 +52,12 @@ public class BeerPongStateManager : MonoBehaviour
             case BeerPongMinigameStates.PlayerWin: currentState = playerWinState; break;
             case BeerPongMinigameStates.AIWin: currentState = AIWinState; break;
             default:
-                Debug.LogWarning($"[StartMenuStateManager] Unknown start menu state: {targetState}");
+                Debug.LogWarning($"[BeerPongStateManager] Unknown Beer Pong state: {targetState}");
                 currentState = null;
                 return;
         }
 
+        CurrentState = targetState;
         currentState?.EnterState(); 
     }
 

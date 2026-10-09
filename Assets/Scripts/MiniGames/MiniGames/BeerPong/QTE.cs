@@ -7,10 +7,13 @@ public class QTE : MonoBehaviour
     [Header("QTE Settings")]
     [SerializeField] private float moveSpeed = 0.02f; // Speed of the pointer movement
     [SerializeField] private float strenght = 0f; // Strenght of the throw
-    [SerializeField] private Slider slider;
     [SerializeField] private float minStrenght = 0.25f; 
     [SerializeField] private float maxStrenght = 2.25f;
-    
+
+    [Header("References")]
+    [SerializeField] private BeerPong beerPong;
+    [SerializeField] private Slider slider;
+
     public float Strenght { get => strenght; }
     void Reset()
     {
@@ -31,6 +34,7 @@ public class QTE : MonoBehaviour
 
     void Update()
     {
+        if (!beerPong.useQTE) return;
         slider.value += moveSpeed;
 
         if ((slider.value <= 0) && moveSpeed < 0)
