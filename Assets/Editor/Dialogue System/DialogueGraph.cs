@@ -14,7 +14,7 @@ public class DialogueGraph : Graph
     public const string AssetExtension = "dialogue";
     
     
-    [MenuItem("Assets/Create/Graph Toolkit Samples/DialogueGraph", false)]
+    [MenuItem("Tools/Systems/DialogueGraph", false)]
     static void CreateAssetFile()
     {
         // im guessing that this is how the graph actually gets made?
