@@ -10,6 +10,8 @@ public class PlayerStats : MonoBehaviour
     {
         var worn = GameSessionData.equippedClothing;
         if (worn != null) worn.Apply(this);
+
+        Debug.Log(GameSessionData.equippedClothing.name);
     }
     public void UpdateSusStat(float value)
     {
