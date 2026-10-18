@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 0}
-  compatibileItems: 01000000
-  dontNeedTool: 0
+  compatibleItems: 01000000
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0

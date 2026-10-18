@@ -8,8 +8,9 @@ public class BombFragmentManagerEditor : Editor
     SerializedProperty bomb;
     SerializedProperty parts;
     SerializedProperty toSolveParts;
+    SerializedProperty autoCountParts;
     SerializedProperty onFragmentSolved;
-    SerializedProperty onFragmentUlnocked;
+    SerializedProperty onFragmentUnlocked;
     SerializedProperty lockAnim;
 
     bool events = false;
@@ -29,8 +30,9 @@ public class BombFragmentManagerEditor : Editor
         bomb = serializedObject.FindProperty("bomb");
         parts = serializedObject.FindProperty("parts");
         toSolveParts = serializedObject.FindProperty("toSolveParts");
+        autoCountParts = serializedObject.FindProperty("autoCountParts");
         onFragmentSolved = serializedObject.FindProperty("onFragmentSolved");
-        onFragmentUlnocked = serializedObject.FindProperty("onFragmentUlnocked");
+        onFragmentUnlocked = serializedObject.FindProperty("onFragmentUnlocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
     }
     #endregion
@@ -42,6 +44,7 @@ public class BombFragmentManagerEditor : Editor
         EditorGUILayout.PropertyField(bomb);
         EditorGUILayout.PropertyField(parts);
         EditorGUILayout.PropertyField(toSolveParts);
+        EditorGUILayout.PropertyField(autoCountParts);
 
         events = EditorGUILayout.BeginFoldoutHeaderGroup(events, "Events");
         eventsAB.target = events;
@@ -50,7 +53,7 @@ public class BombFragmentManagerEditor : Editor
             EditorGUILayout.Space(5);
             EditorGUILayout.PropertyField(onFragmentSolved);
             EditorGUILayout.Space(5);
-            EditorGUILayout.PropertyField(onFragmentUlnocked);
+            EditorGUILayout.PropertyField(onFragmentUnlocked);
             EditorGUILayout.Space(5);
         }
         EditorGUILayout.EndFadeGroup();

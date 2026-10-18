@@ -13,6 +13,9 @@ public class BombFragmentManager : MonoBehaviour
     [Tooltip("How many of the parts need to be solved")]
     [SerializeField] int toSolveParts;
 
+    [Tooltip("If True, toSolveParts is automatically set to the number of parts at runtime. Recommended for new bombs — the Bomb Wizard enables it. (Off by default so legacy prefabs keep their hand-set values.)")]
+    [SerializeField] bool autoCountParts = false;
+
 
     protected int solvedParts;
     
@@ -20,7 +23,7 @@ public class BombFragmentManager : MonoBehaviour
     public UnityEvent onFragmentSolved;
 
     [Tooltip("Triggers, when fragment is unlocked")]
-    public UnityEvent onFragmentUlnocked;
+    public UnityEvent onFragmentUnlocked;
 
     [Tooltip("Animator of the Lock")]
     public Animator lockAnim;
@@ -60,6 +63,11 @@ public class BombFragmentManager : MonoBehaviour
 
     public void InitializeFragment()
     {
+        if (autoCountParts && parts != null)
+        {
+            toSolveParts = parts.Length;
+        }
+
         for (int i = 0; i < parts.Length; i++)
         {
             parts[i].InitializePart();

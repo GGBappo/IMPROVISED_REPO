@@ -12,14 +12,16 @@ public class SymbolPuzzlePart : BombPart
     [SerializeField] private float veryOverTime;
     private float overCounter;
 
-    public override bool OnItemUsed(ItemActionType type)
+    public override bool OnItemUsed(ItemActionType[] itemActions)
     {
-        int elementID = 0;
+        var ctx = new UseContext { itemActions = itemActions, elements = symbols };
 
-        if (!UseBase(symbols, type, ref elementID))
+        if (!UseBase(ref ctx))
         {
             return false;
         }
+
+        int elementID = ctx.hoveredIndex;
 
         symbols[elementID].anim.SetTrigger("Click");
         symbols[elementID].icon.NextColor();

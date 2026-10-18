@@ -27,12 +27,20 @@ public abstract class InteractableItem : MonoBehaviour, IPointerEnterHandler, IP
 
     private Coroutine returner;
 
-    public virtual ItemActionType ActionType
+    /// <summary>
+    /// The verbs this item can fulfill, sourced from its Item_SO (single source of truth).
+    /// This is what makes multi-verb items (e.g. a Multitool) and per-setting reskins work:
+    /// the data defines the function, the prefab is just the skin.
+    /// </summary>
+    public ItemActionType[] Actions
     {
         get
         {
-            Debug.LogWarning(gameObject.name + " does not override ActionType!");
-            return ItemActionType.Cut;
+            if (itemData != null && itemData.actions != null)
+            {
+                return itemData.actions;
+            }
+            return System.Array.Empty<ItemActionType>();
         }
     }
 
@@ -132,14 +140,14 @@ public abstract class InteractableItem : MonoBehaviour, IPointerEnterHandler, IP
     {
         if (BombHoveringManager.hoveredBombPart != null)
         {
-            if (BombHoveringManager.hoveredBombPart.OnItemUsed(ActionType))
+            if (itemData == null)
             {
-                //Item Used Succesfully
+                Debug.LogWarning(gameObject.name + " has no Item_SO assigned - it can't perform any action. Assign one in the inspector.", this);
+                return;
             }
-            else
-            {
-                //Item Used Unsuccesfully (strike was already added)
-            }
+
+            // The part decides which of our verbs applies; strikes are handled inside the part.
+            BombHoveringManager.hoveredBombPart.OnItemUsed(Actions);
         }
     }
 

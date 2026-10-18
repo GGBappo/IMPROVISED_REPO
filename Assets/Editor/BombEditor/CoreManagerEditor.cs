@@ -10,8 +10,9 @@ public class CoreManagerEditor : Editor
     SerializedProperty bomb;
     SerializedProperty parts;
     SerializedProperty toSolveParts;
+    SerializedProperty autoCountParts;
     SerializedProperty onFragmentSolved;
-    SerializedProperty onFragmentUlnocked;
+    SerializedProperty onFragmentUnlocked;
     SerializedProperty lockAnim;
 
     bool events = false;
@@ -35,8 +36,9 @@ public class CoreManagerEditor : Editor
         bomb = serializedObject.FindProperty("bomb");
         parts = serializedObject.FindProperty("parts");
         toSolveParts = serializedObject.FindProperty("toSolveParts");
+        autoCountParts = serializedObject.FindProperty("autoCountParts");
         onFragmentSolved = serializedObject.FindProperty("onFragmentSolved");
-        onFragmentUlnocked = serializedObject.FindProperty("onFragmentUlnocked");
+        onFragmentUnlocked = serializedObject.FindProperty("onFragmentUnlocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
     }
     #endregion
@@ -48,6 +50,7 @@ public class CoreManagerEditor : Editor
         EditorGUILayout.PropertyField(bomb);
         EditorGUILayout.PropertyField(parts);
         EditorGUILayout.PropertyField(toSolveParts);
+        EditorGUILayout.PropertyField(autoCountParts);
 
         events = EditorGUILayout.BeginFoldoutHeaderGroup(events, "Events");
         eventsAB.target = events;
@@ -56,7 +59,7 @@ public class CoreManagerEditor : Editor
             EditorGUILayout.Space(5);
             EditorGUILayout.PropertyField(onFragmentSolved);
             EditorGUILayout.Space(5);
-            EditorGUILayout.PropertyField(onFragmentUlnocked);
+            EditorGUILayout.PropertyField(onFragmentUnlocked);
             EditorGUILayout.Space(5);
         }
         EditorGUILayout.EndFadeGroup();
@@ -82,7 +85,7 @@ public class CoreManagerEditor : Editor
             toExclude[2] = "parts";
             toExclude[3] = "toSolveParts";
             toExclude[4] = "onFragmentSolved";
-            toExclude[5] = "onFragmentUlnocked";
+            toExclude[5] = "onFragmentUnlocked";
             toExclude[6] = "lockAnim";
 
             DrawPropertiesExcluding(serializedObject, toExclude);

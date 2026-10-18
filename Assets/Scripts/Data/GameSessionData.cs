@@ -4,6 +4,8 @@ public static class GameSessionData
     // this is mostly for the states to know things, like if the player lost/won
     // but i think displaying these for the player would be kinda cool too!
 
+    public static Clothing_SO equippedClothing;
+
     #region Player Statistics
     // i wont implement everything here yet
     // however i do think it'd be nice to keep track of each levels best run!
