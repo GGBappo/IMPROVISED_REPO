@@ -18,11 +18,13 @@ public class MinigameManager : MonoBehaviour
     {
         GameEvents.RequestShowBudgetUI();
         GameEvents.RequestHideQTE();
+        GameEvents.RequestShowShop();
     }
 
     private void HideLevelUI()
     {
         GameEvents.RequestHideBudgetUI();
         GameEvents.RequestShowQTE();
+        GameEvents.RequestHideShop();
     }
 }
