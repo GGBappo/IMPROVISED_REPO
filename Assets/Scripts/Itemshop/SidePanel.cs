@@ -50,6 +50,7 @@ public class SidePanel : MonoBehaviour
         if (isOpen) return;
         anim.SetTrigger("Show");
         isOpen = true;
+        Debug.Log("Side panel opened.");
     }
 
     public void ClosePanel()
@@ -57,19 +58,23 @@ public class SidePanel : MonoBehaviour
         if (!isOpen) return;
         anim.SetTrigger("Hide");
         isOpen = false;
+        Debug.Log("Side panel closed.");
     }
 
     private void HideShopComplete()
     {
+        Debug.Log("Call to hide shop received.");
         if (isOpen)
         {
             ClosePanel();
         }
         StartCoroutine(FadeOut());
+        
     }
 
     private void ShowShopComplete()
     {
+        Debug.Log("Call to show shop received.");
         StartCoroutine(FadeIn());
     }
 
