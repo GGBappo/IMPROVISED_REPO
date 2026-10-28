@@ -30,15 +30,15 @@ public class LevelSelector : MonoBehaviour
     void OnEnable()
     {
         GameEvents.OnDataPassLatestAssignmentFolderSpawn += SpawnLatestAssignmentFolder;
-        GameEvents.OnRequestDrawerOpen += LevelChooserEntranceSequence; 
-        GameEvents.OnRequestDrawerClose += LevelChooserExitSequence;
+        GameEvents.OnRequestDrawerOpen += DrawerEntranceSequence;
+        GameEvents.OnRequestDrawerClose += DrawerExitSequence;
     }
     
     void OnDisable()
     {
         GameEvents.OnDataPassLatestAssignmentFolderSpawn -= SpawnLatestAssignmentFolder;
-        GameEvents.OnRequestDrawerOpen -= LevelChooserEntranceSequence; 
-        GameEvents.OnRequestDrawerClose -= LevelChooserExitSequence;
+        GameEvents.OnRequestDrawerOpen -= DrawerEntranceSequence;
+        GameEvents.OnRequestDrawerClose -= DrawerExitSequence;
     }
 
     private void Start()
@@ -101,19 +101,17 @@ public class LevelSelector : MonoBehaviour
         splineAnimate.Play();
     }
 
-    private void LevelChooserEntranceSequence()
+    private void DrawerEntranceSequence()
     {
         Sequence movingSequence = DOTween.Sequence();
 
-        movingSequence.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkersHolder.cameraMarkers[2].transform.position, _cameraMarkersHolder.cameraMarkers[2].transform.rotation, defaultTweenDuration));
         movingSequence.Append(_drawer.Open());
     }
 
-    private void LevelChooserExitSequence()
+    private void DrawerExitSequence()
     {
         Sequence movingSequence = DOTween.Sequence();
 
-        movingSequence.AppendCallback(() => GameEvents.RequestCameraMove(_cameraMarkersHolder.cameraMarkers[0].transform.position, _cameraMarkersHolder.cameraMarkers[0].transform.rotation, defaultTweenDuration));
         movingSequence.Append(_drawer.Close());
     }
 }

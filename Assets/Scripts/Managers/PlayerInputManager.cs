@@ -17,6 +17,7 @@ public class PlayerInputManager : MonoBehaviour
     private BombPart hoveredPart;
 
     private GlobalStateType _currentGameState;
+    private StartMenuState _currentStartMenuState;
 
     private void OnEnable() => GameEvents.OnGlobalStateChanged += UpdateLocalState;
     private void OnDisable() => GameEvents.OnGlobalStateChanged -= UpdateLocalState;

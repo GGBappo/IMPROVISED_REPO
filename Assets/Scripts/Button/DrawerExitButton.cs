@@ -26,9 +26,9 @@ public class DrawerButton : MonoBehaviour
 
     public void OnStateChanged(StartMenuState newState)
     {
-        _isPressed = newState == StartMenuState.LevelChoose;
+        _isPressed = newState == StartMenuState.Drawer;
 
-        if (newState == StartMenuState.Await || newState == StartMenuState.LevelChoose)
+        if (newState == StartMenuState.Await || newState == StartMenuState.Drawer)
         {
             eventTrigger.enabled = true;
         } 
@@ -42,7 +42,7 @@ public class DrawerButton : MonoBehaviour
     {
         if (!_isPressed)
         {
-            GameEvents.StartMenuStateChanged(StartMenuState.LevelChoose);
+            GameEvents.StartMenuStateChanged(StartMenuState.Drawer);
         }
         else
         {
