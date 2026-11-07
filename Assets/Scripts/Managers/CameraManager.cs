@@ -1,14 +1,14 @@
 using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using Unity.Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private Camera _mainCamera;
+    [SerializeField]
+    private CinemachineCamera _cinemachineCamera;
     private const float _defaultFOV = 50;
-    private Coroutine _moveCameraCoroutine; // defining this so that if the camera is in action we could stop it
-    private Coroutine _zoomCoroutine;
 
     private void OnEnable()
     {
@@ -28,10 +28,49 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        EnsureCameraSetup();
+    }
+
+    private bool EnsureCameraSetup()
+    {
         if (_mainCamera == null)
         {
             _mainCamera = Camera.main;
         }
+
+        if (_mainCamera == null)
+        {
+            return false;
+        }
+
+        bool createdCamera = false;
+        if (_cinemachineCamera == null)
+        {
+            _cinemachineCamera = FindFirstObjectByType<CinemachineCamera>();
+        }
+
+        if (_cinemachineCamera == null)
+        {
+            GameObject cameraObject = new GameObject("Cinemachine Camera");
+            _cinemachineCamera = cameraObject.AddComponent<CinemachineCamera>();
+            createdCamera = true;
+        }
+
+        if (_mainCamera.GetComponent<CinemachineBrain>() == null)
+        {
+            _mainCamera.gameObject.AddComponent<CinemachineBrain>();
+        }
+
+        if (createdCamera)
+        {
+            _cinemachineCamera.transform.SetPositionAndRotation(
+                _mainCamera.transform.position,
+                _mainCamera.transform.rotation);
+            SetFOV(_mainCamera.fieldOfView);
+        }
+
+        _cinemachineCamera.Priority.Value = 10;
+        return true;
     }
 
     /// <summary>
@@ -45,90 +84,84 @@ public class CameraManager : MonoBehaviour
     /// <param name="FOV"></param>
     private void MoveCamera(Vector3 position, Quaternion rotation, float duration, Vector3? lookAtMarker = null, float? FOV = null)
     {
-        _mainCamera.transform.DOKill();
-        _mainCamera.DOKill();
+        if (!EnsureCameraSetup())
+        {
+            Debug.LogWarning("[CameraManager] Ignoring camera move because no Unity camera is available.");
+            return;
+        }
+
+        _cinemachineCamera.transform.DOKill();
+        _cinemachineCamera.DOKill();
         if (lookAtMarker.HasValue)
         {
-            _mainCamera.transform.DOLookAt(lookAtMarker.Value, duration)
+            _cinemachineCamera.transform.DOLookAt(lookAtMarker.Value, duration)
                 .SetEase(Ease.InOutSine);
         } 
         else
         {
-            _mainCamera.transform.DORotateQuaternion(rotation, duration)
+            _cinemachineCamera.transform.DORotateQuaternion(rotation, duration)
                 .SetEase(Ease.InOutSine);
         }
 
-        if (FOV.HasValue && FOV.Value != _mainCamera.fieldOfView)
+        if (FOV.HasValue && FOV.Value != _cinemachineCamera.Lens.FieldOfView)
         {
-            _mainCamera.DOFieldOfView(FOV.Value, duration)
-                .SetEase(Ease.InOutSine);
+            TweenFOV(FOV.Value, duration);
         }
 
-        _mainCamera.transform.DOMove(position, duration)
+        _cinemachineCamera.transform.DOMove(position, duration)
             .SetEase(Ease.InOutSine);
     }
     
     private void LookAtTarget(Vector3 targetPosition, float duration, float FOV = _defaultFOV)
     {
-        _mainCamera.transform.DOKill();
-        _mainCamera.DOKill();
+        if (!EnsureCameraSetup())
+        {
+            Debug.LogWarning("[CameraManager] Ignoring look-at request because no Unity camera is available.");
+            return;
+        }
 
-        // 1. Rotate towards the target over the duration
-        _mainCamera.transform.DOLookAt(targetPosition, duration)
+        _cinemachineCamera.transform.DOKill();
+        _cinemachineCamera.DOKill();
+
+        _cinemachineCamera.transform.DOLookAt(targetPosition, duration)
             .SetEase(Ease.InOutSine);
 
-        _mainCamera.DOFieldOfView(FOV, duration)
-            .SetEase(Ease.InOutSine);
+        TweenFOV(FOV, duration);
     }
 
     private void LookAtTarget(GameObject target, float duration, float FOV = _defaultFOV)
     {
-        _mainCamera.transform.DOKill();
-        _mainCamera.DOKill();
+        if (!EnsureCameraSetup())
+        {
+            Debug.LogWarning("[CameraManager] Ignoring look-at request because no Unity camera is available.");
+            return;
+        }
 
-        // 1. Rotate towards the target over the duration
-        _mainCamera.transform.DOLookAt(target.transform.position, duration)
+        _cinemachineCamera.transform.DOKill();
+        _cinemachineCamera.DOKill();
+
+        _cinemachineCamera.transform.DOLookAt(target.transform.position, duration)
             .SetEase(Ease.InOutSine);
 
-        _mainCamera.DOFieldOfView(FOV, duration)
-            .SetEase(Ease.InOutSine);
+        TweenFOV(FOV, duration);
     }
     
 
     private void ChangeCameraFOV(float FOV, bool slowZoom = false, float duration = 1f){
+        if (!EnsureCameraSetup())
+        {
+            Debug.LogWarning("[CameraManager] Ignoring FOV request because no Unity camera is available.");
+            return;
+        }
+
         if (!slowZoom){
-            _zoomCoroutine = StartCoroutine(ChangeFOVRoutine(FOV, duration));
+            TweenFOV(FOV, duration);
         }
         else
         {
-            _mainCamera.fieldOfView = FOV;
+            SetFOV(FOV);
         }
     }
-    /*
-    private IEnumerator LookAtTargetRoutine(Vector3 targetPosition, float duration, float FOV)
-    {
-        Quaternion startRotation = _mainCamera.transform.rotation;
-        Vector3 direction = targetPosition - _mainCamera.transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            float percentage = elapsedTime / duration;
-            float smoothPercentage = Mathf.SmoothStep(0f, 1f, percentage);
-
-            _mainCamera.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, smoothPercentage);
-            _mainCamera.fieldOfView = Mathf.Lerp(_mainCamera.fieldOfView, FOV, smoothPercentage);
-
-            elapsedTime += Time.deltaTime;
-            yield return null; 
-        }
-
-        _mainCamera.transform.rotation = targetRotation;
-        _mainCamera.fieldOfView = FOV;
-    }
-    */
 
     /*
     private IEnumerator MoveCameraRoutine(Vector3 targetPosition, Quaternion targetRotation, float duration)
@@ -168,23 +201,21 @@ public class CameraManager : MonoBehaviour
         Debug.Log($"[CameraManager] Finished moving to position: {targetPosition}, rotation: {targetRotation}");
     }
     */
-    private IEnumerator ChangeFOVRoutine(float targetFOV, float duration)
+    private void SetFOV(float FOV)
     {
-        float startFOV = _mainCamera.fieldOfView;
-        float elapsedTime = 0f;
+        LensSettings lens = _cinemachineCamera.Lens;
+        lens.FieldOfView = FOV;
+        _cinemachineCamera.Lens = lens;
+    }
 
-        while (elapsedTime < duration)
-        {
-            float percentage = elapsedTime / duration;
-            percentage = Mathf.SmoothStep(0f, 1f, percentage);
-
-            _mainCamera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, percentage);
-
-            elapsedTime += Time.deltaTime;
-            yield return null; 
-        }
-
-        _mainCamera.fieldOfView = targetFOV;
-        _zoomCoroutine = null;
+    private void TweenFOV(float targetFOV, float duration)
+    {
+        _cinemachineCamera.DOKill();
+        DOTween.To(
+            () => _cinemachineCamera.Lens.FieldOfView,
+            SetFOV,
+            targetFOV,
+            duration)
+            .SetEase(Ease.InOutSine);
     }
 }

@@ -16,7 +16,7 @@ public class DialougeButton : MonoBehaviour
             }
             else
             {
-                GameEvents.StartMenuStateChanged(StartMenuState.LevelChoose);
+                GameEvents.StartMenuStateChanged(StartMenuState.Await);
             }
         });
     }

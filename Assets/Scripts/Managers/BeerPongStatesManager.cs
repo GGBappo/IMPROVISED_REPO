@@ -2,14 +2,8 @@ using UnityEngine;
 
 public class BeerPongStateManager : MonoBehaviour
 {
-    private readonly PLAYERTURN playerTurnState = new PLAYERTURN();
-    private readonly PLAYERWIN playerWinState = new PLAYERWIN();
-    private readonly AITURN AITurnState = new AITURN();
-    private readonly AIWIN AIWinState = new AIWIN();
-    
-    
-    private IGameState currentState;
-    public BeerPongMinigameStates CurrentState { get; private set; }
+    private readonly StateMachine<BeerPongMinigameStates> stateMachine = new StateMachine<BeerPongMinigameStates>();
+    public BeerPongMinigameStates CurrentState => stateMachine.CurrentState;
 
     // subscribe to events
     private void OnEnable()
@@ -22,43 +16,35 @@ public class BeerPongStateManager : MonoBehaviour
         GameEvents.OnRequestBeerPongMinigameStateChange -= SwitchState;
     }
 
-    void Start()
-    {
-        SwitchState(BeerPongMinigameStates.PlayerTurn);
-    }
     private void Awake()
     {
-        
+        stateMachine.RegisterState(BeerPongMinigameStates.PlayerTurn, new PLAYERTURN());
+        stateMachine.RegisterState(BeerPongMinigameStates.AITurn, new AITURN());
+        stateMachine.RegisterState(BeerPongMinigameStates.PlayerWin, new PLAYERWIN());
+        stateMachine.RegisterState(BeerPongMinigameStates.AIWin, new AIWIN());
+
+        stateMachine.AllowTransition(BeerPongMinigameStates.PlayerTurn, BeerPongMinigameStates.AITurn);
+        stateMachine.AllowTransition(BeerPongMinigameStates.PlayerTurn, BeerPongMinigameStates.PlayerWin);
+        stateMachine.AllowTransition(BeerPongMinigameStates.PlayerTurn, BeerPongMinigameStates.AIWin);
+        stateMachine.AllowTransition(BeerPongMinigameStates.AITurn, BeerPongMinigameStates.PlayerTurn);
+        stateMachine.AllowTransition(BeerPongMinigameStates.AITurn, BeerPongMinigameStates.PlayerWin);
+        stateMachine.AllowTransition(BeerPongMinigameStates.AITurn, BeerPongMinigameStates.AIWin);
+        stateMachine.AllowTransition(BeerPongMinigameStates.PlayerWin, BeerPongMinigameStates.PlayerTurn);
+        stateMachine.AllowTransition(BeerPongMinigameStates.AIWin, BeerPongMinigameStates.PlayerTurn);
     }
 
-    void Update()
+    private void Start()
     {
-        // update the current state every frame
-        currentState?.UpdateState();
+        stateMachine.Start(BeerPongMinigameStates.PlayerTurn);
     }
 
-    /// <summary>
-    /// Switches the current game state to the specified target state.
-    /// </summary>
-    /// <param name="targetState"></param>
+    private void Update()
+    {
+        stateMachine.Update();
+    }
+
     private void SwitchState(BeerPongMinigameStates targetState)
     {
-        currentState?.ExitState(); 
-
-        switch (targetState)
-        {
-            case BeerPongMinigameStates.PlayerTurn: currentState = playerTurnState; break;
-            case BeerPongMinigameStates.AITurn: currentState = AITurnState; break;
-            case BeerPongMinigameStates.PlayerWin: currentState = playerWinState; break;
-            case BeerPongMinigameStates.AIWin: currentState = AIWinState; break;
-            default:
-                Debug.LogWarning($"[BeerPongStateManager] Unknown Beer Pong state: {targetState}");
-                currentState = null;
-                return;
-        }
-
-        CurrentState = targetState;
-        currentState?.EnterState(); 
+        stateMachine.TryChangeState(targetState);
     }
-
 }

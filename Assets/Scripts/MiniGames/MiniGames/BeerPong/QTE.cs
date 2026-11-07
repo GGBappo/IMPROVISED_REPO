@@ -13,6 +13,31 @@ public class QTE : MonoBehaviour
     [Header("References")]
     [SerializeField] private BeerPong beerPong;
     [SerializeField] private Slider slider;
+    private CanvasGroup uiGroup;
+
+    private void Awake()
+    {
+        uiGroup = GetComponentInParent<CanvasGroup>();
+    }
+
+    void OnEnable()
+    {
+        if (uiGroup != null)
+        {
+            uiGroup.alpha = 1f;
+            uiGroup.blocksRaycasts = true;
+        }
+        Debug.Log("[QTE] QTE UI enabled.");
+    }
+
+    void OnDisable()
+    {
+        if (uiGroup != null)
+        {
+            uiGroup.alpha = 0f;
+            uiGroup.blocksRaycasts = false;
+        }
+    }
 
     public float Strenght { get => strenght; }
     void Reset()

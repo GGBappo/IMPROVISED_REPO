@@ -52,7 +52,7 @@ public class LevelButton : MonoBehaviour
 
     public void OpenFileScreen()
     {
-        GameEvents.StartMenuStateChanged(StartMenuState.LevelSelect);
+        GameEvents.StartMenuStateChanged(StartMenuState.FileDetails);
         GameEvents.RequestOpenFileScreen(_levelName, _levelLocation, _levelDescription, _levelIndex);
     }
     public void HoverTextIn()

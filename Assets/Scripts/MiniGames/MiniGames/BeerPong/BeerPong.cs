@@ -31,7 +31,6 @@ public class BeerPong : MiniGame
     [SerializeField] private QTE qte; // Reference to the QTE script
     [SerializeField] private PullBack pullBack; // Reference to the PullBack script
     [SerializeField] private BeerPongStateManager stateManager;
-    [SerializeField] private GameObject qteGameObject;
     [SerializeField] private CanvasGroup shotsCanvasGroup;
     [SerializeField] private Image shotOne;
     [SerializeField] private Image shotTwo;
@@ -113,6 +112,7 @@ public class BeerPong : MiniGame
         {
             aiCupsDict.Add(cup.GetID(), cup.transform);
         }
+        HideQTE();
     }
 
     private void Update()
@@ -502,7 +502,9 @@ public class BeerPong : MiniGame
     /// </summary>
     private void ShowQTE()
     {
-        qteGameObject.SetActive(true);
+        qte.enabled = true;
+        pullBack.enabled = true;
+        Debug.Log("[BeerPong] Showing QTE and PullBack UI.");
     }
 
     /// <summary>
@@ -510,7 +512,9 @@ public class BeerPong : MiniGame
     /// </summary>
     private void HideQTE()
     {
-        qteGameObject.SetActive(false);
+        qte.enabled = false;
+        pullBack.enabled = false;
+        Debug.Log("[BeerPong] Hiding QTE and PullBack UI.");
     }
 
     /// <summary>

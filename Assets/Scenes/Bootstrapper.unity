@@ -256,6 +256,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33347731}
   m_CullTransparentMesh: 1
+--- !u!1 &467516038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1224713162534948630, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+  m_PrefabInstance: {fileID: 712113677611154266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &467516039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467516038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 50
+    OrthographicSize: 10
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!114 &467516040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467516038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBrain
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!1 &574446875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1283,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 592086503747215654, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      propertyPath: field of view
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 592086503747215654, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 592086503747215654, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 592086503747215654, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455824211866632892, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      propertyPath: _cinemachineCamera
+      value: 
+      objectReference: {fileID: 467516039}
     - target: {fileID: 3939297696311041526, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
       propertyPath: m_Alpha
       value: 0
@@ -1280,7 +1380,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2124578379825701042, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
       insertIndex: 0
       addedObject: {fileID: 574446876}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1224713162534948630, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 467516039}
+    - targetCorrespondingSourceObject: {fileID: 1224713162534948630, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 467516040}
   m_SourcePrefab: {fileID: 100100000, guid: b1a0252633f76564d813bb16e20b0bdd, type: 3}
 --- !u!4 &712113677611154267 stripped
 Transform:

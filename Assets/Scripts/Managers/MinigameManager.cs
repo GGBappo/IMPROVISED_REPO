@@ -24,7 +24,10 @@ public class MinigameManager : MonoBehaviour
     private void HideLevelUI()
     {
         GameEvents.RequestHideBudgetUI();
+        Debug.Log("Ph1");
         GameEvents.RequestShowQTE();
+        Debug.Log("Ph2");
         GameEvents.RequestHideShop();
+        Debug.Log("Ph3");
     }
 }

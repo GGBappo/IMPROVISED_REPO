@@ -1,7 +1,8 @@
-public enum GlobalStateType { 
-    Menu, 
-    Active, 
-    Hub, 
+public enum GlobalStateType
+{
+    Menu,
+    Active,
+    Hub,
     Dialogue,
-    Outcome 
+    Outcome
 }

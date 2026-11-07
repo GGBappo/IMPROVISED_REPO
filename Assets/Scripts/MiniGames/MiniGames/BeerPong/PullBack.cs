@@ -22,14 +22,31 @@ public class PullBack : MonoBehaviour
     private Tween maxTensionShake;
     
     public float Strenght { get => strenght; }
+    private CanvasGroup uiGroup;
+
+    private void Awake()
+    {
+        uiGroup = GetComponentInParent<CanvasGroup>();
+    }
 
     void OnEnable()
     {
         GameEvents.OnRequestMousePositionFromDragBall += RecieveMousePosition;
+        if (uiGroup != null)
+        {
+            uiGroup.alpha = 1f;
+            uiGroup.blocksRaycasts = true;
+        }
     }
+
     void OnDisable()
     {
         GameEvents.OnRequestMousePositionFromDragBall -= RecieveMousePosition;
+        if (uiGroup != null)
+        {
+            uiGroup.alpha = 0f;
+            uiGroup.blocksRaycasts = false;
+        }
     }
     void Start()
     {
@@ -70,17 +87,21 @@ public class PullBack : MonoBehaviour
 
         if (!Input.GetMouseButton(0))
         {
-            isDragging = false;
+            if (isDragging)
+            {
+                GameEvents.RequestCameraFOVChange(baseFOV, false, 0.3f);
+                
+                if (maxTensionShake != null && maxTensionShake.IsActive())
+                {
+                    maxTensionShake.Kill(true);
+                }
+                isDragging = false;
+            }
         }
 
         if (!isDragging)
         {
             slider.value = 0f;
-            Camera.main.fieldOfView = baseFOV;
-            if (maxTensionShake != null && maxTensionShake.IsActive())
-            {
-                maxTensionShake.Kill(true);
-            }
             strenght = minStrenght;
             return;
         }
@@ -93,7 +114,8 @@ public class PullBack : MonoBehaviour
         {
             currentMousePositionYDelta = startingMousePositionY - Input.mousePosition.y;
         }
-        slider.value = Mathf.Abs(currentMousePositionYDelta)/100;
+        
+        slider.value = Mathf.Abs(currentMousePositionYDelta) / 100;
 
         if (slider.value < 0f)
         {
@@ -105,7 +127,9 @@ public class PullBack : MonoBehaviour
         }
         
         float sliderPercentage = slider.value / slider.maxValue;
-        Camera.main.fieldOfView = Mathf.Lerp(baseFOV, maxFOV, sliderPercentage);
+        
+        GameEvents.RequestCameraFOVChange(Mathf.Lerp(baseFOV, maxFOV, sliderPercentage), true);
+        
         if (sliderPercentage >= 0.99f)
         {
             if (maxTensionShake == null || !maxTensionShake.IsActive())
