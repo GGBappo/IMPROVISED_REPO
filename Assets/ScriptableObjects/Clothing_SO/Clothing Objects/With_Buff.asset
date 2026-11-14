@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf56a3460c6c1e479d6c8a1e088b096, type: 3}
   m_Name: With_Buff
   m_EditorClassIdentifier: Assembly-CSharp::Clothing_SO
+  closetSprite: {fileID: 21300000, guid: 638cd75a0f8142cfa033bbf9e1330e12, type: 3}
   clothingName: Buff Outfit
+  visualPrefab: {fileID: 0}
   lore: Hes small and red
   clothingBuffText: Gives extra money (+20)
   buffType: 1

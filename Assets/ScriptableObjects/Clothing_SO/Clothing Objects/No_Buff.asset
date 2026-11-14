@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf56a3460c6c1e479d6c8a1e088b096, type: 3}
   m_Name: No_Buff
   m_EditorClassIdentifier: Assembly-CSharp::Clothing_SO
+  closetSprite: {fileID: 21300000, guid: 638cd75a0f8142cfa033bbf9e1330e11, type: 3}
+  IsLocked: 0
+  visualPrefab: {fileID: 5266454657064754447, guid: e3895eebbd0781e42ab2ed8a80d3718a, type: 3}
   clothingName: BaseFit 1
-  lore: He big and green
-  clothingBuffText: No Buff
+  DescriptionText: 
   buffType: 3
   buffAmount: 0
