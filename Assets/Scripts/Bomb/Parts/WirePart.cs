@@ -10,16 +10,17 @@ public class WirePart : BombPart
     private int current = 0;
     public int wiresToCut;
 
-    public override bool OnItemUsed(ItemActionType type)
+    public override bool OnItemUsed(ItemActionType[] itemActions)
     {
-        int elementID = 0;
+        var ctx = new UseContext { itemActions = itemActions, elements = wires };
 
-        if (!UseBase(wires, type, ref elementID))
+        if (!UseBase(ref ctx))
         {
             return false;
         }
 
-        
+        int elementID = ctx.hoveredIndex;
+
         if ((elementID != current && inOrder) || (wires[elementID].dontCut))
         {
             timer.RegisterStrike();

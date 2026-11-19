@@ -811,7 +811,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 2969893190453073201}
@@ -828,8 +828,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
   fragment: {fileID: 6198421758050094325}
-  compatibileItems: 00000000
-  dontNeedTool: 0
+  compatibleItems: 00000000
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0

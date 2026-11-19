@@ -761,9 +761,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 186710257}
-  compatibileItems: 02000000
+  compatibleItems: 02000000
   isSolved: 0
-  dontNeedTool: 0
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -929,7 +929,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 5339724242204134455}
@@ -1842,9 +1842,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonCode
   fragment: {fileID: 1129222143}
-  compatibileItems: 04000000
+  compatibleItems: 04000000
   isSolved: 0
-  dontNeedTool: 1
+  interactByClick: 1
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -3674,9 +3674,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
   fragment: {fileID: 1129222143}
-  compatibileItems: 00000000
+  compatibleItems: 00000000
   isSolved: 0
-  dontNeedTool: 0
+  interactByClick: 0
   selfLocked: 1
   lockAnim: {fileID: 532053776}
   isHighlighted: 0
@@ -5649,7 +5649,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 331571179}
@@ -7476,9 +7476,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WirePart
   fragment: {fileID: 1414933573}
-  compatibileItems: 00000000
+  compatibleItems: 00000000
   isSolved: 0
-  dontNeedTool: 0
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -7633,7 +7633,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 1194821910}
@@ -8836,9 +8836,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestCore01
   fragment: {fileID: 1605027386}
-  compatibileItems: 01000000
+  compatibleItems: 01000000
   isSolved: 0
-  dontNeedTool: 0
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0
@@ -8978,7 +8978,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 1106461456}
@@ -10962,9 +10962,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 1129222143}
-  compatibileItems: 02000000
+  compatibleItems: 02000000
   isSolved: 0
-  dontNeedTool: 0
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0

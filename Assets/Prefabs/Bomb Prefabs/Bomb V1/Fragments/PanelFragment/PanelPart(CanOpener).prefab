@@ -159,7 +159,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onFragmentUlnocked:
+  onFragmentUnlocked:
     m_PersistentCalls:
       m_Calls: []
   lockAnim: {fileID: 1630839091501872616}
@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPart
   fragment: {fileID: 6787502628414989577}
-  compatibileItems: 02000000
-  dontNeedTool: 0
+  compatibleItems: 02000000
+  interactByClick: 0
   selfLocked: 0
   lockAnim: {fileID: 0}
   isHighlighted: 0

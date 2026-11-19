@@ -1,12 +1,2 @@
-using System.Security.Cryptography;
-using UnityEngine;
-
-public class RubberDuck : InteractableItem
-{
-    public override ItemActionType ActionType => ItemActionType.Squeak;
-
-    public override void OnUse()
-    {
-        base.OnUse();
-    }
-}
+// Item behaviour now lives entirely in the Item_SO (actions, classification, economy).
+public class RubberDuck : InteractableItem { }

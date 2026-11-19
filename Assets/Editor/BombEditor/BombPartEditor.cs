@@ -7,8 +7,8 @@ public class BombPartEditor : Editor
 {
     #region Properites
     SerializedProperty fragment;
-    SerializedProperty compatibileItems;
-    SerializedProperty dontNeedTool;
+    SerializedProperty compatibleItems;
+    SerializedProperty interactByClick;
     SerializedProperty selfLocked;
     SerializedProperty lockAnim;
     SerializedProperty highlightable;
@@ -58,8 +58,8 @@ public class BombPartEditor : Editor
         dntAB.valueChanged.AddListener(Repaint);
 
         fragment = serializedObject.FindProperty("fragment");
-        compatibileItems = serializedObject.FindProperty("compatibileItems");
-        dontNeedTool = serializedObject.FindProperty("dontNeedTool");
+        compatibleItems = serializedObject.FindProperty("compatibleItems");
+        interactByClick = serializedObject.FindProperty("interactByClick");
         selfLocked = serializedObject.FindProperty("selfLocked");
         lockAnim = serializedObject.FindProperty("lockAnim");
         highlightable = serializedObject.FindProperty("highlightable");
@@ -76,17 +76,38 @@ public class BombPartEditor : Editor
         BombPart part = (BombPart)target;
         serializedObject.Update();
 
+        // STATE CHIPS + play-mode test buttons
+        EditorGUILayout.BeginHorizontal();
+        string state = part.isSolved ? "SOLVED" : (part.isLocked ? "LOCKED" : "OPEN");
+        EditorGUILayout.LabelField("State:", EditorStyles.miniBoldLabel);
+        EditorGUILayout.LabelField(state, EditorStyles.boldLabel);
+        EditorGUILayout.EndHorizontal();
+
+        if (Application.isPlaying)
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUI.enabled = !part.isSolved;
+            if (GUILayout.Button("Solve")) part.ForceSolve();
+            GUI.enabled = part.isLocked;
+            if (GUILayout.Button("Unlock")) part.Unlock();
+            GUI.enabled = !part.isLocked;
+            if (GUILayout.Button("Lock")) part.SilentLock();
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space(5);
+        }
+
         //BASE
         bases = EditorGUILayout.BeginFoldoutHeaderGroup(bases, "Base");
         basesAB.target = bases;
         if (EditorGUILayout.BeginFadeGroup(basesAB.faded))
         {
             EditorGUILayout.PropertyField(fragment);
-            EditorGUILayout.PropertyField(dontNeedTool);
-            dntAB.target = !dontNeedTool.boolValue;
+            EditorGUILayout.PropertyField(interactByClick);
+            dntAB.target = !interactByClick.boolValue;
             if (EditorGUILayout.BeginFadeGroup(dntAB.faded))
             {
-                EditorGUILayout.PropertyField(compatibileItems);
+                EditorGUILayout.PropertyField(compatibleItems);
             }
             EditorGUILayout.EndFadeGroup();
             EditorGUILayout.Space(5);
@@ -159,8 +180,8 @@ public class BombPartEditor : Editor
             string[] toExclude = new string[12];
             toExclude[0] = "m_Script";
             toExclude[1] = "fragment";
-            toExclude[2] = "compatibileItems";
-            toExclude[3] = "dontNeedTool";
+            toExclude[2] = "compatibleItems";
+            toExclude[3] = "interactByClick";
             toExclude[4] = "lockAnim";
             toExclude[5] = "highlightable";
             toExclude[6] = "highlight";
